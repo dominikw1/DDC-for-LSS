@@ -414,6 +414,14 @@ from first principles and afterwards building a controller upon it.
 A premier example of such an approach is MPC, model predictive control.
 Model-based control tends to be insufficient for complex systems, though~\cite{DDC_Overview}.
 
+\subsection{Classification}
+
+A fundamental delimination in data driven control can be made between model-based and model-free approaches. 
+In model-based methods, a model is learned from data - a process termed system identification (SI) - and, as in traditional control, a controller built upon it.
+Examples of techniques using this strategy are Koopman-theory~\cite{Korda_2018} and Gaussian process~\cite{Kocijan01122005} based approaches.
+
+In model-free control, the dynamics of the system are treated as a black box and the controller is directly built from the data~\cite{DDC_Overview}.
+
 
 
 
@@ -425,6 +433,8 @@ The term is rather used whenever a system grows unweildly to control with tradit
 It is further often used synonymously with complex system, a system consisting of multiple interacting units 
 that exhibits emergent collective behavior which is not the simple summation of its parts~\cite{ControllingComplexSystem}.
 
+
+We try to make it smaller using strategies in Model Order Reduction (MOR) methods.
 
 \subsection{Control Architectures}
 
