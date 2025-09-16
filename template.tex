@@ -337,8 +337,8 @@
 \usepackage{color}
 \definecolor{tumblue}{rgb}{0, 0.4, 0.74}
 
-\usepackage{biblatex}
-\addbibresource{biblatex-examples.bib}
+\usepackage[backend=biber,  style=ieee, url=false,doi=false, isbn=false]{biblatex}
+\addbibresource{references.bib}
 
 
 % correct bad hyphenation here
@@ -354,7 +354,7 @@
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
 % Do not put math or special symbols in the title.
-\title{Data Driven Control for Large Scale Systems: A survey}
+\title{Data Driven Control for Large Scale Systems: \\ A Survey}
 
 
 % author names and affiliations
@@ -406,10 +406,50 @@ This demo file is intended to serve as a ``starter file''
 for IEEE conference papers produced under \LaTeX\ using
 IEEEtran.cls version 1.8 and later.
 
+\section{Data Driven Control}
+
+
+Traditional control approaches largely followed the strategy of first deriving a model
+from first principles and afterwards building a controller upon it. 
+A premier example of such an approach is MPC, model predictive control.
+Model-based control tends to be insufficient for complex systems, though~\cite{DDC_Overview}.
+
+
 
 
 \section{Large Scale Systems}
 
+
+Large Scale Systems do not have a single clear definition.
+The term is rather used whenever a system grows unweildly to control with traditional strategies.
+It is further often used synonymously with complex system, a system consisting of multiple interacting units 
+that exhibits emergent collective behavior which is not the simple summation of its parts~\cite{ControllingComplexSystem}.
+
+
+\subsection{Control Architectures}
+
+We have funny strategies such as decentralised and distributed control.
+
+Decentralised does not actively share date, distributed does. There tend to be delays though.
+
+\subsection{Approaches for Control}
+
+The approaches taken for controlling large scale systems can roughly be categorised into three distinct levels: Node control, Edge control and Structural control~\cite{ControllingComplexSystem}.
+
+\subsubsection{Node Control}
+
+Control at this level concerns itself with the immediate determination of dynamics of a subset of agents at the lowest, microscopic view.
+
+\subsubsection{Edge Control}
+
+On this abstraction level, control works by dynamically adjusting the communication protocol between the individual agents.
+
+\subsubsection{Structural Control}
+
+At the highest level, the network topology can be reshaped in order to guide behaviour at the macroscopic level.
+
+Most works are concerned with node control, as this resembles the traditional single, small-system control the closest.
+Best results are usually achieved when considering them all though~\cite{ControllingComplexSystem}.
 
 
 %\begin{figure}[h]
