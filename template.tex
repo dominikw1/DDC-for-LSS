@@ -14,7 +14,6 @@
 %% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
 %% and
 %% http://www.ieee.org/
-
 %%*************************************************************************
 %% Legal Notice:
 %% This code is offered as-is without any warranty either expressed or
@@ -132,7 +131,8 @@
 % The documentation is contained in the cite.sty file itself.
 
 
-
+\usepackage{amsmath}
+\usepackage{amssymb}
 
 
 
@@ -433,8 +433,14 @@ The term is rather used whenever a system grows unweildly to control with tradit
 It is further often used synonymously with complex system, a system consisting of multiple interacting units 
 that exhibits emergent collective behavior which is not the simple summation of its parts~\cite{ControllingComplexSystem}.
 
+Model-based control of such systems can be intractable to compute and sensitive to uncertainty~\cite{YU2025126253}.
+It has been shown that by imposing locality/separability, 
+many large optimal control problems decompose into parallel local subproblems whose complexity does not grow with the total system size, 
+using techniques such as system-level synthesis~\cite{wang2017separablelocalizedlevelsynthesis}.
 
 We try to make it smaller using strategies in Model Order Reduction (MOR) methods.
+Model reduction methods two categories: SVD-based and Krylov-based or moment matching methods~\cite{lowenerIntro}.
+
 
 \subsection{Control Architectures}
 
@@ -460,6 +466,43 @@ At the highest level, the network topology can be reshaped in order to guide beh
 
 Most works are concerned with node control, as this resembles the traditional single, small-system control the closest.
 Best results are usually achieved when considering them all though~\cite{ControllingComplexSystem}.
+
+
+\section{DDC for Linear Systems}
+
+
+\subsection{Model Reduction}
+
+When a linear model is too large to identify directly, 
+one can use data-driven model reduction. 
+The Loewner framework constructs a reduced linear
+model from transfer-function data or sampled impulse response~\cite{gosea2021datadrivenmodelingcontrollargescale}.
+
+The main element of the Loewner framework is the Loewner Matrix. For two lists of complex number pairs \(u_i, v_i\) and \(\mu_j, \lambda_j\), it is defined as follows ~\cite{lowenerIntro}: 
+
+$$\begin{pmatrix}
+\frac{v_1-w_1}{\mu_1-\lambda_1} & \dots & \frac{v_1-w_k}{\mu_1 - \lambda_k}\\
+\dots & \dots & \dots \\
+\frac{v_q-w_1}{\mu_q-\lambda_1} & \dots & \frac{v_q-w_k}{\mu_q - \lambda_k}
+\end{pmatrix}$$
+
+
+The rank of this Loewner matrix then contains information about the minimal admissible complexity of the solutions of the interpolation.
+
+\subsection{Decentralised and Distributed Control}
+
+
+
+
+\section{DDC for Nonlinear and Complex Systems}
+
+
+\subsection{Koopman based and Lifting Methods}
+
+One approach is to lift the nonlinear system into 
+a higher-dimensional (possibly infinite) linear space via the Koopman operator, then apply linear data methods.
+Recent research has focused on developing a Koopman MPC technique where one learns a linear 
+predictor (via Extended Dynamic Mode Decomposition or neural nets) and then solves a convex MPC on the lifted space~\cite{LI2025100219}.
 
 
 %\begin{figure}[h]
