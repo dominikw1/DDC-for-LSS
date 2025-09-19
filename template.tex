@@ -402,11 +402,8 @@ The abstract goes here.
 
 \section{Introduction}
 % no \IEEEPARstart
-This demo file is intended to serve as a ``starter file''
-for IEEE conference papers produced under \LaTeX\ using
-IEEEtran.cls version 1.8 and later.
-
 \section{Data Driven Control}
+
 
 
 Traditional control approaches largely followed the strategy of first deriving a model
@@ -424,6 +421,17 @@ In model-free control, the dynamics of the system are treated as a black box and
 
 
 
+\subsection{Advantages}
+
+Data-driven approaches provide a range of benefits compared to traditional model-based ones. 
+System identification, the basis for indirect data-driven methods, has
+the key advantage of being generally applicable and to large degrees automated, 
+whereas a model-based technique requries expert-knowledge for deriving the model from first principles,
+the specific result then being domain-specific. SI further provides the applicant with 
+tools to fine-tune the accuracy required, as complexity tends to rise with more accurate models~\cite{behavioralDataDrivenControl}.
+
+
+%For large and complex systems, automatic system identification hence   
 
 \section{Large Scale Systems}
 
@@ -439,6 +447,9 @@ many large optimal control problems decompose into parallel local subproblems wh
 using techniques such as system-level synthesis~\cite{wang2017separablelocalizedlevelsynthesis}.
 
 We try to make it smaller using strategies in Model Order Reduction (MOR) methods.
+This technique attempts to generate
+reduced models reproducing the input-output behavior 
+of large-scale systems accurately.
 Model reduction methods two categories: SVD-based and Krylov-based or moment matching methods~\cite{lowenerIntro}.
 
 
@@ -475,6 +486,7 @@ Best results are usually achieved when considering them all though~\cite{Control
 
 When a linear model is too large to identify directly, 
 one can use data-driven model reduction. 
+
 The Loewner framework constructs a reduced linear
 model from transfer-function data or sampled impulse response~\cite{gosea2021datadrivenmodelingcontrollargescale}.
 
@@ -489,9 +501,17 @@ $$\begin{pmatrix}
 
 The rank of this Loewner matrix then contains information about the minimal admissible complexity of the solutions of the interpolation.
 
+
+
+A similar method is presented in \cite{gosea2021datadrivenbalancinglineardynamical},  a novel reformulation of balanced truncation (BT).
+BT~\cite{balancedtruncationOriginal} is a widely successfully employed MOR technique for large systems~\cite{salehi2021mixed}. 
+
+
+etc. etc.
+
+
+
 \subsection{Decentralised and Distributed Control}
-
-
 
 
 \section{DDC for Nonlinear and Complex Systems}
