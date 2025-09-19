@@ -487,7 +487,8 @@ Best results are usually achieved when considering them all though~\cite{Control
 When a linear model is too large to identify directly, 
 one can use data-driven model reduction. 
 
-The Loewner framework constructs a reduced linear
+A widely-used approach is data-driven interpolatory model reduction.
+One such method, the Loewner framework, constructs a reduced linear
 model from transfer-function data or sampled impulse response~\cite{gosea2021datadrivenmodelingcontrollargescale}.
 
 The main element of the Loewner framework is the Loewner Matrix. For two lists of complex number pairs \(u_i, v_i\) and \(\mu_j, \lambda_j\), it is defined as follows ~\cite{lowenerIntro}: 
@@ -502,14 +503,44 @@ $$\begin{pmatrix}
 The rank of this Loewner matrix then contains information about the minimal admissible complexity of the solutions of the interpolation.
 
 
-
-A similar method is presented in \cite{gosea2021datadrivenbalancinglineardynamical},  a novel reformulation of balanced truncation (BT).
-BT~\cite{balancedtruncationOriginal} is a widely successfully employed MOR technique for large systems~\cite{salehi2021mixed}. 
-
-
-etc. etc.
+Another interpolatory MOR technique is the AAA algorithm.    
+% How does it work??
 
 
+
+Balanced truncation (BT)~\cite{balancedtruncationOriginal} is a widely successfully employed MOR technique for large systems~\cite{salehi2021mixed}. 
+A data-driven reformulation is presented in \cite{gosea2021datadrivenbalancinglineardynamical}.
+% some more, see below
+
+
+For discrete-time systems, \cite{sakamoto2024data} proposes 
+a data-driven \(h^2\) model reduction technique leveraging the
+discrete-time Lyapunov and Sylvester equations, deriving 
+the data-driven gradiant.
+
+Proper orthogonal decomposition (POD) is ....
+
+Dynamic Mode Decomposition is (DMD) ...
+
+%Other data-driven methods, such as
+%proper orthogonal decomposition (POD) [26], dynamic mode
+%decomposition (DMD) [27], [28], or operator inference [29],
+%[30] can also be employed. 
+
+%The datadriven balanced truncation method [13]–[16] is one of the
+%common data-driven model reduction inspired by the balanced
+%truncation method, which is a model-based MOR. In this
+%method, balanced truncation is performed by using the measurement data. For example, [15] performs MOR by estimating
+%the Gramians from the data information. 
+
+%Another well-known
+%approach is data-driven interpolatory model reduction. This
+%approach includes the Loewner framework [17]–[23] and the
+%AAA algorithm [24], [25]. Other data-driven methods, such as
+%proper orthogonal decomposition (POD) [26], dynamic mode
+%decomposition (DMD) [27], [28], or operator inference [29],
+%[30] can also be employed. 
+%https://arxiv.org/pdf/2401.05774
 
 \subsection{Decentralised and Distributed Control}
 
