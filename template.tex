@@ -454,7 +454,7 @@ This technique attempts to generate
 reduced models reproducing the input-output behavior 
 of large-scale systems accurately.
 
-Model reduction methods fall into two categories: SVD-based and moment matching methods.
+Traditional model reduction methods fall into two categories: SVD-based and moment matching methods.
 SVD-based techniques are related to the eponymous singular value decomposition.
 They core idea is the computation of controllability and observability 
 Gramians, eliminating hard-to-reach and -observe states~\cite{lowenerIntro}. 
@@ -501,12 +501,13 @@ Best results are usually achieved when considering them all though~\cite{Control
 
 \subsection{Data-driven Model Reduction}
 
-When a linear model is too large to identify directly, 
+When a linear model is too large to identify and use for control directly, 
 one can use data-driven model reduction. 
+Data-driven MOR methods rely only on measured trajectories, frequency response data, or impulse responses.
 
 A widely-used approach is data-driven interpolatory model reduction.
 One such method, the Loewner framework, constructs a reduced linear
-model from transfer-function data or sampled impulse response~\cite{gosea2021datadrivenmodelingcontrollargescale}.
+model from transfer-function data or sampled impulse responses~\cite{gosea2021datadrivenmodelingcontrollargescale}.
 The main element of the Loewner framework is the Loewner Matrix. For two lists of complex number pairs \(u_i, v_i\) and \(\mu_j, \lambda_j\), it is defined as follows ~\cite{lowenerIntro}: 
 
 $$\begin{pmatrix}
@@ -517,9 +518,27 @@ $$\begin{pmatrix}
 
 
 The rank of this Loewner matrix then contains information about the minimal admissible complexity of the solutions of the interpolation.
+The shifted Loewner matrix \(L_\sigma\) has the entries \(L_{\sigma_{ij}} = \frac{\mu_jv_j- \lambda_iw_i}{\mu_j-\lambda_i}\).
+The key insight is that for a linear system, 
+these matrices are directly related to the system's internal  % double check this - chatgpt
+state-space matrices without needing to know them explicitly~\cite{karachalios2023data}.
+The singular values of the Loewner matrix are used to determine the numerical 
+rank of the system, which suggests the appropriate order of the reduced model.  
+A sharp drop-off in the singular values indicates a good candidate for the 
+reduced model's dimension. 
+By selecting a small number of the largest singular values, 
+one can capture the most important dynamics of the original system.
+The reduced-order model's state-space matrices
+are then directly computed from the projected Loewner matrices 
+and the data vectors~\cite{lowenerIntro}. % double chekck
 
 
-Another interpolatory MOR technique is the AAA algorithm.    
+
+Another interpolatory MOR technique is the AAA algorithm~\cite{nakatsukasa2018aaa}, which builds rational
+approximants adaptively by selecting 
+interpolation points based on approximation error. 
+This method is attractive when only frequency response data is available, 
+as it balances accuracy and model complexity with minimal user intervention.
 % How does it work??
 
 
