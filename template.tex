@@ -337,7 +337,7 @@
 \usepackage{color}
 \definecolor{tumblue}{rgb}{0, 0.4, 0.74}
 
-\usepackage[backend=biber,  style=ieee, url=false,doi=false, isbn=false]{biblatex}
+\usepackage[backend=biber,  style=ieee, url=false,doi=false, isbn=false, citestyle=numeric-comp]{biblatex}
 \addbibresource{references.bib}
 
 
@@ -446,11 +446,28 @@ It has been shown that by imposing locality/separability,
 many large optimal control problems decompose into parallel local subproblems whose complexity does not grow with the total system size, 
 using techniques such as system-level synthesis~\cite{wang2017separablelocalizedlevelsynthesis}.
 
-We try to make it smaller using strategies in Model Order Reduction (MOR) methods.
+\subsection{Model Order Reduction}
+
+The size and complexity of large scale systems can be hard to deal with.
+Model Order Reduction (MOR) methods tackle the problem of reducing their complexity.
 This technique attempts to generate
 reduced models reproducing the input-output behavior 
 of large-scale systems accurately.
-Model reduction methods two categories: SVD-based and Krylov-based or moment matching methods~\cite{lowenerIntro}.
+
+Model reduction methods fall into two categories: SVD-based and moment matching methods.
+SVD-based techniques are related to the eponymous singular value decomposition.
+They core idea is the computation of controllability and observability 
+Gramians, eliminating hard-to-reach and -observe states~\cite{lowenerIntro}. 
+Thier advantages include the preservation of stability and a comoutable error bound. 
+While work is being done to make them more efficient using approximations \cite{numSolutionLargeScale, prajapati2022model}, their resource requirements
+remain their main drawback~\cite{lowenerIntro}. A popular method in this class of MOR techniques is Balanced truncation (BT)~\cite{balancedtruncationOriginal}.
+
+Moment matching methods consider the problem of matching the coefficients of power
+series expansions of the transfer function at selected points, reducing model reduction
+to rational interpolation. They tend to be cheaper to compute than SVD-based methods, 
+but do not provide as strong of theoretical guarantees, the preservation of properties depending on factors such as the choice of expansion points~\cite{ANTOULAS200419}.
+A prominent example are Krylov subspace methods~\cite{freund2003model}.
+
 
 
 \subsection{Control Architectures}
@@ -482,7 +499,7 @@ Best results are usually achieved when considering them all though~\cite{Control
 \section{DDC for Linear Systems}
 
 
-\subsection{Model Reduction}
+\subsection{Data-driven Model Reduction}
 
 When a linear model is too large to identify directly, 
 one can use data-driven model reduction. 
@@ -490,7 +507,6 @@ one can use data-driven model reduction.
 A widely-used approach is data-driven interpolatory model reduction.
 One such method, the Loewner framework, constructs a reduced linear
 model from transfer-function data or sampled impulse response~\cite{gosea2021datadrivenmodelingcontrollargescale}.
-
 The main element of the Loewner framework is the Loewner Matrix. For two lists of complex number pairs \(u_i, v_i\) and \(\mu_j, \lambda_j\), it is defined as follows ~\cite{lowenerIntro}: 
 
 $$\begin{pmatrix}
@@ -659,9 +675,6 @@ predictor (via Extended Dynamic Mode Decomposition or neural nets) and then solv
 
 
 \section{Conclusion}
-The conclusion goes here.
-
-
 
 
 % conference papers do not normally have an appendix
