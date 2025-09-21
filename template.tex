@@ -505,6 +505,9 @@ When a linear model is too large to identify and use for control directly,
 one can use data-driven model reduction. 
 Data-driven MOR methods rely only on measured trajectories, frequency response data, or impulse responses.
 
+
+\subsubsection{Interpolatory approaches}
+
 A widely-used approach is data-driven interpolatory model reduction.
 One such method, the Loewner framework, constructs a reduced linear
 model from transfer-function data or sampled impulse responses~\cite{gosea2021datadrivenmodelingcontrollargescale}.
@@ -533,7 +536,6 @@ are then directly computed from the projected Loewner matrices
 and the data vectors~\cite{lowenerIntro}. % double chekck
 
 
-
 Another interpolatory MOR technique is the AAA algorithm~\cite{nakatsukasa2018aaa}, which builds rational
 approximants adaptively by selecting 
 interpolation points based on approximation error. 
@@ -541,17 +543,26 @@ This method is attractive when only frequency response data is available,
 as it balances accuracy and model complexity with minimal user intervention.
 % How does it work??
 
+\subsubsection{Balanced truncation methods}
 
 
-Balanced truncation (BT)~\cite{balancedtruncationOriginal} is a widely successfully employed MOR technique for large systems~\cite{salehi2021mixed}. 
+Balanced truncation (BT)~\cite{balancedtruncationOriginal} is a widely successfully employed MOR technique for large systems~\cite{salehi2021mixed}, traditionally relying on controllability and observability Gramians and hence access to system matrices.
 A data-driven reformulation is presented in \cite{gosea2021datadrivenbalancinglineardynamical}.
-% some more, see below
+The fundamental insight driving this development is that BT does not use the Gramians directly,
+but rather their product, which can be approximated from data. The results of the numerical BT method 
+can get arbitrary close to those of classical BT, depending on how much computational resources are allocated to the numerical quadrature.
 
+
+
+% some more, see below
+\subsubsection{Optimality-based approaches}
 
 For discrete-time systems, \cite{sakamoto2024data} proposes 
 a data-driven \(h^2\) model reduction technique leveraging the
 discrete-time Lyapunov and Sylvester equations, deriving 
 the data-driven gradiant.
+
+\subsubsection{Modal decomposition methods}
 
 Proper orthogonal decomposition (POD) is ....
 
