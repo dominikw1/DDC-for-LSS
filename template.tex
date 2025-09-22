@@ -223,6 +223,8 @@
 % http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
 
 
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 
 % *** ALIGNMENT PACKAGES ***
@@ -409,7 +411,7 @@ The abstract goes here.
 Traditional control approaches largely followed the strategy of first deriving a model
 from first principles and afterwards building a controller upon it. 
 A premier example of such an approach is MPC, model predictive control.
-Model-based control tends to be insufficient for complex systems, though~\cite{DDC_Overview}.
+Model-based control can become intractible or inaccurate for complex systems, though~\cite{DDC_Overview}.
 
 \subsection{Classification}
 
@@ -426,8 +428,8 @@ In model-free control, the dynamics of the system are treated as a black box and
 Data-driven approaches provide a range of benefits compared to traditional model-based ones. 
 System identification, the basis for indirect data-driven methods, has
 the key advantage of being generally applicable and to large degrees automated, 
-whereas a model-based technique requries expert-knowledge for deriving the model from first principles,
-the specific result then being domain-specific. SI further provides the applicant with 
+whereas a model-based technique requires expert-knowledge for deriving the model from first principles,
+the specific result then being domain-specific. SI further provides the practitioner with 
 tools to fine-tune the accuracy required, as complexity tends to rise with more accurate models~\cite{behavioralDataDrivenControl}.
 
 
@@ -458,7 +460,7 @@ Traditional model reduction methods fall into two categories: SVD-based and mome
 SVD-based techniques are related to the eponymous singular value decomposition.
 They core idea is the computation of controllability and observability 
 Gramians, eliminating hard-to-reach and -observe states~\cite{lowenerIntro}. 
-Thier advantages include the preservation of stability and a comoutable error bound. 
+Their advantages include the preservation of stability and a comoutable error bound. 
 While work is being done to make them more efficient using approximations \cite{numSolutionLargeScale, prajapati2022model}, their resource requirements
 remain their main drawback~\cite{lowenerIntro}. A popular method in this class of MOR techniques is Balanced truncation (BT)~\cite{balancedtruncationOriginal}.
 
@@ -468,13 +470,18 @@ to rational interpolation. They tend to be cheaper to compute than SVD-based met
 but do not provide as strong of theoretical guarantees, the preservation of properties depending on factors such as the choice of expansion points~\cite{ANTOULAS200419}.
 A prominent example are Krylov subspace methods~\cite{freund2003model}.
 
+%This distinction does not necessarily apply to the techniques themselves, though, but rather to their
+%implementation. 
 
 
 \subsection{Control Architectures}
 
-We have funny strategies such as decentralised and distributed control.
+We have strategies such as decentralised and distributed control.
 
-Decentralised does not actively share date, distributed does. There tend to be delays though.
+Decentralized: controllers act independently with no information exchange.
+Distributed: controllers communicate to some degree.
+Delays are to be considered. 
+
 
 \subsection{Approaches for Control}
 
@@ -560,13 +567,44 @@ can get arbitrary close to those of classical BT, depending on how much computat
 For discrete-time systems, \cite{sakamoto2024data} proposes 
 a data-driven \(h^2\) model reduction technique leveraging the
 discrete-time Lyapunov and Sylvester equations, deriving 
-the data-driven gradiant.
+the data-driven gradient.
 
 \subsubsection{Modal decomposition methods}
 
-Proper orthogonal decomposition (POD) is ....
+Proper orthogonal decomposition (POD) is one of the most widely used dimensionality-reduction techniques in dynamical systems.
+The key idea is to approximate system trajectories by 
+projecting them onto a low-dimensional basis obtained directly from data.
+For a dataset \(X = [x_1x_2...x_m], x_i \in \mathbb{R}^n\), POD seeks an orthonormal basis
+\(U_r\in\mathbb{R}^{n\times r}\) that minimises the projection error 
 
-Dynamic Mode Decomposition is (DMD) ...
+\begin{equation}
+\min_{U_r^TU_r = I_r} ||X-U_rU_r^TX||^2_F
+\end{equation}
+
+This optimization problem is solved by computing the singular value decomposition of the snapshot matrix \(X\). 
+The dominant singular vectors define the reduced basis, and the singular values quantify the energy captured by each mode~\cite{eskew2023new}.
+
+
+A closely related algorithm is Dynamic Mode Decomposition is Dynamic Mode Decomposition (DMD).
+Given snapshot pairs \(S^- = [x_1, ... , x_{m-1}]\) and \(S^+ = [x_2, ..., x_{m}]\), DMD approximates the system by finding
+a matrix \(A\) such that 
+
+\begin{equation}
+x_{k+1} \approx Ax_k
+\end{equation}
+
+The goal is to determine a low-rank subspace of \(A\) and through it represent system dynamics.
+One first performs SVD on \(S^- = U\Sigma V^T\), truncating \(U\) and \(V\) to the first \(r\) columns and selecting the first \(r\) singular values from \(\Sigma\).
+What value to use for \(r\) depends on accuracy requirements, though a typical choice is to have it retain
+a specific fraction of information, such that
+
+\begin{equation}
+r = \argmin_j \frac{\sum_{i=1}^{j}\sigma_i}{\sum_{i=1}^n\sigma_i} < \tau
+\end{equation}
+
+One can then reconstruct \(A_r = U_rS^+V_r\Sigma_r^{-1}\).
+Using the cheap eigen-decomposition \(A_rW = \Lambda W\), one can compute the DMD modes \(\Psi = U_rW\), which 
+contain the essential information about the system's evolution and can be used to approximately predict the system's state at any point in time~\cite{HUHN2023111852}.
 
 %Other data-driven methods, such as
 %proper orthogonal decomposition (POD) [26], dynamic mode
