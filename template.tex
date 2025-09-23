@@ -433,6 +433,33 @@ the specific result then being domain-specific. SI further provides the practiti
 tools to fine-tune the accuracy required, as complexity tends to rise with more accurate models~\cite{behavioralDataDrivenControl}.
 
 
+\subsection{Disadvantages}
+
+Despite their benefits, data-driven control methods 
+face several limitations. 
+A central challenge is the heavy reliance on the 
+quality and quantity of available data, insufficient or 
+noisy datasets having the potential to significantly 
+degrade the performance of the resulting controller~\cite{HOU20133}.
+
+
+%Further, data-driven methods often come with high computational 
+%demands, both in terms of learning and real-time operation, 
+%which limits their deployment in safety-critical 
+%or resource-constrained systems [6]. 
+
+Another drawback is the lack of interpretability and 
+transparency compared to physics-based models. 
+First-principles models typically allow direct 
+insight into the mechanisms driving system behavior, 
+black-box controllers derived purely from data can be 
+difficult to analyze or verify~\cite{Brunton_Kutz_2022}. 
+
+Finally, issues of robustness and generalization remain 
+open problems, as controllers trained on one operational 
+regime may fail to extrapolate reliably to unseen 
+conditions~\cite{ramadan2025floodgatescontaindeepclimit}.
+
 %For large and complex systems, automatic system identification hence   
 
 \section{Large Scale Systems}
@@ -460,7 +487,7 @@ Traditional model reduction methods fall into two categories: SVD-based and mome
 SVD-based techniques are related to the eponymous singular value decomposition.
 They core idea is the computation of controllability and observability 
 Gramians, eliminating hard-to-reach and -observe states~\cite{lowenerIntro}. 
-Their advantages include the preservation of stability and a comoutable error bound. 
+Their advantages include the preservation of stability and a computable error bound. 
 While work is being done to make them more efficient using approximations \cite{numSolutionLargeScale, prajapati2022model}, their resource requirements
 remain their main drawback~\cite{lowenerIntro}. A popular method in this class of MOR techniques is Balanced truncation (BT)~\cite{balancedtruncationOriginal}.
 
@@ -509,7 +536,7 @@ Best results are usually achieved when considering them all though~\cite{Control
 \subsection{Data-driven Model Reduction}
 
 When a linear model is too large to identify and use for control directly, 
-one can use data-driven model reduction. 
+one can use data-driven model reduction.
 Data-driven MOR methods rely only on measured trajectories, frequency response data, or impulse responses.
 
 
