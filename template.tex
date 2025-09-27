@@ -530,10 +530,21 @@ Most works are concerned with node control, as this resembles the traditional si
 Best results are usually achieved when considering them all though~\cite{ControllingComplexSystem}.
 
 
-\section{DDC for Linear Systems}
 
 
-\subsection{Data-driven Model Reduction}
+\section{Scalable Data-Driven Modeling}
+
+\subsection{System Identification}
+
+%Distributed/subspace methods (N4SID variants, streaming ID).
+
+%Randomized linear algebra and streaming SVD.
+
+%Local/patch identification and compositional models.
+
+%Guarantees: consistency, sample complexity scaling; limits under nonstationarity.
+
+\subsection{Model Reduction}
 
 When a linear model is too large to identify and use for control directly, 
 one can use data-driven model reduction.
@@ -653,18 +664,102 @@ contain the essential information about the system's evolution and can be used t
 %[30] can also be employed. 
 %https://arxiv.org/pdf/2401.05774
 
-\subsection{Decentralised and Distributed Control}
 
 
-\section{DDC for Nonlinear and Complex Systems}
+\subsection{Graph/Structure-aware Modeling}
+
+%Graphical models, sparse identification, factorized dynamics, Koopman ensembles per locality.
+%Mean-field reductions for dense homogeneous populations.
+
+\subsection{Surrogate \& Probabilistic Models at Scale}
+
+%Sparse GPs, ensembles, bootstrap uncertainty, neural net surrogates with uncertainty quantification.
+%How to scale UQ: sparse approximations, local GPs, Bayesian neural nets caveats.
+
+\subsection{Transfer, Meta-models \& Federated Identification}
+%Transfer learning between substations/agents, meta-learning for fast adaptation, federated ID for privacy across agents.
 
 
-\subsection{Koopman based and Lifting Methods}
+%\subsection{Data-driven LQR / Optimal Control}
+
+%Work on computing optimal state feedback gains directly from input–output data (Willems’ fundamental lemma).
+%Guarantees: when persistency of excitation is satisfied, closed-loop stability and optimality can be proven.
+%Cite: De Persis & Tesi (2020), Markovsky et al. (2023).
+
+%\subsection{Decentralised and Distributed Control}
+
+
+
+\subsection{Koopman lifting for Nonlinear Subsystems}
 
 One approach is to lift the nonlinear system into 
 a higher-dimensional (possibly infinite) linear space via the Koopman operator, then apply linear data methods.
 Recent research has focused on developing a Koopman MPC technique where one learns a linear 
 predictor (via Extended Dynamic Mode Decomposition or neural nets) and then solves a convex MPC on the lifted space~\cite{LI2025100219}.
+
+% DIRECT COPY PASTE BEGIN
+%Estimating Koopman operators with sketching to provably learn large scale dynamical system
+
+Learning the spectral properties of the Koopman operator directly from data has
+been considered for at least three decades.
+
+Among the different approaches proposed over time (see Mezic´ [41] for a recent review) it is most common
+to search for finite dimensional approximations to the operator, from which part of the spectrum
+and the Koopman modes [8] can be obtained. Dynamic mode decomposition (DMD) [56, 63],
+time-lagged independent component analysis (tICA) [42, 49] and many subsequent extensions [31]
+for example can be seen as minimizers of the forecasting error when \(\psi\) is restricted to be a linear
+function of the states [52]. Extended DMD (eDMD) [66, 25] and the variational approach for
+conformation dynamics (VAC) [45, 46] instead allow for a (potentially learnable, as in recent deep
+learning algorithms [32, 37, 69, 62]) dictionary of non-linear functions \(\psi\). Kernel DMD [67, 26]
+and kernel tICA [57] are further generalizations which again approximate the Koopman operator
+but using an infinite dimensional space of features \(\psi\), encoded by the feature map of a reproducing
+kernel. While often slow from a computational point of view, kernel methods are highly expressive
+and can be analyzed theoretically, to prove convergence and derive learning rates of the resulting
+estimators [29, 30]. Approximate kernel methods which are much faster to run have been recently
+used for Koopman operator learning by Baddoo et al. [6] where an iterative procedure is used to
+identify the best approximation to the full kernel, but no formal learning rates are demonstrated, and
+by Ahmad et al. [3] who derive learning rates in Hilbert-Schmidt norm 
+
+% END
+
+
+
+
+\section{Control Architectures for Large-Scale Systems}
+
+%\section{DDC for Nonlinear and Complex Systems}
+
+
+\subsection{Decentralized control}
+
+
+\subsection{Distributed control}
+
+\subsubsection{Distributed Model Predictive Control (DMPC)}
+
+%\subsubsection{Consensus/synchronization controllers and distributed optimization}
+
+%\subsubsection{Event-triggered and sampled/quantized coordination}
+
+
+\section{Scalable Learning-Based Control}
+
+\subsection{Single-Agent RL}
+
+\subsection{Multi-Agent Reinforcement Learning (MARL)}
+
+\subsection{Mean-Field \& Population Methods}
+
+\subsection{Model-Based RL}
+
+\subsection{Federated \& Distributed RL / Learning}
+
+\subsection{Safe / Constrained RL}
+
+\subsection{Scalability enablers \& architectures}
+
+\section{Safety, Robustness \& Certification at Scale}
+
 
 
 \section{Data-driven Higher Level Control}
@@ -686,6 +781,8 @@ on global dynamics.
 
 
 \subsection{Data-driven Edge Control}
+
+
 
 \subsection{Data-driven Structural Control}
 
