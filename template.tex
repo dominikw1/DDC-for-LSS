@@ -133,6 +133,7 @@
 
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{mathtools}
 
 
 
@@ -765,12 +766,68 @@ Reinforcement Learning (RL) has recently become a popular
 method for dealing with the ever-growing complexity of modern systems, 
 providing the benefit of determining optimal control policies without 
 necessitating detailed system models~\cite{9261330}.
+RL-based controllers require no labeled datasets and are instead guided by feedback and learn in a trial-and-error fashion,
+making them well-suited for large scale systems where 
+explicit system models are missing for reasons such as 
+nonlinear dynamics and multi-timescale operations~\cite{rfAndIntro}.
+
+
+Another advantage of RL is its statement of the control problem as Markov decision processes
+(MDPs), providing great generality. 
+They are applicable to nonlinear
+and stochastic dynamics, nonquadratic reward functions and even
+continous states and actions through numerical
+function approximation techniques~\cite{BUSONIU20188}.
+Weaknesses include high data requirements and long convergence times~\cite{BARBALHO2022108315},
+hyperparameter sensitivity~\cite{smartGridRL}, potentially high computational costs [cite], and  
+often missing formal stability guarantees~\cite{BARBALHO2022108315}.
+
+
 
 %https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11162524 this is good
 
-%\subsection{Single-Agent RL}
+%In the context of microgrids, an RL agent might take the following form~\cite{mfrlMG}:
 
-\subsection{Multi-Agent Reinforcement Learning (MARL)}
+The goal is to find a policy \(\pi: S \to \mathcal{A}\) mapping 
+states to actions maximising the expected cumulative reward
+
+\begin{equation}
+J(\pi) = \mathbb{E}_\pi \left[\sum_{t=0}^\infty\gamma^tr(s_t,a_t)\right]
+\end{equation}
+
+\noindent \(\gamma\in [0,1]\) denotes a factor balancing immediate against
+long-term goals and \(r\) encodes control objectives as scalar rewards, possibly differing across individual controllers, e.g. in hierarchical systems~\cite{mfrlMG}.
+
+
+\subsubsection{Multi-Agent RL (MARL)}
+
+In MARL, each agent controls a subsystem 
+and must learn policies in a partially observable environment while interacting with other agents.
+As in model-based methods, centralised control via RL can grow intractible.
+In a multi-agent network \(\mathcal{G}= (V,\mathcal{E})\)
+each agent \(v_i\in V\) chooses an action \(u_i\in U_i\)
+and communicates with neighbours along the edges \((i,j)\in \mathcal{E}\), 
+receiving a global reward \(r(s,u)\). 
+The joint action space \(U = \bigtimes U_i\) then grows too large to
+efficiently control in a centralised fashion~\cite{chu2019multi}.
+
+%The central assumption MARL in the context of Q-learning, the most common approach, 
+%is the decomposability of the global Q-function, distributing each \(Q_i\) to the corresponding local agent~\cite{chu2019multi}:
+
+%\begin{equation}
+%Q(s,u) = \sum_{v_i \in V}Q_i(s,u)
+%\end{equation}
+
+A central distinction is to be made between 
+centralized training with decentralized execution (CTDE) and decentralized training with
+decentralized execution (DTDE). 
+In CTDE, agents can freely communicate during the learning phase, which is performed by a centralised
+algorithm. The policies are, however, executed in a decentralised fashion, agents communicating only via 
+restricted channels~\cite{foerster2016learning}.
+In DTDE, independent learners train policies without explicitly modeling other 
+agents, which provides improved scalability~\cite{du2021survey}.
+
+
 
 %\subsection{Mean-Field \& Population Methods}
 
