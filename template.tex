@@ -708,30 +708,13 @@ a higher-dimensional (possibly infinite) linear space via the Koopman operator, 
 Recent research has focused on developing a Koopman MPC technique where one learns a linear 
 predictor (via Extended Dynamic Mode Decomposition or neural nets) and then solves a convex MPC on the lifted space~\cite{LI2025100219}.
 
-% DIRECT COPY PASTE BEGIN
-%Estimating Koopman operators with sketching to provably learn large scale dynamical system
 
-Learning the spectral properties of the Koopman operator directly from data has
-been considered for at least three decades.
+The data-driven determination of the Koopman operator's spectral properties usually involves approximating the operator with finite dimensions~\cite{meanti2023estimating}.
+For linear functions, techniques such as variations of DMD~\cite{dmdseminal} and tICA~\cite{tICA} can be used~\cite{Rowley2009SpectralAO}.
+The methods of eDMD~\cite{Williams2014ADA}, VAC~\cite{vacsem}, KernelDMD~\cite{kerneldmd} and kernel tICA~\cite{schwantes2015modeling} extend the function dictionary to non-linear functions~\cite{meanti2023estimating}.
+The latter two kernel techniques resert to being infinite-dimensional, trading off computational efficiency for theoretical guarantees~\cite{koopmanThepry},
+though approximate kernel methods are a topic of active research~\cite{baddoo2022kernel, meanti2023estimating, liang2025fourier}.
 
-Among the different approaches proposed over time (see Mezic´ [41] for a recent review) it is most common
-to search for finite dimensional approximations to the operator, from which part of the spectrum
-and the Koopman modes [8] can be obtained. Dynamic mode decomposition (DMD) [56, 63],
-time-lagged independent component analysis (tICA) [42, 49] and many subsequent extensions [31]
-for example can be seen as minimizers of the forecasting error when \(\psi\) is restricted to be a linear
-function of the states [52]. Extended DMD (eDMD) [66, 25] and the variational approach for
-conformation dynamics (VAC) [45, 46] instead allow for a (potentially learnable, as in recent deep
-learning algorithms [32, 37, 69, 62]) dictionary of non-linear functions \(\psi\). Kernel DMD [67, 26]
-and kernel tICA [57] are further generalizations which again approximate the Koopman operator
-but using an infinite dimensional space of features \(\psi\), encoded by the feature map of a reproducing
-kernel. While often slow from a computational point of view, kernel methods are highly expressive
-and can be analyzed theoretically, to prove convergence and derive learning rates of the resulting
-estimators [29, 30]. Approximate kernel methods which are much faster to run have been recently
-used for Koopman operator learning by Baddoo et al. [6] where an iterative procedure is used to
-identify the best approximation to the full kernel, but no formal learning rates are demonstrated, and
-by Ahmad et al. [3] who derive learning rates in Hilbert-Schmidt norm 
-
-% END
 
 
 
