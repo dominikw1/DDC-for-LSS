@@ -403,8 +403,10 @@ The abstract goes here.
 
 
 \section{Introduction}
+
+\section{Background}
 % no \IEEEPARstart
-\section{Data Driven Control}
+\subsection{Data Driven Control}
 
 
 
@@ -413,7 +415,7 @@ from first principles and afterwards building a controller upon it.
 A premier example of such an approach is MPC, model predictive control.
 Model-based control can become intractible or inaccurate for complex systems, though~\cite{DDC_Overview}.
 
-\subsection{Classification}
+\subsubsection{Classification}
 
 A fundamental delimination in data driven control can be made between model-based and model-free approaches. 
 In model-based methods, a model is learned from data - a process termed system identification (SI) - and, as in traditional control, a controller built upon it.
@@ -423,7 +425,7 @@ In model-free control, the dynamics of the system are treated as a black box and
 
 
 
-\subsection{Advantages}
+\subsubsection{Advantages}
 
 Data-driven approaches provide a range of benefits compared to traditional model-based ones. 
 System identification, the basis for indirect data-driven methods, has
@@ -433,7 +435,7 @@ the specific result then being domain-specific. SI further provides the practiti
 tools to fine-tune the accuracy required, as complexity tends to rise with more accurate models~\cite{behavioralDataDrivenControl}.
 
 
-\subsection{Disadvantages}
+\subsubsection{Disadvantages}
 
 Despite their benefits, data-driven control methods 
 face several limitations. 
@@ -462,7 +464,7 @@ conditions~\cite{ramadan2025floodgatescontaindeepclimit}.
 
 %For large and complex systems, automatic system identification hence   
 
-\section{Large Scale Systems}
+\subsection{Large Scale Systems}
 
 
 Large Scale Systems do not have a single clear definition.
@@ -475,7 +477,7 @@ It has been shown that by imposing locality/separability,
 many large optimal control problems decompose into parallel local subproblems whose complexity does not grow with the total system size, 
 using techniques such as system-level synthesis~\cite{wang2017separablelocalizedlevelsynthesis}.
 
-\subsection{Model Order Reduction}
+\subsubsection{Model Order Reduction}
 
 The size and complexity of large scale systems can be hard to deal with.
 Model Order Reduction (MOR) methods tackle the problem of reducing their complexity.
@@ -501,7 +503,7 @@ A prominent example are Krylov subspace methods~\cite{freund2003model}.
 %implementation. 
 
 
-\subsection{Control Architectures}
+\subsubsection{Control Architectures}
 
 We have strategies such as decentralised and distributed control.
 
@@ -510,19 +512,19 @@ Distributed: controllers communicate to some degree.
 Delays are to be considered. 
 
 
-\subsection{Approaches for Control}
+\subsubsection{Approaches for Control}
 
 The approaches taken for controlling large scale systems can roughly be categorised into three distinct levels: Node control, Edge control and Structural control~\cite{ControllingComplexSystem}.
 
-\subsubsection{Node Control}
+\paragraph{Node Control}
 
 Control at this level concerns itself with the immediate determination of dynamics of a subset of agents at the lowest, microscopic view.
 
-\subsubsection{Edge Control}
+\paragraph{Edge Control}
 
 On this abstraction level, control works by dynamically adjusting the communication protocol between the individual agents.
 
-\subsubsection{Structural Control}
+\paragraph{Structural Control}
 
 At the highest level, the network topology can be reshaped in order to guide behaviour at the macroscopic level.
 
@@ -666,17 +668,25 @@ contain the essential information about the system's evolution and can be used t
 
 
 
-\subsection{Graph/Structure-aware Modeling}
+\subsection{Topology Identification}
+
+In large scale systems, the goal of modeling is often to 
+identify a sparse structure therein. Formally, given a 
+set of variables \(V\), a directed graph \(\mathcal{G} = (V,\mathcal{E})\) 
+is to be determined from data, such that \((v,w)\in\mathcal{E}\) if \(v\) has a direct causal effect on \(w\)~\cite{DDC_Overview}.
+
+
+TODO: methods\dots
 
 %Graphical models, sparse identification, factorized dynamics, Koopman ensembles per locality.
 %Mean-field reductions for dense homogeneous populations.
 
-\subsection{Surrogate \& Probabilistic Models at Scale}
+%\subsection{Surrogate \& Probabilistic Models at Scale}
 
 %Sparse GPs, ensembles, bootstrap uncertainty, neural net surrogates with uncertainty quantification.
 %How to scale UQ: sparse approximations, local GPs, Bayesian neural nets caveats.
 
-\subsection{Transfer, Meta-models \& Federated Identification}
+%\subsection{Transfer, Meta-models \& Federated Identification}
 %Transfer learning between substations/agents, meta-learning for fast adaptation, federated ID for privacy across agents.
 
 
@@ -737,24 +747,38 @@ by Ahmad et al. [3] who derive learning rates in Hilbert-Schmidt norm
 
 \subsubsection{Distributed Model Predictive Control (DMPC)}
 
+
+\subsection{Hierarchical control}
+
+
 %\subsubsection{Consensus/synchronization controllers and distributed optimization}
 
 %\subsubsection{Event-triggered and sampled/quantized coordination}
 
 
-\section{Scalable Learning-Based Control}
+\section{Scalable Model-Free Control}
 
-\subsection{Single-Agent RL}
+
+\subsection{Reinforcement Learning}
+
+Reinforcement Learning (RL) has recently become a popular 
+method for dealing with the ever-growing complexity of modern systems, 
+providing the benefit of determining optimal control policies without 
+necessitating detailed system models~\cite{9261330}.
+
+%https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11162524 this is good
+
+%\subsection{Single-Agent RL}
 
 \subsection{Multi-Agent Reinforcement Learning (MARL)}
 
-\subsection{Mean-Field \& Population Methods}
+%\subsection{Mean-Field \& Population Methods}
 
 \subsection{Model-Based RL}
 
-\subsection{Federated \& Distributed RL / Learning}
+%\subsection{Federated \& Distributed RL / Learning}
 
-\subsection{Safe / Constrained RL}
+%\subsection{Safe / Constrained RL}
 
 \subsection{Scalability enablers \& architectures}
 
