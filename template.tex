@@ -472,6 +472,10 @@ Large Scale Systems do not have a single clear definition.
 The term is rather used whenever a system grows unweildly to control with traditional strategies.
 It is further often used synonymously with complex system, a system consisting of multiple interacting units 
 that exhibits emergent collective behavior which is not the simple summation of its parts~\cite{ControllingComplexSystem}.
+% a system is considered as large scale complex whenever it is necessary to partition the given analysis or synthesis problem in order to come up with manageable subproblems
+% https://pdf.sciencedirectassets.com/271897/1-s2.0-S1367578812X00026/1-s2.0-S1367578812000028/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDkaCXVzLWVhc3QtMSJGMEQCIFuyO2%2BOyv4oEbvlBReZXR12ei9IPZCW5zmPtdWgH3yKAiA9tGSvndkFQW4ktFpVnS7Qsqax0atoQRMRT95WTdkIZSq8BQjS%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAUaDDA1OTAwMzU0Njg2NSIMyC1wWjnrzaLee3m0KpAFWle6d2mOWXDum5AbJS67M%2BWWoPU5UwcCWNSgG1A4QurSwIMb4XcK%2FVAoWp%2Fez8tKQYpXc4iOecz8GlSMVK6EwDgAlExE7FEUiwHADa0mCyVxIRqQBuu4Dspt8jo7jGff1lkClIHVULoVR5HLXhw3%2B7wdV9Udtugea3i2Gojl%2FYGhyPoIlG3iKwNDnZKlZ76l06Kf%2BCxxqYbxkEi0%2Fkl%2F2YAtYdIv6cCAcDAQ3%2FM9wfY%2FSlMFnWKMiT5j6%2B3hAYWLn9Mkd5FoKcxQVzgWxwGTHbgXea9rtTbCHMgr5lnI9%2FdwhFOoDkeqaajGEd%2B8IbHRWmrcRUhN%2Bwc9IBNrYjneCmHx2rIMUSK5ErSqVixAWjw3WNdy%2BPQ5MoPCBjUi62BrQrtVAEfXbD%2FSyWfQuPPYXV7lJW9n%2BYGlx3laPojmCvif5VkJR%2BnPSD1ucw9lP70YEpsAgQr44ZoHmjxXp%2FaX0HJhDWERE%2BhYnQ2%2Fif6uDi3oQSl%2BJYHsC4LWxA75k1j2tCA%2B6X%2FTZzwLmIJqLVMdZH13lrIWoKvzBgruvo6haPj2O%2FWggr7YA6jBJNZ8lS5%2FZJL1q%2BgDYEQK%2FDZSin0XI9uNCD%2Bwhsg84qOJTBA2c%2BdKg7bV0S2t44rbrggC04ey8G%2Fg7zstch2h4l1bAmyNyGiwREnYoiZrE%2FKAzYoNNwK0rR9ejPQzu4WZ9hOcBSi98bQnQqbKuDLTR0xLRpqysqr0S6x0TTn2caVpnWATs5Nkc6mg0hwPeEPfTB%2B%2BEoFdu4wzgjP4Y9csvFWjLqgnxNyc3TtJ0y9db8URTV5m1QGII4%2FqUt1uf9MrJOmIj%2FG%2BrZzRx%2FZAwFB2cLDAazzZ0jhqdGmK08eHqxr4guwcfXAwoPOdxwY6sgEmFF1uMvj97RYxU1%2BbQXqJ4PBHdjI7J8%2B0pQSDELzqI4m2uYZ4n6b82bkqzp3aIxqTq8Pgo00jqnQdExaet83PyoVP7GeAxYPSyR4P7qTavpW%2BbF1otVHaGCsiKYwuBQYmqB0DVd4UIIPNgkXfVznTG0xY7cdL0c%2FPwc3xpNJO1Km9HSo615oRUSryJ1cULVsw%2BUpaasuWPwogTUiVP1bIGVDEkM8dI9KlFNGxeltS6%2BjI&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20251009T093726Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYQS55SIAW%2F20251009%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=6a6ac8d15b5cb6434913e9415a4b20dadbcab6e2e795f0a35a4424128e3a6b70&hash=c75fc87a3e3b7ed67b7f7e226f8bec06b27f3feb422145c63f846f91f5658e16&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S1367578812000028&tid=spdf-063f0f87-4e00-43a6-b7ff-10f6f3764c08&sid=029b8ee71b7c5841003ae926bfe04b1834bagxrqa&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&rh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=1e075d5907000a58510c&rr=98bce63c6fd7974a&cc=de
+
+
 
 Model-based control of such systems can be intractable to compute and sensitive to uncertainty~\cite{YU2025126253}.
 It has been shown that by imposing locality/separability, 
@@ -669,15 +673,36 @@ contain the essential information about the system's evolution and can be used t
 
 
 
-\subsection{Topology Identification}
+\subsection{Topology Identification and Decomposition}
 
 In large scale systems, the goal of modeling is often to 
 identify a sparse structure therein. Formally, given a 
 set of variables \(V\), a directed graph \(\mathcal{G} = (V,\mathcal{E})\) 
 is to be determined from data, such that \((v,w)\in\mathcal{E}\) if \(v\) has a direct causal effect on \(w\)~\cite{DDC_Overview}.
 
+The system is hence not considered as a single, coherent object
+anymore, but rather as a collection of 
+different interacting subsystems. 
+The two primary decomposition methodologies are physical and numerical. 
+In the former, the subsystems are defined by the physical components of the system, such as individual robots in a swarm.
+The latter imposes the structure based on computational reasons~\cite{bakule2012decentralized}.
 
-TODO: methods\dots
+% They can be classified
+%according to the properties of subsystem-interconnection structures as
+%– Disjoint subsystems
+%– Overlapping subsystems
+%– Symmetric composite systems
+%– Multi-time scale systems
+%– Hierarchically structured systems
+
+
+
+%The decomposition
+%algorithms are based on graph-theoretic representations such as
+%epsilon decompositions, Bordered Block Diagonal (BBD) ordering,
+%and input/output constrained decompositions.
+
+Methods \dots
 
 %Graphical models, sparse identification, factorized dynamics, Koopman ensembles per locality.
 %Mean-field reductions for dense homogeneous populations.
