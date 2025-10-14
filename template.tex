@@ -745,7 +745,10 @@ modeled implicitly~\cite{wang1973stabilization}.
 This structure yields high robustness to communication 
 failures, straightforward scalability
 and is attractive for large-scale systems where global data aggregation is infeasible or 
-undesirable due to privacy, latency, or safety concerns, yet typically sacrifices global optimality.
+undesirable due to privacy, latency, or safety concerns, 
+yet typically sacrifices global optimality, as individual controllers do not have as much information regarding the state or output of the system as a centralized one would~\cite{ge2017distributed}.
+
+
 
 
 %Recent research focuses on enhancing local 
@@ -785,10 +788,25 @@ undesirable due to privacy, latency, or safety concerns, yet typically sacrifice
 
 \subsection{Distributed control}
 
+As opposed to decentralised control, subsystems in distributed architectures share information among system components.
+This enhances the coordination capabilities of the agents, incurring improved scalability and robustness~\cite{ge2017distributed}. 
+Factors that need to be considered in this design are communication delays and reliability. 
+
+
 \subsubsection{Distributed Model Predictive Control (DMPC)}
+
+In DMPC methods, each subsystem solves a local MPC and exchanges certain pieces of information.
 
 
 \subsection{Hierarchical control}
+
+In hierarchical control scenarios, the control structure is conceptually arranged in multiple levels.
+The higher level controllers coordinate the actions of the lower level ones, 
+being responsible for meeting the overall goal of the large scale system~\cite{SCATTOLINI2009723}.
+
+This type of architecture is especially popular in the control of microgrids, 
+as they naturally decompose into three distinct hierarchical levels~\cite{hu2021model}.
+
 
 
 %\subsubsection{Consensus/synchronization controllers and distributed optimization}
