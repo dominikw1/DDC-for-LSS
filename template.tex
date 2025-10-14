@@ -413,8 +413,8 @@ The abstract goes here.
 
 Traditional control approaches largely followed the strategy of first deriving a model
 from first principles and afterwards building a controller upon it. 
-A premier example of such an approach is MPC, model predictive control.
-Model-based control can become intractible or inaccurate for complex systems, though~\cite{DDC_Overview}.
+%A premier example of such an approach is MPC, model predictive control.
+Such model-based control can become intractible or inaccurate for complex systems, though~\cite{DDC_Overview}.
 
 \subsubsection{Classification}
 
@@ -481,6 +481,11 @@ Model-based control of such systems can be intractable to compute and sensitive 
 It has been shown that by imposing locality/separability, 
 many large optimal control problems decompose into parallel local subproblems whose complexity does not grow with the total system size, 
 using techniques such as system-level synthesis~\cite{wang2017separablelocalizedlevelsynthesis}.
+Techniques used to handle control of large-scale and complex systems include
+reducing the model to a more tractible size through model order reduction methods,
+utilising non-centralised control architectures and including 
+communication protocols and interconnects between individual subsystems into the control model.  
+
 
 \subsubsection{Model Order Reduction}
 
@@ -541,15 +546,7 @@ Best results are usually achieved when considering them all though~\cite{Control
 
 \section{Scalable Data-Driven Modeling}
 
-\subsection{System Identification}
-
-%Distributed/subspace methods (N4SID variants, streaming ID).
-
-%Randomized linear algebra and streaming SVD.
-
-%Local/patch identification and compositional models.
-
-%Guarantees: consistency, sample complexity scaling; limits under nonstationarity.
+\subsection{System Identification (?)}
 
 \subsection{Model Reduction}
 
@@ -651,26 +648,6 @@ One can then reconstruct \(A_r = U_rS^+V_r\Sigma_r^{-1}\).
 Using the cheap eigen-decomposition \(A_rW = \Lambda W\), one can compute the DMD modes \(\Psi = U_rW\), which 
 contain the essential information about the system's evolution and can be used to approximately predict the system's state at any point in time~\cite{HUHN2023111852}.
 
-%Other data-driven methods, such as
-%proper orthogonal decomposition (POD) [26], dynamic mode
-%decomposition (DMD) [27], [28], or operator inference [29],
-%[30] can also be employed. 
-
-%The datadriven balanced truncation method [13]–[16] is one of the
-%common data-driven model reduction inspired by the balanced
-%truncation method, which is a model-based MOR. In this
-%method, balanced truncation is performed by using the measurement data. For example, [15] performs MOR by estimating
-%the Gramians from the data information. 
-
-%Another well-known
-%approach is data-driven interpolatory model reduction. This
-%approach includes the Loewner framework [17]–[23] and the
-%AAA algorithm [24], [25]. Other data-driven methods, such as
-%proper orthogonal decomposition (POD) [26], dynamic mode
-%decomposition (DMD) [27], [28], or operator inference [29],
-%[30] can also be employed. 
-%https://arxiv.org/pdf/2401.05774
-
 
 
 \subsection{Topology Identification and Decomposition}
@@ -718,17 +695,6 @@ Methods \dots
 %Sparse GPs, ensembles, bootstrap uncertainty, neural net surrogates with uncertainty quantification.
 %How to scale UQ: sparse approximations, local GPs, Bayesian neural nets caveats.
 
-%\subsection{Transfer, Meta-models \& Federated Identification}
-%Transfer learning between substations/agents, meta-learning for fast adaptation, federated ID for privacy across agents.
-
-
-%\subsection{Data-driven LQR / Optimal Control}
-
-%Work on computing optimal state feedback gains directly from input–output data (Willems’ fundamental lemma).
-%Guarantees: when persistency of excitation is satisfied, closed-loop stability and optimality can be proven.
-%Cite: De Persis & Tesi (2020), Markovsky et al. (2023).
-
-%\subsection{Decentralised and Distributed Control}
 
 
 
@@ -752,7 +718,6 @@ though approximate kernel methods are a topic of active research~\cite{baddoo202
 
 \section{Control Architectures for Large-Scale Systems}
 
-%\section{DDC for Nonlinear and Complex Systems}
 The scalability of data-driven control 
 depends not only on the learning or 
 identification methods employed, but also on the 
@@ -783,37 +748,37 @@ and is attractive for large-scale systems where global data aggregation is infea
 undesirable due to privacy, latency, or safety concerns, yet typically sacrifices global optimality.
 
 
-Recent research focuses on enhancing local 
-data-driven controllers with structural 
-priors and regularization that implicitly 
-encode coupling information. 
-Markovsky et al. [1] demonstrated that 
-behavioral system identification can yield locally 
-data-driven DeePC controllers with guaranteed 
-feasibility and stability in power networks, without 
-requiring explicit coupling models. 
-Di Lorenzo et al. [2] introduced continuification 
-control, a density-based approach where each agent 
-reconstructs a local estimate of the global state 
-density from sparse samples, achieving emergent global 
-coordination from fully local data. In large-scale 
-energy systems, 
-Yu et al. [3] combined local identification and 
-reinforcement-based optimization to enable a
-daptive voltage and frequency control in 
-distributed grids.
+%Recent research focuses on enhancing local 
+%data-driven controllers with structural 
+%priors and regularization that implicitly 
+%encode coupling information. 
+%Markovsky et al. [1] demonstrated that 
+%behavioral system identification can yield locally 
+%data-driven DeePC controllers with guaranteed 
+%feasibility and stability in power networks, without 
+%requiring explicit coupling models. 
+%Di Lorenzo et al. [2] introduced continuification 
+%control, a density-based approach where each agent 
+%reconstructs a local estimate of the global state 
+%density from sparse samples, achieving emergent global 
+%coordination from fully local data. In large-scale 
+%energy systems, 
+%Yu et al. [3] combined local identification and 
+%reinforcement-based optimization to enable a
+%daptive voltage and frequency control in 
+%distributed grids.
 
 
 
-Despite its scalability and resilience, 
-purely decentralized data-driven control 
-remains challenged by incomplete information 
-and model drift. Current research therefore 
-emphasizes local adaptation - re-identifying models or
-updating policies online to preserve performance as 
-operating regimes shift. 
-Robustness to unobserved couplings and noise remains 
-a core open problem.
+%Despite its scalability and resilience, 
+%purely decentralized data-driven control 
+%remains challenged by incomplete information 
+%and model drift. Current research therefore 
+%emphasizes local adaptation - re-identifying models or
+%updating policies online to preserve performance as 
+%operating regimes shift. 
+%Robustness to unobserved couplings and noise remains 
+%a core open problem.
 
 
 
