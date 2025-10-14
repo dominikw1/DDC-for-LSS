@@ -878,9 +878,121 @@ agents, which provides improved scalability~\cite{du2021survey}.
 
 \subsection{Scalability enablers \& architectures}
 
+
+
+
 \section{Safety, Robustness \& Certification at Scale}
 
+A continuing challenge in the field of data driven control remains the question of verifyable stability and safety.
+In many application areas of control theory, guarantees are required for methods to have any use at all.
 
+
+
+
+\subsection{Stability \& Robustness}
+
+Stability refers to the system's ability to remain bounded 
+and to return to equilibrium after small perturbations. 
+Formally, a system \(\dot{x} = f_u(x) , x \in \mathcal{X}\)
+is stable at its equilibrium point \(x_e\in \mathcal{X}\)
+if 
+\begin{equation}
+\forall \epsilon > 0 \exists \delta_\epsilon \forall t: ||x(0) - x_e||_2 < \delta_\epsilon
+\implies ||(x(t)-x_e)||_2 < \epsilon
+\end{equation}
+
+There are, among others, similar notions of asymptotical and exponential stability~\cite{min2023data}.
+
+
+
+\subsubsection{Lyapunov approaches}
+
+Min et al.~\cite{min2023data} propose Control with Inherent Lyapunov Stability (CoILS), a technique that 
+jointly learns a controlled dynamical
+systems model and a feedback controller from data.
+The key innovation is that the model is guaranteed by construction to
+be stabilized in closed-loop with the learned controller.
+This is achieved by constraining the open-loop dynamics onto the 
+subspace of dynamics stabilizable in closed-loop by
+the learned controller through the concurrent learning of a  parametric Lyapunov function,
+leading to the inherent guarantee of exponential stability of
+the learned models.
+
+
+\subsubsection{Contraction Theory}
+
+
+\subsection{Safety \& Certification}
+
+
+Ensuring safety and certifiability in data-driven control 
+remains one of the central open challenges. 
+A system \(\dot{x}(t)  = f(x(t), u(t))\) is called safe if 
+
+\begin{equation}
+\forall t\in \mathbb{R}_{\geq 0} x(t) \in \mathcal{X} \land u(t) \in \mathcal{U}
+\end{equation}
+
+where \(\mathcal{X}\) and \(\mathcal{U}\) are the state constraint set and the input constraint set, respectively~\cite{10266799}.
+
+Unlike traditional model-based designs, 
+learning-driven controllers must operate under 
+epistemic uncertainty arising from limited data, 
+unmodeled dynamics, and distributional drift. 
+Consequently, a major strand of recent work focuses on 
+safety filters. These filters are supervisory mechanisms that ensure system 
+trajectories remain within a certified safe set, 
+even when the underlying controller or policy is learned. 
+Among these, three major methodological families 
+dominate current research: Control Barrier Function (CBF) 
+approaches, Reachability-based methods, and Predictive control 
+formulations~\cite{10266799}.
+
+\subsubsection{Control barrier function (CBF) approaches}
+
+
+For a known control affine system \(\dot{x} = f(x)  + g(t)u\), a 
+Control Barrier Function can be defined as follows~\cite{jin2023robust}: 
+a continuously differentiable function \(h: \mathcal{X} \to \mathbb{R}\) 
+is a CBR if there exists an  extended class \(K_\infty\) function \(\alpha\):
+\begin{equation}
+\sup_{u\in \mathcal{U}} \dot{h}(x,u)\geq -\alpha(h(x))
+\end{equation}
+
+for all \(x\in\mathcal{X}\) where \(\dot{h}(x, u) = \nabla h(x)
+f(x) + \nabla h(x) g(x)u\).
+
+The key idea is that for the safety set \(S = \{x \in \mathcal{X} | \exists u \in \mathcal{U} \land h(x) \geq 0\}\),
+any Lipschitz continuous controller \(u(t)\) is safe~\cite{ames2016control}.
+
+
+%CBFs rely on
+%Lyapunov theory to determine inputs to a system that
+%ensure set invariance.
+
+---
+
+
+Hsu et al. introduce conformal robustness,  
+robustifying finite-horizon stability
+and safety guarantees in data-driven nonlinear dynamical
+systems.
+Through a conformally robust control Lyapunov
+function (CR-CLF) and control barrier function (CR-CBF), 
+systematic closed-loop control designs with provable 
+finite-horizon stability and safety guarantees are enabled.
+
+
+\subsubsection{Reachability-based approaches}
+
+%based on a set-based propagation
+%of all possible system trajectories determined by the
+%system inputs and disturbances.
+
+\subsubsection{Predictive control approaches}
+
+%e based on a receding-horizon open-loop optimal control problem, which is guaranteed to be solvable
+%and ensures constraint satisfaction at every control sampling time step. 
 
 \section{Data-driven Higher Level Control}
 
