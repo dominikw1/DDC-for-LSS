@@ -546,13 +546,14 @@ Best results are usually achieved when considering them all though~\cite{Control
 
 \section{Scalable Data-Driven Modeling}
 
-\subsection{System Identification (?)}
+\subsection{System Identification}
 
-\subsection{Model Reduction}
-
-When a linear model is too large to identify and use for control directly, 
-one can use data-driven model reduction.
-Data-driven MOR methods rely only on measured trajectories, frequency response data, or impulse responses.
+To enable model-based control techniques, a model of the to be controlled system needs to be
+identified. As large-scale systems tend to produce system models that are
+unweildly to handle, data-driven model order reduction (MOR) techniques
+receive special attention~\cite{baumann2022data}. Data-driven MOR methods rely
+only on measured trajectories, frequency response data, 
+or impulse responses and produce a reduced representation of the system's dynamics.
 
 
 \subsubsection{Interpolatory approaches}
@@ -669,6 +670,44 @@ In the former, the subsystems are defined by the physical components of the syst
 The latter imposes the structure based on computational reasons,
 an approach more suited for large scale systems, as obtaining partitions by physical reasoning can become intractible~\cite{ocampo2011partitioning}.
 
+A widely adopted approach is the Sparse Identification of Nonlinear Dynamics (SINDy) framework~\cite{sindy}.
+It constructs a library of candidate nonlinear functions \(\Theta(X)\) 
+and identifies governing interactions via sparse regression based on the time-series data \(X = [x_1, ...,x_n]\): 
+
+\begin{equation}
+\dot{X} = \Theta(X)\Xi
+\end{equation}
+
+\begin{equation}
+\Xi = \argmin_{\Xi} \frac{1}{2}||\dot{X} - \Theta(X)\Xi||_2^2 + \lambda ||\Xi||_1
+\end{equation}
+
+The resulting sparsity pattern in \(\Xi\) directly defines the 
+data-driven interconnection topology. 
+SINDyG~\cite{basiri2024sindyg}, an extension of the base SINDy method, 
+incorporates the network structure into sparse regression, 
+directly identifying model parameters explaining 
+underlying network dynamics, allowing the 
+capturing of small changes in the emergent behaviour.
+
+Another family of approaches uses causal discovery from
+time-series, generalizing Granger causality~\cite{grangerCausalkty} to nonlinear and
+high-dimensional dynamics.
+Methods such as PCMCI~\cite{pcmci} recover directed
+interaction graphs by statistically testing predictive dependencies
+in data, requiring no explicit model assumptions.
+%Recent variants integrate sparse regression or kernel embeddings
+%for improved robustness under noise and temporal correlation.
+
+Once the interaction topology is estimated,
+data-driven decomposition partitions the overall 
+network into weakly coupled modules. 
+This step is essential for scalability, 
+as it limits the dimensionality of each identification and 
+control problem. Practical strategies include clustering based on 
+finding highly connected subgraphs
+with balanced number of internal and external connections~\cite{OCAMPOMARTINEZ2011775}
+and spectral clustering on dynamic interaction graphs~\cite{TANG20187}.
 
 % They can be classified
 %according to the properties of subsystem-interconnection structures as
@@ -685,8 +724,6 @@ an approach more suited for large scale systems, as obtaining partitions by phys
 %epsilon decompositions, Bordered Block Diagonal (BBD) ordering,
 %and input/output constrained decompositions.
 
-Methods \dots
-
 %Graphical models, sparse identification, factorized dynamics, Koopman ensembles per locality.
 %Mean-field reductions for dense homogeneous populations.
 
@@ -694,7 +731,6 @@ Methods \dots
 
 %Sparse GPs, ensembles, bootstrap uncertainty, neural net surrogates with uncertainty quantification.
 %How to scale UQ: sparse approximations, local GPs, Bayesian neural nets caveats.
-
 
 
 
