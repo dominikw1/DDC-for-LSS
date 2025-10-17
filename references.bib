@@ -769,6 +769,22 @@ numpages = {17}
 
 
 
+@inproceedings{conservativeQLearning,
+author = {Kumar, Aviral and Zhou, Aurick and Tucker, George and Levine, Sergey},
+title = {Conservative Q-learning for offline reinforcement learning},
+year = {2020},
+isbn = {9781713829546},
+publisher = {Curran Associates Inc.},
+address = {Red Hook, NY, USA},
+abstract = {Effectively leveraging large, previously collected datasets in reinforcement learning (RL) is a key challenge for large-scale real-world applications. Offline RL algorithms promise to learn effective policies from previously-collected, static datasets without further interaction. However, in practice, offline RL presents a major challenge, and standard off-policy RL methods can fail due to overestimation of values induced by the distributional shift between the dataset and the learned policy, especially when training on complex and multi-modal data distributions. In this paper, we propose conservative Q-learning (CQL), which aims to address these limitations by learning a conservative Q-function such that the expected value of a policy under this Q-function lower-bounds its true value. We theoretically show that CQL produces a lower bound on the value of the current policy and that it can be incorporated into a policy learning procedure with theoretical improvement guarantees. In practice, CQL augments the standard Bellman error objective with a simple Q-value regularizer which is straightforward to implement on top of existing deep Q-learning and actor-critic implementations. On both discrete and continuous control domains, we show that CQL substantially outperforms existing offline RL methods, often learning policies that attain 2-5 times higher final return, especially when learning from complex and multi-modal data distributions.},
+booktitle = {Proceedings of the 34th International Conference on Neural Information Processing Systems},
+articleno = {100},
+numpages = {13},
+location = {Vancouver, BC, Canada},
+series = {NIPS '20}
+}
+
+
 
 
 
@@ -812,4 +828,44 @@ year = {2018},
 issn = {0959-1524},
 author = {Wentao Tang and Prodromos Daoutidis},
 keywords = {Distributed control, Network decomposition, Control architecture design},
+}
+
+
+@article{Levine2020OfflineRL,
+  title={Offline Reinforcement Learning: Tutorial, Review, and Perspectives on Open Problems},
+  author={Sergey Levine and Aviral Kumar and G. Tucker and Justin Fu},
+  journal={ArXiv},
+  year={2020},
+  volume={abs/2005.01643},
+  url={https://api.semanticscholar.org/CorpusID:218486979}
+}
+
+
+@inproceedings{mildlyconservativee,
+author = {Lyu, Jiafei and Ma, Xiaoteng and Li, Xiu and Lu, Zongqing},
+title = {Mildly conservative Q-learning for offline reinforcement learning},
+year = {2022},
+isbn = {9781713871088},
+publisher = {Curran Associates Inc.},
+address = {Red Hook, NY, USA},
+abstract = {Offline reinforcement learning (RL) defines the task of learning from a static logged dataset without continually interacting with the environment. The distribution shift between the learned policy and the behavior policy makes it necessary for the value function to stay conservative such that out-of-distribution (OOD) actions will not be severely overestimated. However, existing approaches, penalizing the unseen actions or regularizing with the behavior policy, are too pessimistic, which suppresses the generalization of the value function and hinders the performance improvement. This paper explores mild but enough conservatism for offline learning while not harming generalization. We propose Mildly Conservative Q-learning (MCQ), where OOD actions are actively trained by assigning them proper pseudo Q values. We theoretically show that MCQ induces a policy that behaves at least as well as the behavior policy and no erroneous overestimation will occur for OOD actions. Experimental results on the D4RL benchmarks demonstrate that MCQ achieves remarkable performance compared with prior work. Furthermore, MCQ shows superior generalization ability when transferring from offline to online, and significantly outperforms baselines.},
+booktitle = {Proceedings of the 36th International Conference on Neural Information Processing Systems},
+articleno = {125},
+numpages = {14},
+location = {New Orleans, LA, USA},
+series = {NIPS '22}
+}
+
+
+
+@inproceedings{NEURIPS2023_f3f2ff95,
+ author = {Shao, Jianzhun and Qu, Yun and Chen, Chen and Zhang, Hongchang and Ji, Xiangyang},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {A. Oh and T. Naumann and A. Globerson and K. Saenko and M. Hardt and S. Levine},
+ pages = {77290--77312},
+ publisher = {Curran Associates, Inc.},
+ title = {Counterfactual Conservative Q Learning for Offline Multi-agent Reinforcement Learning},
+ url = {https://proceedings.neurips.cc/paper_files/paper/2023/file/f3f2ff9579ba6deeb89caa2fe1f0b99c-Paper-Conference.pdf},
+ volume = {36},
+ year = {2023}
 }

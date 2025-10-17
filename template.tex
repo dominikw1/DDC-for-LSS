@@ -933,6 +933,16 @@ J(\pi) = \mathbb{E}_\pi \left[\sum_{t=0}^\infty\gamma^tr(s_t,a_t)\right]
 \noindent \(\gamma\in [0,1]\) denotes a factor balancing immediate against
 long-term goals and \(r\) encodes control objectives as scalar rewards, possibly differing across individual controllers, e.g. in hierarchical systems~\cite{mfrlMG}.
 
+A central distinction is to be made between online and offline RL.
+Traditionally, RL is viewed as an active
+learning process requiring interaction with the environment. 
+This can, however, be expensive and dangerous,
+and must rely on a smaller set of data than could be gathered for offline datasets, 
+due to them only having to be collected once, instead of during each run~\cite{conservativeQLearning}.
+Offline RL methods, the learning from entirely pre-collected, offline data, without on-policy interaction, 
+have been developed accordingly. Challenges to be solved with this approach include the inability of exploration, 
+the counterfactuality of queries and distributional shift~\cite{Levine2020OfflineRL}.
+
 
 \subsubsection{Multi-Agent RL (MARL)}
 
@@ -963,16 +973,35 @@ In DTDE, independent learners train policies without explicitly modeling other
 agents, which provides improved scalability~\cite{du2021survey}.
 
 
+\subsection{Offline Learning}
+
+Training from fixed data tends to introduce distributional shift:
+the learned policy may select actions that are poorly represented
+in the dataset, leading to extrapolation errors in value estimates.
+To mitigate this, a range of regularisation strategies have been proposed.
+
+One range of techniques centers around the 
+idea of Conservative Q-Learning (CQL)~\cite{conservativeQLearning}.
+CQL solves issues off-policy RL algorithms face by learning a conservative estimate of the value function,
+avoiding over-estimation and yielding much better
+performance. A tighter lower bound is achieved by 
+Mildly Conservative Q-learning
+(MCQ)~\cite{mildlyconservativee}, actively training out-of-distribution actions by constructing them proper
+pseudo target values. 
+
+Offline RL has also been extended to multi-agent and distributed settings. Counterfactual Conservative Q-Learning (CFCQL) proposes a method  
+counterfactually determining conservative regularization
+for each agent separately and subsequently combining them linearly, leading to an overall conservative estimation~\cite{NEURIPS2023_f3f2ff95}.
 
 %\subsection{Mean-Field \& Population Methods}
 
-\subsection{Model-Based RL}
+%\subsection{Model-Based RL}
 
 %\subsection{Federated \& Distributed RL / Learning}
 
 %\subsection{Safe / Constrained RL}
 
-\subsection{Scalability enablers \& architectures}
+%\subsection{Scalability enablers \& architectures}
 
 
 
