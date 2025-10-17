@@ -702,16 +702,58 @@ Methods \dots
 
 One approach is to lift the nonlinear system into 
 a higher-dimensional (possibly infinite) linear space via the Koopman operator, then apply linear data methods.
-Recent research has focused on developing a Koopman MPC technique where one learns a linear 
-predictor (via Extended Dynamic Mode Decomposition or neural nets) and then solves a convex MPC on the lifted space~\cite{LI2025100219}.
+The Koopman operator \(\mathcal{K}_f: \mathcal{F} \to \mathcal{F}\) associated with the state transition map \(f: X\to X\) 
+and the Banach space \(\mathcal{F}\) of observables \(g: X \to \mathbf{C}\) is defined through the composition:
 
+\begin{equation}
+\mathcal{K}_f g = g \circ f, \forall g \in \mathcal{F}
+\end{equation}
+
+The two core properties making the Koopman operator an exceedingly useful tool are its globality and linearity~\cite{mauroy2020koopman}.
+The Koopman operator provides an exact linear approximation 
+to nonlinear systems that is globally valid, instead of only around a point or trajectory. 
+The main drawback, however, is that it can be infinite-dimensional~\cite{shi2024koopman}.
+
+%Recent research has focused on developing a Koopman MPC technique where one learns a linear 
+%predictor (via Extended Dynamic Mode Decomposition or neural nets) and then solves a convex MPC on the lifted space~\cite{LI2025100219}.
+
+
+A Koopman-invariant subspace is the span of a set of \(m\) basis observable functions \(y_i\)
+if all functions \(g\) lying in this subspace, i.e. \(g = \sum_{k=1}^m \alpha_ky_k\)
+remain inside this subspace upon application of the Koopman operator, there being a linear combination of the basis functions representing \(\mathcal{K}g\)~\cite{brunton2016koopman}
+
+
+\begin{equation}
+\mathcal{K}g = \beta_1y_1 + \beta_2 y_2 +  ... + \beta_m y_m
+\end{equation}
+
+On this subspace, a finite-dimensional linear operator \(K\) can be obtained, restricting the Koopman operator \(\mathcal{K}\)~\cite{shi2024koopman}.
+When applying the Koopman operator to control scenarios, a Koopman-invariant subspace containing the original state variables \(x_i\) is desired.
+This can be an impossible task for some systems, for example a system with multiple
+fixed points, as all finite-dimensional linear systems have a single fixed point~\cite{brunton2016koopman}. 
 
 The data-driven determination of the Koopman operator's spectral properties usually involves approximating the operator with finite dimensions~\cite{meanti2023estimating}.
-For linear functions, techniques such as variations of DMD~\cite{dmdseminal} and tICA~\cite{tICA} can be used~\cite{Rowley2009SpectralAO}.
+DMD~\cite{dmdseminal} is a popular technique, in large part due to its ease of implementation~\cite{dmdImpl}, extensibility and interpretability~\cite{tu2013dynamic}.
+The procedure begins by collecting a time-series of state 
+snapshots and organizing them into two matrices, 
+\(X\) and \(Y\), representing paired snapshots of the 
+system's "past" and "future" states, 
+respectively. 
+The core objective is to determine the best-fit linear 
+operator \(A\) such that \(Y \approx A X\). 
+To ensure robustness and manage high-dimensional data, the method 
+utilizes the Singular Value Decomposition (SVD) of the state
+matrix \(X \approx U_r \Sigma_r V_r^*\) to project the 
+dynamics onto a rank-\(r\) subspace~\cite{kutz2016dynamic}. 
+The low-rank approximation of the Koopman operator is then calculated as
+\(\tilde{A} = U_r^* YV_r\Sigma_r^{-1}\)~\cite{schmid2010dynamic}.
+
+
+
+Another wide-spread~\cite{Rowley2009SpectralAO} method for linear functions is tICA~\cite{tICA}.
 The methods of eDMD~\cite{Williams2014ADA}, VAC~\cite{vacsem}, KernelDMD~\cite{kerneldmd} and kernel tICA~\cite{schwantes2015modeling} extend the function dictionary to non-linear functions~\cite{meanti2023estimating}.
 The latter two kernel techniques resert to being infinite-dimensional, trading off computational efficiency for theoretical guarantees~\cite{koopmanThepry},
 though approximate kernel methods are a topic of active research~\cite{baddoo2022kernel, meanti2023estimating, liang2025fourier}.
-
 
 
 
@@ -726,7 +768,7 @@ The control architecture determines how information
 is shared and decisions are made within a large-scale
 system.
 Large-scale systems pose fundamental challenges for classical control architectures.
-As system dimensions and interconnections grow, centralized strategies become computationally intractable and communication-limited.
+As system dimensions and interconnections grow, centralized strategies become computationally intractable and communication-limited~\cite{ma2024efficient}.
 
 To address these challenges, the three principal paradigms of decentralized, distributed, and hierarchical control have evolved, each with characteristic trade-offs in scalability, performance, and robustness. 
 Beyond this tripartite classification, 
