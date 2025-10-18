@@ -873,7 +873,53 @@ Factors that need to be considered in this design are communication delays and r
 
 \subsubsection{Distributed Model Predictive Control (DMPC)}
 
-In DMPC methods, each subsystem solves a local MPC and exchanges certain pieces of information.
+A familty of techniques having been reserached deeply recently is the collection of Distributed Model Predictive Control methods.
+In general, data-driven MPC can be formulated as presented in \cite{berberich2024overview} for noise-free data:
+Given input-output data \(\{u_k^d, y_k^d\}_{k=0}^{N-1}\) and the goal 
+of tracking a setpoint \((u^s, y^s)\) under the constraints \(u_k\in \mathbf{U}, y_k\in \mathbf{Y} \forall k\in \mathbf{I}_{\geq 0}\),
+following optimal control problem must be solved:
+
+\begin{equation}
+\min_{\alpha(t), \bar{u}(t), \bar{y}(t)}\sum_{k=0}^{L-1}||\bar{u}_k(t)-u^s||_R^2+||\bar{y}_k(t)-y^s||_Q^2
+\end{equation}
+
+such that 
+
+\begin{equation}
+\begin{bmatrix}
+\bar{u}(t) \\
+\bar{y}(t) 
+\end{bmatrix}	
+= 
+\begin{bmatrix}
+H_{L+n}(u^d) \\
+H_{L+n}(y^d)
+\end{bmatrix}	
+\alpha(t)
+\end{equation}
+
+\begin{equation}
+\begin{bmatrix}
+\bar{u}_{[-n,-1]}(t) \\
+\bar{y}_{[-n,-1]}(t) 
+\end{bmatrix}	
+= 
+\begin{bmatrix}
+u_{[t-n,t-1]} \\
+y_{[t-n,t-1]}
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\bar{u}_k(t)\in \mathbf{U}, \bar{y}_k(t)\in \mathbf{Y},k\in \mathbf{I}_{[0,L-1]}
+\end{equation}
+
+Running the algorithm requires first choosing an upper bound on system order \(n\), prediction horizon \(L\), positive definite
+cost matrices \(Q\) and \(R\), constraint sets \(\mathbf{U}\) and \(\mathbf{Y}\), and setpoint \((u^s, y^s)\). Then 
+for each timestep, the optimisation problem can be solved and the first optimal input component applied to the system, repeating until convergence~\cite{berberich2024overview}.
+
+In a DMPC setting, each subsystem solves a local MPC and exchanges certain pieces of information.
+
 
 
 \subsection{Hierarchical control}
