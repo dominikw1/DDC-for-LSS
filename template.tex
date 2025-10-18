@@ -941,7 +941,6 @@ and Nesterov-accelerated-gradient~\cite{8304602} approaches have been used succe
 
 
 
-
 \subsection{Hierarchical control}
 
 In hierarchical control scenarios, the control structure is conceptually arranged in multiple levels.
@@ -977,6 +976,78 @@ on global dynamics.
 
 
 \section{Scalable Model-Free Control}
+
+
+\subsection{Data-enabled Predictive Control (DeePC)}
+
+Data-enabled Predictive Control (DeePC)~\cite{coulson2019data} is 
+a model-free control framework that extends 
+the principles of Model Predictive Control (MPC) 
+to a purely data-driven, effectively model-free setting.
+It eliminates the need for explicit 
+system identification by leveraging Willems' Fundamental
+Lemma~\cite{willems2005note} from behavioral systems theory, 
+which states that all trajectories of a
+controllable linear system can be represented
+as linear combinations of a single persistently
+exciting trajectory.
+
+Given a persistently exciting input-output dataset, DeePC constructs Hankel matrices of past inputs and outputs, then formulates
+an optimization problem that directly predicts 
+future trajectories and computes optimal control actions 
+without identifying a model. As described in \cite{coulson2019data}, the DeePC works as follows:
+Taking as input a reference trajector \(r\), past input-output data \((u_{ini}, y_{ini})\), constraint sets \(U,Y\) and performance matrices \(Q\) amd \(R\),
+the first step is to solve for \(g^*\):
+
+\begin{equation}
+\min_{g,u,y} \sum_{k=0}^{N-1}||y_k-r_{t+k}||_Q^2 + ||u_k||_R^2
+\end{equation}
+
+subject to
+
+\begin{equation}
+\begin{bmatrix}
+U_p\\
+Y_p \\
+U_f \\
+Y_f
+\end{bmatrix}
+g
+= 
+\begin{bmatrix}
+u_{ini}\\ y_{ini}\\ u \\y
+\end{bmatrix}, \forall k \in [N-1]: u_k\in U, y_k\in Y
+\end{equation}
+
+The optimal control sequence is subsequently calculated via \(u^* = U_fg^*\).
+
+Since its introduction, a variety of extensions have 
+been proposed to enhance the robustness, 
+scalability, and practicality of DeePC.
+To improve noise tolerance and generalization 
+to unseen conditions, regularized DeePC formulations
+introduce penalties on the trajectory coefficients
+and slack variables, effectively mitigating overfitting
+to specific datasets~\cite{ramadan2025floodgates}.
+Robust DeePC variants employ
+distributional robustness concepts,
+e.g., Wasserstein ambiguity sets or
+chance-constrained formulations,
+to ensure performance under measurement
+noise and modeling uncertainty~\cite{coulson2019regularized}.
+
+Its applicabiltiy to large scale systems is primarily driven through 
+distributed and hierarchical DeePC
+algorithm formulations, decomposing the 
+global DeePC optimization into coupled
+subproblems solved locally with limited coordination,
+improving scalability and communication efficiency~\cite{YU2024110360,10667672}.
+Kernel-based DeePC enables the control of nonlinear systems,
+reformulating the optimisation as a nonconvex but
+structured minimization problem.~\cite{huang2023robust}.
+Recent works further address online computational efficiency through recursive
+and low-rank DeePC updates, allowing adaptive, 
+real-time control under streaming data constraints~\cite{shi2024efficient}.
 
 
 \subsection{Reinforcement Learning}
