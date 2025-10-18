@@ -873,7 +873,7 @@ Factors that need to be considered in this design are communication delays and r
 
 \subsubsection{Distributed Model Predictive Control (DMPC)}
 
-A familty of techniques having been reserached deeply recently is the collection of Distributed Model Predictive Control methods.
+A familty of techniques having been researched deeply for decades~\cite{SCATTOLINI2009723} is the collection of Distributed Model Predictive Control methods.
 In general, data-driven MPC can be formulated as presented in \cite{berberich2024overview} for noise-free data:
 Given input-output data \(\{u_k^d, y_k^d\}_{k=0}^{N-1}\) and the goal 
 of tracking a setpoint \((u^s, y^s)\) under the constraints \(u_k\in \mathbf{U}, y_k\in \mathbf{Y} \forall k\in \mathbf{I}_{\geq 0}\),
@@ -918,7 +918,27 @@ Running the algorithm requires first choosing an upper bound on system order \(n
 cost matrices \(Q\) and \(R\), constraint sets \(\mathbf{U}\) and \(\mathbf{Y}\), and setpoint \((u^s, y^s)\). Then 
 for each timestep, the optimisation problem can be solved and the first optimal input component applied to the system, repeating until convergence~\cite{berberich2024overview}.
 
-In a DMPC setting, each subsystem solves a local MPC and exchanges certain pieces of information.
+In a DMPC setting, each subsystem solves a local MPC and exchanges certain pieces of information, which is considered in addition to dynamics, constraints and objectives.
+DMPC systems can be approached from a bottom-up or
+a top-down perspective: 
+either a collection of autonomous systems is considered, introducing communication
+for coordination purposes, or from the
+view of a monolithic system being decomposed into
+subsystems, coordinated under constraints of
+communication and processing power~\cite{maestre2014distributed}.
+
+In non-iterative approaches, agents 
+coordinate only once per sampling instant to solve
+their optimization problems, providing simple and fast coordination, albeit at the cost of sub-optimal performance~\cite{maestre2015comparison}.
+Iterative DMPC strategies aim to 
+overcome the sub-optimality of non-Iterative
+methods by repeatedly exchanging information until a
+consensus or near-optimal solution is reached~\cite{wu2024iterative}. 
+To realise this efficiently, decomposition techniques such as the alternating
+direction method of multipliers (ADMM)~\cite{rostami2017admm}, the dual fast gradient method~\cite{wu2024iterative}
+and Nesterov-accelerated-gradient~\cite{8304602} approaches have been used successfully.
+
+
 
 
 
