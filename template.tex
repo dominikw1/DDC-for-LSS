@@ -793,6 +793,182 @@ though approximate kernel methods are a topic of active research~\cite{baddoo202
 
 
 
+\section{Scalable Model-Free Control}
+
+
+\subsection{Data-enabled Predictive Control (DeePC)}
+
+Data-enabled Predictive Control (DeePC)~\cite{coulson2019data} is 
+a model-free control framework that extends 
+the principles of Model Predictive Control (MPC) 
+to a purely data-driven, effectively model-free setting.
+It eliminates the need for explicit 
+system identification by leveraging Willems' Fundamental
+Lemma~\cite{willems2005note} from behavioral systems theory, 
+which states that all trajectories of a
+controllable linear system can be represented
+as linear combinations of a single persistently
+exciting trajectory.
+
+Given a persistently exciting input-output dataset, DeePC constructs Hankel matrices of past inputs and outputs, then formulates
+an optimization problem that directly predicts 
+future trajectories and computes optimal control actions 
+without identifying a model. As described in \cite{coulson2019data}, the DeePC works as follows:
+Taking as input a reference trajector \(r\), past input-output data \((u_{ini}, y_{ini})\), constraint sets \(U,Y\) and performance matrices \(Q\) amd \(R\),
+the first step is to solve for \(g^*\):
+
+\begin{equation}
+\min_{g,u,y} \sum_{k=0}^{N-1}||y_k-r_{t+k}||_Q^2 + ||u_k||_R^2
+\end{equation}
+
+subject to
+
+\begin{equation}
+\begin{bmatrix}
+U_p\\
+Y_p \\
+U_f \\
+Y_f
+\end{bmatrix}
+g
+= 
+\begin{bmatrix}
+u_{ini}\\ y_{ini}\\ u \\y
+\end{bmatrix}, \forall k \in [N-1]: u_k\in U, y_k\in Y
+\end{equation}
+
+The optimal control sequence is subsequently calculated via \(u^* = U_fg^*\).
+
+Since its introduction, a variety of extensions have 
+been proposed to enhance the robustness, 
+scalability, and practicality of DeePC.
+To improve noise tolerance and generalization 
+to unseen conditions, regularized DeePC formulations
+introduce penalties on the trajectory coefficients
+and slack variables, effectively mitigating overfitting
+to specific datasets~\cite{ramadan2025floodgates}.
+Robust DeePC variants employ
+distributional robustness concepts,
+e.g., Wasserstein ambiguity sets or
+chance-constrained formulations,
+to ensure performance under measurement
+noise and modeling uncertainty~\cite{coulson2019regularized}.
+
+Its applicabiltiy to large scale systems is primarily driven through 
+distributed and hierarchical DeePC
+algorithm formulations, decomposing the 
+global DeePC optimization into coupled
+subproblems solved locally with limited coordination,
+improving scalability and communication efficiency~\cite{YU2024110360,10667672}.
+Kernel-based DeePC enables the control of nonlinear systems,
+reformulating the optimisation as a nonconvex but
+structured minimization problem.~\cite{huang2023robust}.
+Recent works further address online computational efficiency through recursive
+and low-rank DeePC updates, allowing adaptive, 
+real-time control under streaming data constraints~\cite{shi2024efficient}.
+
+
+\subsection{Reinforcement Learning}
+
+Reinforcement Learning (RL) has recently become a popular 
+method for dealing with the ever-growing complexity of modern systems, 
+providing the benefit of determining optimal control policies without 
+necessitating detailed system models~\cite{9261330}.
+RL-based controllers require no labeled datasets and are instead guided by feedback and learn in a trial-and-error fashion,
+making them well-suited for large scale systems where 
+explicit system models are missing for reasons such as 
+nonlinear dynamics and multi-timescale operations~\cite{rfAndIntro}.
+
+
+Another advantage of RL is its statement of the control problem as Markov decision processes
+(MDPs), providing great generality. 
+They are applicable to nonlinear
+and stochastic dynamics, nonquadratic reward functions and even
+continous states and actions through numerical
+function approximation techniques~\cite{BUSONIU20188}.
+Weaknesses include high data requirements and long convergence times~\cite{BARBALHO2022108315},
+hyperparameter sensitivity~\cite{smartGridRL}, potentially high computational costs [cite], and  
+often missing formal stability guarantees~\cite{BARBALHO2022108315}.
+
+
+
+%https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11162524 this is good
+
+%In the context of microgrids, an RL agent might take the following form~\cite{mfrlMG}:
+
+The goal is to find a policy \(\pi: S \to \mathcal{A}\) mapping 
+states to actions maximising the expected cumulative reward
+
+\begin{equation}
+J(\pi) = \mathbb{E}_\pi \left[\sum_{t=0}^\infty\gamma^tr(s_t,a_t)\right]
+\end{equation}
+
+\noindent \(\gamma\in [0,1]\) denotes a factor balancing immediate against
+long-term goals and \(r\) encodes control objectives as scalar rewards, possibly differing across individual controllers, e.g. in hierarchical systems~\cite{mfrlMG}.
+
+A central distinction is to be made between online and offline RL.
+Traditionally, RL is viewed as an active
+learning process requiring interaction with the environment. 
+This can, however, be expensive and dangerous,
+and must rely on a smaller set of data than could be gathered for offline datasets, 
+due to them only having to be collected once, instead of during each run~\cite{conservativeQLearning}.
+Offline RL methods, the learning from entirely pre-collected, offline data, without on-policy interaction, 
+have been developed accordingly. Challenges to be solved with this approach include the inability of exploration, 
+the counterfactuality of queries and distributional shift~\cite{Levine2020OfflineRL}.
+
+
+\subsubsection{Multi-Agent RL (MARL)}
+
+In Multi-Agent RL, each agent controls a subsystem 
+and must learn policies in a partially observable environment while interacting with other agents.
+As in model-based methods, centralised control via RL can grow intractible.
+In a multi-agent network \(\mathcal{G}= (V,\mathcal{E})\)
+each agent \(v_i\in V\) chooses an action \(u_i\in U_i\)
+and communicates with neighbours along the edges \((i,j)\in \mathcal{E}\), 
+receiving a global reward \(r(s,u)\). 
+The joint action space \(U = \bigtimes U_i\) then grows too large to
+efficiently control in a centralised fashion~\cite{chu2019multi}.
+
+%The central assumption MARL in the context of Q-learning, the most common approach, 
+%is the decomposability of the global Q-function, distributing each \(Q_i\) to the corresponding local agent~\cite{chu2019multi}:
+
+%\begin{equation}
+%Q(s,u) = \sum_{v_i \in V}Q_i(s,u)
+%\end{equation}
+
+A central distinction is to be made between 
+centralized training with decentralized execution (CTDE) and decentralized training with
+decentralized execution (DTDE). 
+In CTDE, agents can freely communicate during the learning phase, which is performed by a centralised
+algorithm. The policies are, however, executed in a decentralised fashion, agents communicating only via 
+restricted channels~\cite{foerster2016learning}.
+In DTDE, independent learners train policies without explicitly modeling other 
+agents, which provides improved scalability~\cite{du2021survey}.
+
+
+\subsubsection{Offline Learning}
+
+Training from fixed data tends to introduce distributional shift:
+the learned policy may select actions that are poorly represented
+in the dataset, leading to extrapolation errors in value estimates.
+To mitigate this, a range of regularisation strategies have been proposed.
+
+One range of techniques centers around the 
+idea of Conservative Q-Learning (CQL)~\cite{conservativeQLearning}.
+CQL solves issues off-policy RL algorithms face by learning a conservative estimate of the value function,
+avoiding over-estimation and yielding much better
+performance. A tighter lower bound is achieved by 
+Mildly Conservative Q-learning
+(MCQ)~\cite{mildlyconservativee}, actively training out-of-distribution actions by constructing them proper
+pseudo target values. 
+
+Offline RL has also been extended to multi-agent and distributed settings. Counterfactual Conservative Q-Learning (CFCQL) proposes a method  
+counterfactually determining conservative regularization
+for each agent separately and subsequently combining them linearly, leading to an overall conservative estimation~\cite{NEURIPS2023_f3f2ff95}.
+
+
+
+
 
 \section{Control Architectures for Large-Scale Systems}
 
@@ -973,190 +1149,6 @@ on global dynamics.
 %\subsubsection{Consensus/synchronization controllers and distributed optimization}
 
 %\subsubsection{Event-triggered and sampled/quantized coordination}
-
-
-\section{Scalable Model-Free Control}
-
-
-\subsection{Data-enabled Predictive Control (DeePC)}
-
-Data-enabled Predictive Control (DeePC)~\cite{coulson2019data} is 
-a model-free control framework that extends 
-the principles of Model Predictive Control (MPC) 
-to a purely data-driven, effectively model-free setting.
-It eliminates the need for explicit 
-system identification by leveraging Willems' Fundamental
-Lemma~\cite{willems2005note} from behavioral systems theory, 
-which states that all trajectories of a
-controllable linear system can be represented
-as linear combinations of a single persistently
-exciting trajectory.
-
-Given a persistently exciting input-output dataset, DeePC constructs Hankel matrices of past inputs and outputs, then formulates
-an optimization problem that directly predicts 
-future trajectories and computes optimal control actions 
-without identifying a model. As described in \cite{coulson2019data}, the DeePC works as follows:
-Taking as input a reference trajector \(r\), past input-output data \((u_{ini}, y_{ini})\), constraint sets \(U,Y\) and performance matrices \(Q\) amd \(R\),
-the first step is to solve for \(g^*\):
-
-\begin{equation}
-\min_{g,u,y} \sum_{k=0}^{N-1}||y_k-r_{t+k}||_Q^2 + ||u_k||_R^2
-\end{equation}
-
-subject to
-
-\begin{equation}
-\begin{bmatrix}
-U_p\\
-Y_p \\
-U_f \\
-Y_f
-\end{bmatrix}
-g
-= 
-\begin{bmatrix}
-u_{ini}\\ y_{ini}\\ u \\y
-\end{bmatrix}, \forall k \in [N-1]: u_k\in U, y_k\in Y
-\end{equation}
-
-The optimal control sequence is subsequently calculated via \(u^* = U_fg^*\).
-
-Since its introduction, a variety of extensions have 
-been proposed to enhance the robustness, 
-scalability, and practicality of DeePC.
-To improve noise tolerance and generalization 
-to unseen conditions, regularized DeePC formulations
-introduce penalties on the trajectory coefficients
-and slack variables, effectively mitigating overfitting
-to specific datasets~\cite{ramadan2025floodgates}.
-Robust DeePC variants employ
-distributional robustness concepts,
-e.g., Wasserstein ambiguity sets or
-chance-constrained formulations,
-to ensure performance under measurement
-noise and modeling uncertainty~\cite{coulson2019regularized}.
-
-Its applicabiltiy to large scale systems is primarily driven through 
-distributed and hierarchical DeePC
-algorithm formulations, decomposing the 
-global DeePC optimization into coupled
-subproblems solved locally with limited coordination,
-improving scalability and communication efficiency~\cite{YU2024110360,10667672}.
-Kernel-based DeePC enables the control of nonlinear systems,
-reformulating the optimisation as a nonconvex but
-structured minimization problem.~\cite{huang2023robust}.
-Recent works further address online computational efficiency through recursive
-and low-rank DeePC updates, allowing adaptive, 
-real-time control under streaming data constraints~\cite{shi2024efficient}.
-
-
-\subsection{Reinforcement Learning}
-
-Reinforcement Learning (RL) has recently become a popular 
-method for dealing with the ever-growing complexity of modern systems, 
-providing the benefit of determining optimal control policies without 
-necessitating detailed system models~\cite{9261330}.
-RL-based controllers require no labeled datasets and are instead guided by feedback and learn in a trial-and-error fashion,
-making them well-suited for large scale systems where 
-explicit system models are missing for reasons such as 
-nonlinear dynamics and multi-timescale operations~\cite{rfAndIntro}.
-
-
-Another advantage of RL is its statement of the control problem as Markov decision processes
-(MDPs), providing great generality. 
-They are applicable to nonlinear
-and stochastic dynamics, nonquadratic reward functions and even
-continous states and actions through numerical
-function approximation techniques~\cite{BUSONIU20188}.
-Weaknesses include high data requirements and long convergence times~\cite{BARBALHO2022108315},
-hyperparameter sensitivity~\cite{smartGridRL}, potentially high computational costs [cite], and  
-often missing formal stability guarantees~\cite{BARBALHO2022108315}.
-
-
-
-%https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11162524 this is good
-
-%In the context of microgrids, an RL agent might take the following form~\cite{mfrlMG}:
-
-The goal is to find a policy \(\pi: S \to \mathcal{A}\) mapping 
-states to actions maximising the expected cumulative reward
-
-\begin{equation}
-J(\pi) = \mathbb{E}_\pi \left[\sum_{t=0}^\infty\gamma^tr(s_t,a_t)\right]
-\end{equation}
-
-\noindent \(\gamma\in [0,1]\) denotes a factor balancing immediate against
-long-term goals and \(r\) encodes control objectives as scalar rewards, possibly differing across individual controllers, e.g. in hierarchical systems~\cite{mfrlMG}.
-
-A central distinction is to be made between online and offline RL.
-Traditionally, RL is viewed as an active
-learning process requiring interaction with the environment. 
-This can, however, be expensive and dangerous,
-and must rely on a smaller set of data than could be gathered for offline datasets, 
-due to them only having to be collected once, instead of during each run~\cite{conservativeQLearning}.
-Offline RL methods, the learning from entirely pre-collected, offline data, without on-policy interaction, 
-have been developed accordingly. Challenges to be solved with this approach include the inability of exploration, 
-the counterfactuality of queries and distributional shift~\cite{Levine2020OfflineRL}.
-
-
-\subsubsection{Multi-Agent RL (MARL)}
-
-In MARL, each agent controls a subsystem 
-and must learn policies in a partially observable environment while interacting with other agents.
-As in model-based methods, centralised control via RL can grow intractible.
-In a multi-agent network \(\mathcal{G}= (V,\mathcal{E})\)
-each agent \(v_i\in V\) chooses an action \(u_i\in U_i\)
-and communicates with neighbours along the edges \((i,j)\in \mathcal{E}\), 
-receiving a global reward \(r(s,u)\). 
-The joint action space \(U = \bigtimes U_i\) then grows too large to
-efficiently control in a centralised fashion~\cite{chu2019multi}.
-
-%The central assumption MARL in the context of Q-learning, the most common approach, 
-%is the decomposability of the global Q-function, distributing each \(Q_i\) to the corresponding local agent~\cite{chu2019multi}:
-
-%\begin{equation}
-%Q(s,u) = \sum_{v_i \in V}Q_i(s,u)
-%\end{equation}
-
-A central distinction is to be made between 
-centralized training with decentralized execution (CTDE) and decentralized training with
-decentralized execution (DTDE). 
-In CTDE, agents can freely communicate during the learning phase, which is performed by a centralised
-algorithm. The policies are, however, executed in a decentralised fashion, agents communicating only via 
-restricted channels~\cite{foerster2016learning}.
-In DTDE, independent learners train policies without explicitly modeling other 
-agents, which provides improved scalability~\cite{du2021survey}.
-
-
-\subsection{Offline Learning}
-
-Training from fixed data tends to introduce distributional shift:
-the learned policy may select actions that are poorly represented
-in the dataset, leading to extrapolation errors in value estimates.
-To mitigate this, a range of regularisation strategies have been proposed.
-
-One range of techniques centers around the 
-idea of Conservative Q-Learning (CQL)~\cite{conservativeQLearning}.
-CQL solves issues off-policy RL algorithms face by learning a conservative estimate of the value function,
-avoiding over-estimation and yielding much better
-performance. A tighter lower bound is achieved by 
-Mildly Conservative Q-learning
-(MCQ)~\cite{mildlyconservativee}, actively training out-of-distribution actions by constructing them proper
-pseudo target values. 
-
-Offline RL has also been extended to multi-agent and distributed settings. Counterfactual Conservative Q-Learning (CFCQL) proposes a method  
-counterfactually determining conservative regularization
-for each agent separately and subsequently combining them linearly, leading to an overall conservative estimation~\cite{NEURIPS2023_f3f2ff95}.
-
-%\subsection{Mean-Field \& Population Methods}
-
-%\subsection{Model-Based RL}
-
-%\subsection{Federated \& Distributed RL / Learning}
-
-%\subsection{Safe / Constrained RL}
-
-%\subsection{Scalability enablers \& architectures}
 
 
 
