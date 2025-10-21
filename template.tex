@@ -921,34 +921,6 @@ have been developed accordingly. Challenges to be solved with this approach incl
 the counterfactuality of queries and distributional shift~\cite{Levine2020OfflineRL}.
 
 
-\subsubsection{Multi-Agent RL (MARL)}
-
-In Multi-Agent RL, each agent controls a subsystem 
-and must learn policies in a partially observable environment while interacting with other agents.
-As in model-based methods, centralised control via RL can grow intractible.
-In a multi-agent network \(\mathcal{G}= (V,\mathcal{E})\)
-each agent \(v_i\in V\) chooses an action \(u_i\in U_i\)
-and communicates with neighbours along the edges \((i,j)\in \mathcal{E}\), 
-receiving a global reward \(r(s,u)\). 
-The joint action space \(U = \bigtimes U_i\) then grows too large to
-efficiently control in a centralised fashion~\cite{chu2019multi}.
-
-%The central assumption MARL in the context of Q-learning, the most common approach, 
-%is the decomposability of the global Q-function, distributing each \(Q_i\) to the corresponding local agent~\cite{chu2019multi}:
-
-%\begin{equation}
-%Q(s,u) = \sum_{v_i \in V}Q_i(s,u)
-%\end{equation}
-
-A central distinction is to be made between 
-centralized training with decentralized execution (CTDE) and decentralized training with
-decentralized execution (DTDE). 
-In CTDE, agents can freely communicate during the learning phase, which is performed by a centralised
-algorithm. The policies are, however, executed in a decentralised fashion, agents communicating only via 
-restricted channels~\cite{foerster2016learning}.
-In DTDE, independent learners train policies without explicitly modeling other 
-agents, which provides improved scalability~\cite{du2021survey}.
-
 
 \subsubsection{Offline Learning}
 
@@ -1117,6 +1089,34 @@ consensus or near-optimal solution is reached~\cite{wu2024iterative}.
 To realise this efficiently, decomposition techniques such as the alternating
 direction method of multipliers (ADMM)~\cite{rostami2017admm}, the dual fast gradient method~\cite{wu2024iterative}
 and Nesterov-accelerated-gradient~\cite{8304602} approaches have been used successfully.
+
+\subsubsection{Multi-Agent RL (MARL)}
+
+In Multi-Agent RL, each agent controls a subsystem 
+and must learn policies in a partially observable environment while interacting with other agents.
+As in model-based methods, centralised control via RL can grow intractible.
+In a multi-agent network \(\mathcal{G}= (V,\mathcal{E})\)
+each agent \(v_i\in V\) chooses an action \(u_i\in U_i\)
+and communicates with neighbours along the edges \((i,j)\in \mathcal{E}\), 
+receiving a global reward \(r(s,u)\). 
+The joint action space \(U = \bigtimes U_i\) then grows too large to
+efficiently control in a centralised fashion~\cite{chu2019multi}.
+
+%The central assumption MARL in the context of Q-learning, the most common approach, 
+%is the decomposability of the global Q-function, distributing each \(Q_i\) to the corresponding local agent~\cite{chu2019multi}:
+
+%\begin{equation}
+%Q(s,u) = \sum_{v_i \in V}Q_i(s,u)
+%\end{equation}
+
+A central distinction is to be made between 
+centralized training with decentralized execution (CTDE) and decentralized training with
+decentralized execution (DTDE). 
+In CTDE, agents can freely communicate during the learning phase, which is performed by a centralised
+algorithm. The policies are, however, executed in a decentralised fashion, agents communicating only via 
+restricted channels~\cite{foerster2016learning}.
+In DTDE, independent learners train policies without explicitly modeling other 
+agents, which provides improved scalability~\cite{du2021survey}.
 
 
 
