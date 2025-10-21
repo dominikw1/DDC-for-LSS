@@ -406,6 +406,9 @@ The abstract goes here.
 \section{Introduction}
 
 \section{Background}
+
+NOTE: The background section is much more in a draft state than the other sections.
+
 % no \IEEEPARstart
 \subsection{Data Driven Control}
 
@@ -515,12 +518,7 @@ A prominent example are Krylov subspace methods~\cite{freund2003model}.
 
 \subsubsection{Control Architectures}
 
-We have strategies such as decentralised and distributed control.
-
-Decentralized: controllers act independently with no information exchange.
-Distributed: controllers communicate to some degree.
-Delays are to be considered. 
-
+A centralised controller tends to fail at effectively controlling large scale systems. Alternatives are strategies such as decentralised and distributed control...
 
 \subsubsection{Approaches for Control}
 
@@ -665,8 +663,7 @@ The system is hence not considered as a single, coherent object
 anymore, but rather as a collection of 
 different interacting subsystems. 
 The two primary decomposition methodologies are physical and numerical. 
-In the former, the subsystems are defined by the physical components of the system, such as individual robots in a swarm.
-~\cite{bakule2012decentralized}.
+In the former, the subsystems are defined by the physical components of the system, such as individual robots in a swarm~\cite{bakule2012decentralized}.
 The latter imposes the structure based on computational reasons,
 an approach more suited for large scale systems, as obtaining partitions by physical reasoning can become intractible~\cite{ocampo2011partitioning}.
 
@@ -708,6 +705,13 @@ control problem. Practical strategies include clustering based on
 finding highly connected subgraphs
 with balanced number of internal and external connections~\cite{OCAMPOMARTINEZ2011775}
 and spectral clustering on dynamic interaction graphs~\cite{TANG20187}.
+
+%Despite being dissimilar in details, most graph decomposition
+%algorithms, such as spectral algorithm [94], ϵ-decomposition
+%algorithm [93] and Bordered Block Diagonal(BBD) decomposition algorithm [93], try to reduce the total absolute values
+%of the weights of the edges that connect various subgraphs to
+% minimum.
+%https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10106217
 
 % They can be classified
 %according to the properties of subsystem-interconnection structures as
@@ -801,7 +805,7 @@ though approximate kernel methods are a topic of active research~\cite{baddoo202
 Data-enabled Predictive Control (DeePC)~\cite{coulson2019data} is 
 a model-free control framework that extends 
 the principles of Model Predictive Control (MPC) 
-to a purely data-driven, effectively model-free setting.
+to a purely data-driven setting.
 It eliminates the need for explicit 
 system identification by leveraging Willems' Fundamental
 Lemma~\cite{willems2005note} from behavioral systems theory, 
@@ -1179,6 +1183,13 @@ There are, among others, similar notions of asymptotical and exponential stabili
 
 \subsubsection{Lyapunov approaches}
 
+Lyapunov theory is one of the most popular techniques to
+analyse stability of control systems~\cite{li2023survey}.
+
+%Especially suited for large-scale systems is the composite Lyapunov function method,
+%using a composite Lyapunov function constructed as a weighted sum of isolated subsystems' Lyapunov functions.
+%https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10106217
+
 Min et al.~\cite{min2023data} propose Control with Inherent Lyapunov Stability (CoILS), a technique that 
 jointly learns a controlled dynamical
 systems model and a feedback controller from data.
@@ -1190,8 +1201,34 @@ the learned controller through the concurrent learning of a  parametric Lyapunov
 leading to the inherent guarantee of exponential stability of
 the learned models.
 
+%While Lyapunov-based approaches such as CoILS 
+%enable provable stability for small and medium-scale
+%systems, scalability to large-scale interconnected
+%systems remains an open frontier. Data-driven
+%large-scale control must address coupled uncertainties,
+%distributed dynamics, and limited data per subsystem, all of which complicate robustness guarantees.
+%
+%A promising research direction is distributed and compositional Lyapunov analysis. 
+%Instead of deriving a global Lyapunov function, 
+%each subsystem learns a local Lyapunov function 
+%\(V_i(x_i)\) from data, 
+%with interconnection terms bounded via 
+%data-driven estimates of subsystem coupling. 
+%This leads to scalable, certifiable guarantees.
+%Such approaches scale linearly in the number of
+%subsystems and are compatible with
+%decentralized DeePC or multi-agent RL controllers.
+%
+%Lavaei et al. [2] developed a data-driven
+%dissipativity framework for compositional
+%safety verification of interconnected systems:
+%local storage functions are identified from trajectory data and
+%composed to certify global dissipativity.
+%These techniques scale linearly with the number of
+%subsystems and naturally exploit system sparsity.
 
 \subsubsection{Contraction Theory}
+
 
 
 \subsection{Safety \& Certification}
@@ -1245,7 +1282,7 @@ any Lipschitz continuous controller \(u(t)\) is safe~\cite{ames2016control}.
 ---
 
 
-Hsu et al. introduce conformal robustness,  
+Hsu et al.~\cite{hsu2025statistical} introduce conformal robustness,  
 robustifying finite-horizon stability
 and safety guarantees in data-driven nonlinear dynamical
 systems.
