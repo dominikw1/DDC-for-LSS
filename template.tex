@@ -910,6 +910,11 @@ J(\pi) = \mathbb{E}_\pi \left[\sum_{t=0}^\infty\gamma^tr(s_t,a_t)\right]
 \noindent \(\gamma\in [0,1]\) denotes a factor balancing immediate against
 long-term goals and \(r\) encodes control objectives as scalar rewards, possibly differing across individual controllers, e.g. in hierarchical systems~\cite{mfrlMG}.
 
+
+
+
+\subsubsection{Offline Learning}
+
 A central distinction is to be made between online and offline RL.
 Traditionally, RL is viewed as an active
 learning process requiring interaction with the environment. 
@@ -919,13 +924,7 @@ due to them only having to be collected once, instead of during each run~\cite{c
 Offline RL methods, the learning from entirely pre-collected, offline data, without on-policy interaction, 
 have been developed accordingly. Challenges to be solved with this approach include the inability of exploration, 
 the counterfactuality of queries and distributional shift~\cite{Levine2020OfflineRL}.
-
-
-
-\subsubsection{Offline Learning}
-
-Training from fixed data tends to introduce distributional shift:
-the learned policy may select actions that are poorly represented
+The learned policy may select actions that are poorly represented
 in the dataset, leading to extrapolation errors in value estimates.
 To mitigate this, a range of regularisation strategies have been proposed.
 
@@ -1119,6 +1118,36 @@ In DTDE, independent learners train policies without explicitly modeling other
 agents, which provides improved scalability~\cite{du2021survey}.
 
 
+\subsubsection{Event-triggered distributed control}
+
+A key disadvantage of many distributed control approaches
+is the necessity of high-frequency communication between the sub-controllers.
+Solving this issue is the aim of event-triggered control, 
+constructing trigger functions that 
+communicate only when necessary~\cite{9354049}.
+This can further be extended to a system where the local controllers
+are deactivated, the control action held constant until a preset condition is met,
+reducing computational burden~\cite{wang2020event}.
+
+Each local controller continuously
+monitors its state and transmits updates only
+if a predefined triggering condition,
+typically based on state error or
+performance degradation, is violated~\cite{hirche2020distributed}.
+
+Event-triggered data-driven distributed control has found application in a variety of areas.
+\cite{bu2025event} developed a data-driven control algorithm
+for multimicrogrid interconnected systems with time delays, 
+triggering communication only when the control error exceeds a tunable threshold,
+proving convergence via Lyapunov theory.
+\cite{10337762} proposes a method for connected heterogeneous vehicle platoon control
+considering sensor faults, network resource usage minimised through the effective use of triggering conditions.
+\cite{yu2023distributed} develops an iterative learning approach for the control of 
+Multiple High-Speed Trains (MHSTs) with sitching topologies, proving 
+stability and reduced bandwidth occupancy while retaining
+sufficient performance.
+
+
 
 
 \subsection{Hierarchical control}
@@ -1126,6 +1155,10 @@ agents, which provides improved scalability~\cite{du2021survey}.
 In hierarchical control scenarios, the control structure is conceptually arranged in multiple levels.
 The higher level controllers coordinate the actions of the lower level ones, 
 being responsible for meeting the overall goal of the large scale system~\cite{SCATTOLINI2009723}.
+Hierarchical control could be viewed as a special case of distributed control, 
+where some controllers take on special coordination roles.
+
+
 
 This type of architecture is especially popular in the control of microgrids, 
 as they naturally decompose into three distinct hierarchical levels~\cite{hu2021model}.
