@@ -851,6 +851,9 @@ to unseen conditions, regularized DeePC formulations
 introduce penalties on the trajectory coefficients
 and slack variables, effectively mitigating overfitting
 to specific datasets~\cite{ramadan2025floodgates}.
+\cite{wang2024mechanical} adds a dimension reduction step to the traditional DeePC 
+technique, greatly improving scalability.
+
 
 Its applicabiltiy to large scale systems is primarily driven through 
 distributed and hierarchical DeePC
@@ -882,6 +885,25 @@ via an inclusion of model knowledge into DeePC.
 
 \subsubsection{Safety}
 
+Unlike classical MPC where a
+model provides invariant sets and Lyapunov proofs, 
+DeePC lacks an explicit parametric model and 
+thus must embed safety via data-driven mechanisms.
+Recent work proposes hybrid controller architectures
+that combine a data-driven predictive element
+with a reactive safeguarding feedback loop.
+Bold et al.~\cite{bold2025two} design a two-component controller where
+the first component is a predictive DeePC controller, whereas the second component is a model-free high-gain funnel or adaptive feedback controller, which activates when the predictive controller cannot guarantee satisfaction of output or trajectory constraints.
+This architecture ensures constraint satisfaction
+under worst-case conditions: by switching or
+blending to the high-gain feedback when needed,
+the system never drifts into unsafe regions,
+even while the data-driven component learns or adapts.
+Another approach for proving safety is using reachability analysis, 
+decoupling the system into error system and nominal system,
+the former prividing data-driven reachability sets 
+for the enhanced safety constraints
+in the nominal system~\cite{li2024robust}.
 
 
 \subsection{Reinforcement Learning}
