@@ -851,12 +851,6 @@ to unseen conditions, regularized DeePC formulations
 introduce penalties on the trajectory coefficients
 and slack variables, effectively mitigating overfitting
 to specific datasets~\cite{ramadan2025floodgates}.
-Robust DeePC variants employ
-distributional robustness concepts,
-e.g., Wasserstein ambiguity sets or
-chance-constrained formulations,
-to ensure performance under measurement
-noise and modeling uncertainty~\cite{coulson2019regularized}.
 
 Its applicabiltiy to large scale systems is primarily driven through 
 distributed and hierarchical DeePC
@@ -870,6 +864,19 @@ structured minimization problem.~\cite{huang2023robust}.
 Recent works further address online computational efficiency through recursive
 and low-rank DeePC updates, allowing adaptive, 
 real-time control under streaming data constraints~\cite{shi2024efficient}.
+
+\subsubsection{Robustness}
+
+Robust DeePC variants employ
+distributional robustness concepts,
+e.g., Wasserstein ambiguity sets or
+chance-constrained formulations,
+to ensure performance under measurement
+noise and modeling uncertainty~\cite{coulson2019regularized}.
+
+
+\subsubsection{Safety}
+
 
 
 \subsection{Reinforcement Learning}
@@ -943,6 +950,9 @@ for each agent separately and subsequently combining them linearly, leading to a
 
 
 
+\subsubsection{Robustness}
+
+\subsubsection{Safety}
 
 
 \section{Control Architectures for Large-Scale Systems}
@@ -1012,6 +1022,10 @@ yet typically sacrifices global optimality, as individual controllers do not hav
 %Robustness to unobserved couplings and noise remains 
 %a core open problem.
 
+
+\subsubsection{Robustness}
+
+\subsubsection{Safety}
 
 
 
@@ -1148,6 +1162,9 @@ stability and reduced bandwidth occupancy while retaining
 sufficient performance.
 
 
+\subsubsection{Robustness}
+
+\subsubsection{Safety}
 
 
 \subsection{Hierarchical control}
@@ -1163,6 +1180,10 @@ where some controllers take on special coordination roles.
 This type of architecture is especially popular in the control of microgrids, 
 as they naturally decompose into three distinct hierarchical levels~\cite{hu2021model}.
 
+
+\subsubsection{Robustness}
+
+\subsubsection{Safety}
 
 
 \subsection{Higher Level Control}
