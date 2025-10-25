@@ -227,6 +227,7 @@
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
 
+\usepackage{cleveref}
 
 % *** ALIGNMENT PACKAGES ***
 %
@@ -939,12 +940,16 @@ states to actions maximising the expected cumulative reward
 
 \begin{equation}
 J(\pi) = \mathbb{E}_\pi \left[\sum_{t=0}^\infty\gamma^tr(s_t,a_t)\right]
+\label{eq:reinforcement}
 \end{equation}
 
 \noindent \(\gamma\in [0,1]\) denotes a factor balancing immediate against
 long-term goals and \(r\) encodes control objectives as scalar rewards, possibly differing across individual controllers, e.g. in hierarchical systems~\cite{mfrlMG}.
 
-
+To enable real-time online reinforcement for large scale systems,
+approximation approaches have been proposed, where the input-output history is
+transformed into a shorter set of data, being the basis for a lower-dimensional
+inferred controller than the original, decreasing the time complexity from \(O(L^6)\) to \(O(L^4)\), where \(L\) denotes a natural number valued design parameter of the algorithm~\cite{sadamoto2021fast}.
 
 
 \subsubsection{Offline Learning}
@@ -979,7 +984,31 @@ for each agent separately and subsequently combining them linearly, leading to a
 
 \subsubsection{Robustness}
 
+Generally, robustness approaches in Reinforcement Learning can be categorised into four classes, as proposed by Moos et al.~\cite{moos2022robust}:
+Transition robust methods adjust the transition probabilities between states,
+disturbance robust ones model uncertainty via external forces, 
+action robust techniques corrupt agents' outputs in order to redirect system transitions,
+and observation robust methods change the policy's perceived system state.
+In the transition uncertainty case, the maximisation problem presented in 
+\cref{eq:reinforcement} might be reformulated as follows~\cite{moos2022robust}, assuming an unknown transition matrix \(P\) to be fixed and lying within a known uncertainty set \(\mathcal{U}_P\):
+
+\begin{equation}
+\max_{\pi\in\Pi}\min_{P\in \mathcal{U}_P}\mathbb{E}_{P,\pi} \left[\gamma^t r(s_t,a_t)\right]
+\end{equation}
+
 \subsubsection{Safety}
+
+Since reinforcement learning approaches make random decisions in the process of exploration
+that can violate safety constraints and lead to unacceptable system behaviour, naive RL methods
+cannot be applied to many safety critical areas~\cite{yu2024safe}.
+One approach to safe RL is to utilise Lyapunov functions determined through linear programming to
+guarantee safety and robust learning~\cite{chow2018lyapunov}.
+An alternative methodology involves adding control barrier functions, dropping the reward to minus infinity in
+safety violation situations, ensuring the learned optimal control policy respects the safety bounds~\cite{vu2021barrier}.
+These CBFs can further be learned efficiently using neural networks, as demonstrated by \cite{yang2023model}.
+A formal methods based approach presented in \cite{hasanbeig2020cautious} safety constraints 
+expressed in LTL guide the exploration. A key drawback of this, despite success in the safety dimension, is the necessity of manual 
+formulation of these constraints~\cite{gu2024review}. 
 
 
 \section{Control Architectures for Large-Scale Systems}
@@ -1158,6 +1187,8 @@ restricted channels~\cite{foerster2016learning}.
 In DTDE, independent learners train policies without explicitly modeling other 
 agents, which provides improved scalability~\cite{du2021survey}.
 
+
+%https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10675394
 
 \subsubsection{Event-triggered distributed control}
 
