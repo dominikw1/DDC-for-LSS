@@ -1042,8 +1042,73 @@ failures, straightforward scalability
 and is attractive for large-scale systems where global data aggregation is infeasible or 
 undesirable due to privacy, latency, or safety concerns, 
 yet typically sacrifices global optimality, as individual controllers do not have as much information regarding the state or output of the system as a centralized one would~\cite{ge2017distributed}.
+In some definitions of decentralised control information exchange is allowed before and after the decision making process, 
+simply restricting the controllers from actively negotiating~\cite{bemporad2010decentralized}. 
 
+\subsubsection{Decentralised Model Predictive Control}
 
+In general, data-driven MPC can be formulated as presented in \cite{berberich2024overview} for noise-free data:
+Given input-output data \(\{u_k^d, y_k^d\}_{k=0}^{N-1}\) and the goal 
+of tracking a setpoint \((u^s, y^s)\) under the constraints \(u_k\in \mathbf{U}, y_k\in \mathbf{Y} \forall k\in \mathbf{I}_{\geq 0}\),
+following optimal control problem must be solved:
+
+\begin{equation}
+\min_{\alpha(t), \bar{u}(t), \bar{y}(t)}\sum_{k=0}^{L-1}||\bar{u}_k(t)-u^s||_R^2+||\bar{y}_k(t)-y^s||_Q^2
+\end{equation}
+
+such that 
+
+\begin{equation}
+\begin{bmatrix}
+\bar{u}(t) \\
+\bar{y}(t) 
+\end{bmatrix}	
+= 
+\begin{bmatrix}
+H_{L+n}(u^d) \\
+H_{L+n}(y^d)
+\end{bmatrix}	
+\alpha(t)
+\end{equation}
+
+\begin{equation}
+\begin{bmatrix}
+\bar{u}_{[-n,-1]}(t) \\
+\bar{y}_{[-n,-1]}(t) 
+\end{bmatrix}	
+= 
+\begin{bmatrix}
+u_{[t-n,t-1]} \\
+y_{[t-n,t-1]}
+\end{bmatrix}
+\end{equation}
+
+\begin{equation}
+\bar{u}_k(t)\in \mathbf{U}, \bar{y}_k(t)\in \mathbf{Y},k\in \mathbf{I}_{[0,L-1]}
+\end{equation}
+
+Running the algorithm requires first choosing an upper bound on system order \(n\), prediction horizon \(L\), positive definite
+cost matrices \(Q\) and \(R\), constraint sets \(\mathbf{U}\) and \(\mathbf{Y}\), and setpoint \((u^s, y^s)\). Then 
+for each timestep, the optimisation problem can be solved and the first optimal input component applied to the system, repeating until convergence~\cite{berberich2024overview}.
+
+To illustrate the changes in a decentralised MPC method,
+the (linear) dynamics of the the \(i\)th subsystem controller in a model-based view could be described as~\cite{kofler2022agent}
+
+\begin{equation}
+\dot{x}_i = Ax_i + B u_i +Ex_c
+\end{equation}
+
+where \(E\) denotes the disturbance based on the central state \(x_c\), one of its sources being the actuation from other subcontrollers.
+
+Chen et al.~\cite{chen2020decentralized} proposes a decentralised MPC system for nonlinear processes
+where neural network models are trained for each subsystem and used as prediction models. 
+This approach resulted in improved computational cost compared to the centralised approach, while ensuring ensure
+closed-loop state boundedness and convergence.
+Decentralised MPC can even work in application domains that tend to favor 
+a different kind of architecture, such as microgrids \cite{karami2019decentralized}.
+
+The more popular approach to predictive control in decentralised architectures is the DeePC one, though.
+dDeeP-LCC~\cite{shang2024decentralized}, a decentralised formulation of DeePC, achieves better safety guarantees and smaller computational cost than a centralised formulation, while being naturally privacy preserving.
 
 
 %Recent research focuses on enhancing local 
@@ -1095,50 +1160,6 @@ Factors that need to be considered in this design are communication delays and r
 \subsubsection{Distributed Model Predictive Control (DMPC)}
 
 A familty of techniques having been researched deeply for decades~\cite{SCATTOLINI2009723} is the collection of Distributed Model Predictive Control methods.
-In general, data-driven MPC can be formulated as presented in \cite{berberich2024overview} for noise-free data:
-Given input-output data \(\{u_k^d, y_k^d\}_{k=0}^{N-1}\) and the goal 
-of tracking a setpoint \((u^s, y^s)\) under the constraints \(u_k\in \mathbf{U}, y_k\in \mathbf{Y} \forall k\in \mathbf{I}_{\geq 0}\),
-following optimal control problem must be solved:
-
-\begin{equation}
-\min_{\alpha(t), \bar{u}(t), \bar{y}(t)}\sum_{k=0}^{L-1}||\bar{u}_k(t)-u^s||_R^2+||\bar{y}_k(t)-y^s||_Q^2
-\end{equation}
-
-such that 
-
-\begin{equation}
-\begin{bmatrix}
-\bar{u}(t) \\
-\bar{y}(t) 
-\end{bmatrix}	
-= 
-\begin{bmatrix}
-H_{L+n}(u^d) \\
-H_{L+n}(y^d)
-\end{bmatrix}	
-\alpha(t)
-\end{equation}
-
-\begin{equation}
-\begin{bmatrix}
-\bar{u}_{[-n,-1]}(t) \\
-\bar{y}_{[-n,-1]}(t) 
-\end{bmatrix}	
-= 
-\begin{bmatrix}
-u_{[t-n,t-1]} \\
-y_{[t-n,t-1]}
-\end{bmatrix}
-\end{equation}
-
-\begin{equation}
-\bar{u}_k(t)\in \mathbf{U}, \bar{y}_k(t)\in \mathbf{Y},k\in \mathbf{I}_{[0,L-1]}
-\end{equation}
-
-Running the algorithm requires first choosing an upper bound on system order \(n\), prediction horizon \(L\), positive definite
-cost matrices \(Q\) and \(R\), constraint sets \(\mathbf{U}\) and \(\mathbf{Y}\), and setpoint \((u^s, y^s)\). Then 
-for each timestep, the optimisation problem can be solved and the first optimal input component applied to the system, repeating until convergence~\cite{berberich2024overview}.
-
 In a DMPC setting, each subsystem solves a local MPC and exchanges certain pieces of information, which is considered in addition to dynamics, constraints and objectives.
 DMPC systems can be approached from a bottom-up or
 a top-down perspective: 
