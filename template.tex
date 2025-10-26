@@ -1111,6 +1111,8 @@ The more popular approach to predictive control in decentralised architectures i
 dDeeP-LCC~\cite{shang2024decentralized}, a decentralised formulation of DeePC, achieves better safety guarantees and smaller computational cost than a centralised formulation, while being naturally privacy preserving.
 
 
+
+
 %Recent research focuses on enhancing local 
 %data-driven controllers with structural 
 %priors and regularization that implicitly 
@@ -1146,7 +1148,21 @@ dDeeP-LCC~\cite{shang2024decentralized}, a decentralised formulation of DeePC, a
 
 \subsubsection{Robustness}
 
+
+%https://pure.tue.nl/ws/portalfiles/portal/167568910/1312561_Anupama.pdf
+
+
+The application area of microgrid control has brought about much of the research on robust decrentralised control approaches.
+As for model-based methods, \cite{baghaee2017decentralized} proposes a decentralised robust mixed \(H_2/H_\infty\) controller
+
+\cite{li2023decentralized} proposes a robust adaptive dynamic programming approach to decentralised control taking into account both actuator faults and external disturbances. 
+
+
+
 \subsubsection{Safety}
+
+\cite{zhang2023data} proposes a decentralised deep reinforcement learning approach with safety guaranteed by  embedded
+safe policy projection, restricting the action space and avoiding constraint violation.
 
 
 
@@ -1245,6 +1261,8 @@ sufficient performance.
 
 \subsubsection{Safety}
 
+%https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10025385&casa_token=qjvIbDAx4-IAAAAA:M_4c8XzQjozwgwnYrNPirBtIXLgr0FI3ZlBIOL4bbFzo0MrfkKRA-L2I-HbvmhhS9Utle5M0ykQ&tag=1
+
 
 \subsection{Hierarchical control}
 
@@ -1254,10 +1272,36 @@ being responsible for meeting the overall goal of the large scale system~\cite{S
 Hierarchical control could be viewed as a special case of distributed control, 
 where some controllers take on special coordination roles.
 
+This paradigm allows coordination of complex large-scale systems 
+by assigning high-level layers to strategic, long-horizon decisions
+and lower-level layers to fast, local actuation.
+The approach mitigates the curse of dimensionality
+inherent in centralized optimization and can improve robustness
+and scalability compared to purely distributed schemes~\cite{SCATTOLINI2009723}.
+
+\subsubsection{Architectural principles}
+
+A canonical three-layer hierarchy distinguishes between:
+
+\begin{itemize}
+\item Supervisory layer (Level 1): Performs system-wide coordination, optimization, and constraint management. It determines global references or resource allocations for subordinate controllers.
+\item Coordination layer (Level 2): Translates supervisory commands into feasible sub-objectives for each subsystem, handling coupling constraints and communication among local controllers.
+\item Local control layer (Level 3): Executes low-level control laws (e.g., MPC, RL, PID) to track references or regulate states under real-time constraints.
+\end{itemize}
 
 
-This type of architecture is especially popular in the control of microgrids, 
-as they naturally decompose into three distinct hierarchical levels~\cite{hu2021model}.
+
+This division of control responsibility originates
+from industrial process control~\cite{terry1983hierarchical} %double check this
+and has since
+been generalized for power systems~\cite{vasquez2010hierarchical},
+transportation networks~\cite{10667672}, and multi-robot systems~\cite{ju2021hybrid}.
+The separation enables each layer to operate at different
+sampling rates, leading to computational tractability and
+improved modularity~\cite{maestre2014distributed}.
+
+\subsubsection{Data-driven hierarchical model predictive control}
+
 
 
 \subsubsection{Robustness}
