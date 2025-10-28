@@ -1334,80 +1334,80 @@ on global dynamics.
 
 
 
-\section{Safety, Robustness \& Certification at Scale}
+\section{Safety \& Certification at Scale}
 
-A continuing challenge in the field of data driven control remains the question of verifyable stability and safety.
+A continuing challenge in the field of data driven control remains the question of verifyable safety.
 In many application areas of control theory, guarantees are required for methods to have any use at all.
 
 
 
 
-\subsection{Stability \& Robustness}
-
-Stability refers to the system's ability to remain bounded 
-and to return to equilibrium after small perturbations. 
-Formally, a system \(\dot{x} = f_u(x) , x \in \mathcal{X}\)
-is stable at its equilibrium point \(x_e\in \mathcal{X}\)
-if 
-\begin{equation}
-\forall \epsilon > 0 \exists \delta_\epsilon \forall t: ||x(0) - x_e||_2 < \delta_\epsilon
-\implies ||(x(t)-x_e)||_2 < \epsilon
-\end{equation}
-
-There are, among others, similar notions of asymptotical and exponential stability~\cite{min2023data}.
-
-
-
-\subsubsection{Lyapunov approaches}
-
-Lyapunov theory is one of the most popular techniques to
-analyse stability of control systems~\cite{li2023survey}.
-
-%Especially suited for large-scale systems is the composite Lyapunov function method,
-%using a composite Lyapunov function constructed as a weighted sum of isolated subsystems' Lyapunov functions.
-%https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10106217
-
-Min et al.~\cite{min2023data} propose Control with Inherent Lyapunov Stability (CoILS), a technique that 
-jointly learns a controlled dynamical
-systems model and a feedback controller from data.
-The key innovation is that the model is guaranteed by construction to
-be stabilized in closed-loop with the learned controller.
-This is achieved by constraining the open-loop dynamics onto the 
-subspace of dynamics stabilizable in closed-loop by
-the learned controller through the concurrent learning of a  parametric Lyapunov function,
-leading to the inherent guarantee of exponential stability of
-the learned models.
-
-%While Lyapunov-based approaches such as CoILS 
-%enable provable stability for small and medium-scale
-%systems, scalability to large-scale interconnected
-%systems remains an open frontier. Data-driven
-%large-scale control must address coupled uncertainties,
-%distributed dynamics, and limited data per subsystem, all of which complicate robustness guarantees.
+%\subsection{Stability \& Robustness}
 %
-%A promising research direction is distributed and compositional Lyapunov analysis. 
-%Instead of deriving a global Lyapunov function, 
-%each subsystem learns a local Lyapunov function 
-%\(V_i(x_i)\) from data, 
-%with interconnection terms bounded via 
-%data-driven estimates of subsystem coupling. 
-%This leads to scalable, certifiable guarantees.
-%Such approaches scale linearly in the number of
-%subsystems and are compatible with
-%decentralized DeePC or multi-agent RL controllers.
+%Stability refers to the system's ability to remain bounded 
+%and to return to equilibrium after small perturbations. 
+%Formally, a system \(\dot{x} = f_u(x) , x \in \mathcal{X}\)
+%is stable at its equilibrium point \(x_e\in \mathcal{X}\)
+%if 
+%\begin{equation}
+%\forall \epsilon > 0 \exists \delta_\epsilon \forall t: ||x(0) - x_e||_2 < \delta_\epsilon
+%\implies ||(x(t)-x_e)||_2 < \epsilon
+%\end{equation}
 %
-%Lavaei et al. [2] developed a data-driven
-%dissipativity framework for compositional
-%safety verification of interconnected systems:
-%local storage functions are identified from trajectory data and
-%composed to certify global dissipativity.
-%These techniques scale linearly with the number of
-%subsystems and naturally exploit system sparsity.
-
-\subsubsection{Contraction Theory}
-
-
-
+%There are, among others, similar notions of asymptotical and exponential stability~\cite{min2023data}.
+%
+%
+%
+%\subsubsection{Lyapunov approaches}
+%
+%Lyapunov theory is one of the most popular techniques to
+%analyse stability of control systems~\cite{li2023survey}.
+%
+%%Especially suited for large-scale systems is the composite Lyapunov function method,
+%%using a composite Lyapunov function constructed as a weighted sum of isolated subsystems' Lyapunov functions.
+%%https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10106217
+%
+%Min et al.~\cite{min2023data} propose Control with Inherent Lyapunov Stability (CoILS), a technique that 
+%jointly learns a controlled dynamical
+%systems model and a feedback controller from data.
+%The key innovation is that the model is guaranteed by construction to
+%be stabilized in closed-loop with the learned controller.
+%This is achieved by constraining the open-loop dynamics onto the 
+%subspace of dynamics stabilizable in closed-loop by
+%the learned controller through the concurrent learning of a  parametric Lyapunov function,
+%leading to the inherent guarantee of exponential stability of
+%the learned models.
+%
+%%While Lyapunov-based approaches such as CoILS 
+%%enable provable stability for small and medium-scale
+%%systems, scalability to large-scale interconnected
+%%systems remains an open frontier. Data-driven
+%%large-scale control must address coupled uncertainties,
+%%distributed dynamics, and limited data per subsystem, all of which complicate robustness guarantees.
+%%
+%%A promising research direction is distributed and compositional Lyapunov analysis. 
+%%Instead of deriving a global Lyapunov function, 
+%%each subsystem learns a local Lyapunov function 
+%%\(V_i(x_i)\) from data, 
+%%with interconnection terms bounded via 
+%%data-driven estimates of subsystem coupling. 
+%%This leads to scalable, certifiable guarantees.
+%%Such approaches scale linearly in the number of
+%%subsystems and are compatible with
+%%decentralized DeePC or multi-agent RL controllers.
+%%
+%%Lavaei et al. [2] developed a data-driven
+%%dissipativity framework for compositional
+%%safety verification of interconnected systems:
+%%local storage functions are identified from trajectory data and
+%%composed to certify global dissipativity.
+%%These techniques scale linearly with the number of
+%%subsystems and naturally exploit system sparsity.
+%
+%\subsubsection{Contraction Theory}
+%
+%
+%
 \subsection{Safety \& Certification}
 
 
