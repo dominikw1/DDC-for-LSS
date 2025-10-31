@@ -1323,6 +1323,12 @@ global vehicle repositioning and the lower layer applies local DeePC to individu
 
 \subsubsection{Reinforcement Learning}
 
+One of the early papers in the field of hierarchical reinforcement learning (HRL) was \cite{singh1992transfer},
+proposes a technique of decomposing tasks, solving them individually using Q-modules and sharing solutions across multiple composite tasks,
+laying the groundwork for the widely successful HRL framework. 
+
+% defintiion for HRL https://arxiv.org/pdf/2011.04752
+
 In \cite{chen2023distributed}, a distributed hierarchical controller using deep reinforcement learning is proposed.
 They develop a new framework coined hierarchical reduction reinforcement learning (HR2L),
 improving upon prior computational efficiency issues, generally impriving upon the prior art in regards to
@@ -1332,7 +1338,53 @@ convergence speed, solution quality, training robustness, and adaptability to la
 
 \subsubsection{Robustness}
 
+Hierarchical control further offers a natural option of mixing different approaches to control.
+This approach is especially popular for constructing robust reinforcement learning based controllers, as
+robustness properties can be inherited from the other controller, while still reaping some of the benefits 
+of RL. [citation needed]
+In \cite{li2020learning}, such a hybrid hierarchical controller for robotic in-hand manipulation is proposed, where the low-level controllers being 
+first-principles based, whereas the higher-level controller uses reinforcement learning, leading to a controller
+robust against noise-affected observations of the object pose 
+and inaccurate kinematic and dynamic models.
+A similar approach is taken by \cite{naveed2021trajectory} for robust trajectory planning of autonomous vehicles, 
+the high-level reinforcement controller guiding low-level PID controllers.
+
+Another approach for robustness in hierarchical architectures 
+is to combine a distributionally-robust supervisory optimizer 
+with certified local controllers: 
+the supervisory layer computes plans under data-driven ambiguity sets
+(Wasserstein/empirical) to protect against
+mis-specified forecast distributions, while the local controllers
+enforce tightened constraints and reject bounded disturbances during tracking.
+Saberi et al.~\cite{saberi2021data} use this approach in a home-energy management context,
+showing that a distributionally-robust hierarchical
+coordinator preserves constraint
+satisfaction and improves out-of-sample reliability
+by explicitly accounting for distributional uncertainty
+at the decision layer and delegating disturbance rejection to
+the local controllers.
+
+In the domain of hierarchical control for networked physical systems,
+the work by Nandakumar et al.~\cite{nandakumar2024enhancing} demonstrates a data-driven
+predictive droop-control architecture structured hierarchically
+applied to islanded microgrids. 
+The high-level module uses a physics-informed sparse identification
+prediction model and model predictive control to issue
+set-points for frequency regulation,
+while the droop control at the lower level tracks those
+references and compensates disturbances. 
+Reachability analysis is employed to bound worst-case deviations, 
+thereby contributing robustness guarantees
+under modelling uncertainty and disturbance.
+Robustness is achieved through 
+adaptive model refinement and time-scale separation, 
+the upper layer continuously re-identifying system dynamics,
+while the lower predictive droop layer enforces
+bounded invariance through reachability-based compensation.
+
 \subsubsection{Safety}
+
+
 
 
 \subsection{Higher Level Control}
