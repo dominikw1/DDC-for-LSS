@@ -1196,6 +1196,12 @@ To realise this efficiently, decomposition techniques such as the alternating
 direction method of multipliers (ADMM)~\cite{rostami2017admm}, the dual fast gradient method~\cite{wu2024iterative}
 and Nesterov-accelerated-gradient~\cite{8304602} approaches have been used successfully.
 
+For computational and operational efficiency reasons, constraining the communication of subsystems to a local neighbourhood
+can be advantageous. DLMPC~\cite{alonso2022distributed} and the corresponding data-driven formulation \(D^3\)LMPC~\cite{alonso2022data}
+use the System Level Synthesis (SLS) framework to generate a distributed model-predictive controller, which shares information only locally, the neighbourhood sizes being adjustable.
+This is achieved through a locality constraint on the system response, the result of the SLS reformulation.
+The data-driven DLMPC provides the same guarantees as the standard DLMPC, namely recursive feasibility, stability and convergence for both nominal and robust settings~\cite{alonso2023distributed}.
+
 \subsubsection{Multi-Agent RL (MARL)}
 
 In Multi-Agent RL, each agent controls a subsystem 
@@ -1301,6 +1307,26 @@ sampling rates, leading to computational tractability and
 improved modularity~\cite{maestre2014distributed}.
 
 \subsubsection{Data-driven hierarchical model predictive control}
+
+Hierarchical Model Predictive Control (HMPC) extends MPC to a multi-level framework, where upper layers solve relaxed or aggregated optimization problems whose 
+outputs guide lower layers~\cite{SCATTOLINI2009723}. 
+
+\cite{shi2020data} presents an indirect data-driven hierarchical control structure for systems operating under uncertainty.
+The controller lower in the hierarchy identifies a linear approximation between the higher-level signals and output, whereas the higher-level controller component  
+has the task of dealing with the modeling errors and environment uncertainties.
+
+As for direct data driven methods, model-free
+formulations such as hierarchical DeePC have emerged~\cite{10667672}, demonstrating
+such a structure for autonomous mobility-on-demand fleets: the upper layer optimizes
+global vehicle repositioning and the lower layer applies local DeePC to individual agents.
+
+
+\subsubsection{Reinforcement Learning}
+
+In \cite{chen2023distributed}, a distributed hierarchical controller using deep reinforcement learning is proposed.
+They develop a new framework coined hierarchical reduction reinforcement learning (HR2L),
+improving upon prior computational efficiency issues, generally impriving upon the prior art in regards to
+convergence speed, solution quality, training robustness, and adaptability to large-scale systems.
 
 
 
