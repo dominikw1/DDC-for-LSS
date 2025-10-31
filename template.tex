@@ -1168,6 +1168,9 @@ safe policy projection, restricting the action space and avoiding constraint vio
 
 \subsection{Distributed control}
 
+%https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11108244&casa_token=VehPJM9m_hEAAAAA:3Bupc1FUPTPLgj8_M5IRi0bldulWFqXMWGRFIL9m9QTyk5ZJUKmMSrGcIH4sxvDlW5FZOeJIgs-2Ow
+
+
 As opposed to decentralised control, subsystems in distributed architectures share information among system components.
 This enhances the coordination capabilities of the agents, incurring improved scalability and robustness~\cite{ge2017distributed}. 
 Factors that need to be considered in this design are communication delays and reliability. 
@@ -1265,12 +1268,39 @@ sufficient performance.
 
 \subsubsection{Robustness}
 
+A class of distributed robustness strategies tackles
+network-scale uncertainty by combining data-driven uncertainty
+quantification with distributed optimization and local certified control.
+In \cite{wang2024data} each subsystem of the interconnected
+network uses measurement data to infer uncertainty sets for both its local dynamics and couplings
+and then participates in a distributed robust control optimisation
+that ensures global constraint satisfaction despite
+the worst-case admissible uncertainties.
+The robustness is achieved through three key ideas: 
+the data-driven construction of uncertainty bounds from historical measurements, 
+the distributed robust optimization so that each node enforces tightened coupling and constraint bounds under communication and coordination constraints, respectively, and 
+the fact that local controllers execute the optimized signals while guaranteeing invariant-set membership or disturbance rejection within the prescribed uncertainty set.
+
+A robust distributed model-free controller is constructed in \cite{li2022robust}
+for the domain of volt/VAR regulation over power distribution networks. 
+Each local agent uses robust regression 
+to mitigate bad measurement data
+and iteratively updates its control strategy via a distributed ADMM
+algorithm enhanced with Nesterov acceleration, enabling scalability. 
+Efficient robustness is hence achieved via the model-free, data-driven feedback loop
+which tolerates measurement errors and model mismatch,
+the distributed optimization architecture where only limited peer exchange is required and convergence is accelerated, and
+decentralized local correction at each node which ensures the system stays robust to both local disturbance and coupling uncertainties.
+
+
 \subsubsection{Safety}
 
 %https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10025385&casa_token=qjvIbDAx4-IAAAAA:M_4c8XzQjozwgwnYrNPirBtIXLgr0FI3ZlBIOL4bbFzo0MrfkKRA-L2I-HbvmhhS9Utle5M0ykQ&tag=1
 
 
 \subsection{Hierarchical control}
+
+% A Data-driven Hierarchical Control Structure for Systems with Uncertainty
 
 In hierarchical control scenarios, the control structure is conceptually arranged in multiple levels.
 The higher level controllers coordinate the actions of the lower level ones, 
@@ -1385,6 +1415,21 @@ bounded invariance through reachability-based compensation.
 \subsubsection{Safety}
 
 
+Hierarchical Multi-Agent Reinforcement Learning (HMARL) 
+can be made to provide near-perfect safety guarantees
+using Control Barrier functions,
+addressing the control problem at the level of learning joint cooperative behavior
+and of learning safe individual behavior~\cite{ahmad2025hierarchical}.
+
+
+As for an MPC approach, Vallon et al.~\cite{vallon2022data} propose a hierarchical, data-driven predictive control architecture for unknown operational environments, where previous task-trajectories are mined offline to generate target regions and input constraints that become terminal sets for a lower-level model predictive controller.
+This target-set construction ensures that the tracking controller always steers the system into a region known safe 
+(via prior data) before executing new environment-specific maneuvers.
+In hierarchical terms this corresponds to the supervisory layer computing 
+safe-set so-called waypoints or regions informed by data-driven transfer of
+experience and the local layer running an MPC whose terminal set is
+the safe region, thereby guaranteeing closed-loop feasibility and safety.
+The safety guarantees thus stem from embedding experience-derived safe sets as terminal constraints in the hierarchical control scheme.
 
 
 \subsection{Higher Level Control}
