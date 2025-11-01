@@ -471,6 +471,7 @@ It is further often used synonymously with complex system, a system consisting o
 that exhibits emergent collective behavior which is not the simple summation of its parts~\cite{ControllingComplexSystem}.
 % a system is considered as large scale complex whenever it is necessary to partition the given analysis or synthesis problem in order to come up with manageable subproblems
 % https://pdf.sciencedirectassets.com/271897/1-s2.0-S1367578812X00026/1-s2.0-S1367578812000028/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDkaCXVzLWVhc3QtMSJGMEQCIFuyO2%2BOyv4oEbvlBReZXR12ei9IPZCW5zmPtdWgH3yKAiA9tGSvndkFQW4ktFpVnS7Qsqax0atoQRMRT95WTdkIZSq8BQjS%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAUaDDA1OTAwMzU0Njg2NSIMyC1wWjnrzaLee3m0KpAFWle6d2mOWXDum5AbJS67M%2BWWoPU5UwcCWNSgG1A4QurSwIMb4XcK%2FVAoWp%2Fez8tKQYpXc4iOecz8GlSMVK6EwDgAlExE7FEUiwHADa0mCyVxIRqQBuu4Dspt8jo7jGff1lkClIHVULoVR5HLXhw3%2B7wdV9Udtugea3i2Gojl%2FYGhyPoIlG3iKwNDnZKlZ76l06Kf%2BCxxqYbxkEi0%2Fkl%2F2YAtYdIv6cCAcDAQ3%2FM9wfY%2FSlMFnWKMiT5j6%2B3hAYWLn9Mkd5FoKcxQVzgWxwGTHbgXea9rtTbCHMgr5lnI9%2FdwhFOoDkeqaajGEd%2B8IbHRWmrcRUhN%2Bwc9IBNrYjneCmHx2rIMUSK5ErSqVixAWjw3WNdy%2BPQ5MoPCBjUi62BrQrtVAEfXbD%2FSyWfQuPPYXV7lJW9n%2BYGlx3laPojmCvif5VkJR%2BnPSD1ucw9lP70YEpsAgQr44ZoHmjxXp%2FaX0HJhDWERE%2BhYnQ2%2Fif6uDi3oQSl%2BJYHsC4LWxA75k1j2tCA%2B6X%2FTZzwLmIJqLVMdZH13lrIWoKvzBgruvo6haPj2O%2FWggr7YA6jBJNZ8lS5%2FZJL1q%2BgDYEQK%2FDZSin0XI9uNCD%2Bwhsg84qOJTBA2c%2BdKg7bV0S2t44rbrggC04ey8G%2Fg7zstch2h4l1bAmyNyGiwREnYoiZrE%2FKAzYoNNwK0rR9ejPQzu4WZ9hOcBSi98bQnQqbKuDLTR0xLRpqysqr0S6x0TTn2caVpnWATs5Nkc6mg0hwPeEPfTB%2B%2BEoFdu4wzgjP4Y9csvFWjLqgnxNyc3TtJ0y9db8URTV5m1QGII4%2FqUt1uf9MrJOmIj%2FG%2BrZzRx%2FZAwFB2cLDAazzZ0jhqdGmK08eHqxr4guwcfXAwoPOdxwY6sgEmFF1uMvj97RYxU1%2BbQXqJ4PBHdjI7J8%2B0pQSDELzqI4m2uYZ4n6b82bkqzp3aIxqTq8Pgo00jqnQdExaet83PyoVP7GeAxYPSyR4P7qTavpW%2BbF1otVHaGCsiKYwuBQYmqB0DVd4UIIPNgkXfVznTG0xY7cdL0c%2FPwc3xpNJO1Km9HSo615oRUSryJ1cULVsw%2BUpaasuWPwogTUiVP1bIGVDEkM8dI9KlFNGxeltS6%2BjI&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20251009T093726Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYQS55SIAW%2F20251009%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=6a6ac8d15b5cb6434913e9415a4b20dadbcab6e2e795f0a35a4424128e3a6b70&hash=c75fc87a3e3b7ed67b7f7e226f8bec06b27f3feb422145c63f846f91f5658e16&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S1367578812000028&tid=spdf-063f0f87-4e00-43a6-b7ff-10f6f3764c08&sid=029b8ee71b7c5841003ae926bfe04b1834bagxrqa&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&rh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=1e075d5907000a58510c&rr=98bce63c6fd7974a&cc=de
+Application domains of large-scale system control are areas such as power generation and distribution, traffic and water networks, and industrial system processes, such as heating ventilation or supply chain management systems~\cite{kordestani2021recent}.
 
 
 
@@ -521,9 +522,11 @@ While not all layers might be controllable for a specific use-case, such as the 
 
 %\subsection{Safety \& Certification}
 
-
-Ensuring safety and certifiability in remains one of the
-central challenges. 
+The inherent complexity of large-scale systems not only
+challenges tractability but also exacerbates
+safety and certification concerns. 
+As data-driven controllers replace interpretable physics-based models,
+formal guarantees must often be reintroduced.
 A system \(\dot{x}(t)  = f(x(t), u(t))\) is called safe if 
 
 \begin{equation}
@@ -593,10 +596,15 @@ any Lipschitz continuous controller \(u(t)\) is safe~\cite{ames2016control}.
 
 \section{Scalable Data-Driven Modeling}
 
+To enable indirect data-driven control techniques, a model of the to be controlled system needs to be
+identified. Techniques in this section are also crucial for direct methods, however, as
+the decomposition of the global control problem into the control of sub-systems
+is crucial element in all non-centralised large-scale system controller syntheses
+where this decentralisation can be configured and is not forced by physical reality.
+
 \subsection{System Identification}
 
-To enable model-based control techniques, a model of the to be controlled system needs to be
-identified. As large-scale systems tend to produce system models that are
+As large-scale systems tend to produce system models that are
 unweildly to handle, data-driven model order reduction (MOR) techniques
 receive special attention~\cite{baumann2022data}. Data-driven MOR methods rely
 only on measured trajectories, frequency response data, 
@@ -652,12 +660,12 @@ can get arbitrary close to those of classical BT, depending on how much computat
 
 
 % some more, see below
-\subsubsection{Optimality-based approaches}
+%\subsubsection{Optimality-based approaches}
 
-For discrete-time systems, \cite{sakamoto2024data} proposes 
-a data-driven \(h^2\) model reduction technique leveraging the
-discrete-time Lyapunov and Sylvester equations, deriving 
-the data-driven gradient.
+%For discrete-time systems, \cite{sakamoto2024data} proposes 
+%a data-driven \(h^2\) model reduction technique leveraging the
+%discrete-time Lyapunov and Sylvester equations, deriving 
+%the data-driven gradient.
 
 \subsubsection{Modal decomposition methods}
 
@@ -700,7 +708,8 @@ contain the essential information about the system's evolution and can be used t
 
 \subsection{Topology Identification and Decomposition}
 
-
+Whereas system identification seeks compact dynamic representations,
+topology identification extends this goal to structural discovery.
 In large scale systems, the goal of modeling is often to 
 identify a sparse structure therein. This lies the necessary basis for popular 
 decentralised and distributed control techniques~\cite{ocampo2011partitioning}.
@@ -789,9 +798,13 @@ and spectral clustering on dynamic interaction graphs~\cite{TANG20187}.
 
 \subsection{Koopman lifting for Nonlinear Subsystems}
 
-One approach is to lift the nonlinear system into 
-a higher-dimensional (possibly infinite) linear space via the Koopman operator, then apply linear data methods.
-The Koopman operator \(\mathcal{K}_f: \mathcal{F} \to \mathcal{F}\) associated with the state transition map \(f: X\to X\) 
+Most system and topology identification methods operate within
+the original state space, limiting expressiveness when dynamics
+are strongly nonlinear. Koopman lifting overcomes this by embedding
+the nonlinear system into a higher-dimensional, approximately linear space,
+allowing the reuse of linear data-driven tools within nonlinear regimes.
+
+Formally, the Koopman operator \(\mathcal{K}_f: \mathcal{F} \to \mathcal{F}\) associated with the state transition map \(f: X\to X\) 
 and the Banach space \(\mathcal{F}\) of observables \(g: X \to \mathbf{C}\) is defined through the composition:
 
 \begin{equation}
@@ -848,6 +861,13 @@ though approximate kernel methods are a topic of active research~\cite{baddoo202
 
 \section{Scalable Model-Free Control}
 
+Instead of data-driven modeling, where data approximates the
+underlying system to enable model-based control, an orthogonal strand of research
+eliminates explicit modeling altogether. 
+Such model-free direct data-driven control paradigms, chiefly among them 
+Data-enabled Predictive Control (DeePC) and 
+Reinforcement Learning, 
+have received much attention lately.
 
 \subsection{Data-enabled Predictive Control (DeePC)}
 
@@ -1501,22 +1521,22 @@ the safe region, thereby guaranteeing closed-loop feasibility and safety.
 The safety guarantees thus stem from embedding experience-derived safe sets as terminal constraints in the hierarchical control scheme.
 
 
-\subsection{Higher Level Control}
-
-
-While most data-driven control efforts for 
-large-scale systems focus on the microscopic 
-level of node control, there is increasing 
-recognition that higher levels of abstraction 
-can provide leverage for scalability and robustness. 
-Specifically, edge control and structural control 
-have emerged as two promising approaches to orchestrating 
-collective behavior in complex systems~\cite{ControllingComplexSystem}. 
-These approaches shift attention from 
-direct state manipulation of individual nodes to 
-the design of interactions and the adaptation 
-of system topology, providing a macroscopic handle 
-on global dynamics.
+%\subsection{Higher Level Control}
+%
+%
+%While most data-driven control efforts for 
+%large-scale systems focus on the microscopic 
+%level of node control, there is increasing 
+%recognition that higher levels of abstraction 
+%can provide leverage for scalability and robustness. 
+%Specifically, edge control and structural control 
+%have emerged as two promising approaches to orchestrating 
+%collective behavior in complex systems~\cite{ControllingComplexSystem}. 
+%These approaches shift attention from 
+%direct state manipulation of individual nodes to 
+%the design of interactions and the adaptation 
+%of system topology, providing a macroscopic handle 
+%on global dynamics.
 
 
 %\subsubsection{Consensus/synchronization controllers and distributed optimization}
