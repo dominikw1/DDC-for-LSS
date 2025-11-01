@@ -418,19 +418,16 @@ NOTE: The background section is much more in a draft state than the other sectio
 Traditional control approaches largely followed the strategy of first deriving a model
 from first principles and afterwards building a controller upon it. 
 %A premier example of such an approach is MPC, model predictive control.
-Such model-based control can become intractible or inaccurate for complex systems, though~\cite{DDC_Overview}.
-
-\subsubsection{Classification}
-
-A fundamental delimination in data driven control can be made between model-based and model-free approaches. 
-In model-based methods, a model is learned from data - a process termed system identification (SI) - and, as in traditional control, a controller built upon it.
-Examples of techniques using this strategy are Koopman-theory~\cite{Korda_2018} and Gaussian process~\cite{Kocijan01122005} based approaches.
-
-In model-free control, the dynamics of the system are treated as a black box and the controller is directly built from the data~\cite{DDC_Overview}.
+Such model-based control can become intractible or inaccurate for complex large-scale systems, though~\cite{DDC_Overview}.
+%\subsubsection{Classification}
+A fundamental delimination in data driven control can be made between direct and indirect approaches. 
+In indirect methods, a model is learned from data - a process termed system identification (SI) - and, as in traditional control, a controller built upon it.
+%Examples of techniques using this strategy are Koopman-theory~\cite{Korda_2018} and Gaussian process~\cite{Kocijan01122005} based approaches.
+In direct data-driven control, the dynamics of the system are treated as a black box and the controller is directly built from the data~\cite{DDC_Overview}.
 
 
 
-\subsubsection{Advantages}
+%\subsubsection{Advantages}
 
 Data-driven approaches provide a range of benefits compared to traditional model-based ones. 
 System identification, the basis for indirect data-driven methods, has
@@ -440,7 +437,7 @@ the specific result then being domain-specific. SI further provides the practiti
 tools to fine-tune the accuracy required, as complexity tends to rise with more accurate models~\cite{behavioralDataDrivenControl}.
 
 
-\subsubsection{Disadvantages}
+%\subsubsection{Disadvantages}
 
 Despite their benefits, data-driven control methods 
 face several limitations. 
@@ -448,20 +445,16 @@ A central challenge is the heavy reliance on the
 quality and quantity of available data, insufficient or 
 noisy datasets having the potential to significantly 
 degrade the performance of the resulting controller~\cite{HOU20133}.
-
-
 %Further, data-driven methods often come with high computational 
 %demands, both in terms of learning and real-time operation, 
 %which limits their deployment in safety-critical 
 %or resource-constrained systems [6]. 
-
 Another drawback is the lack of interpretability and 
 transparency compared to physics-based models. 
 First-principles models typically allow direct 
 insight into the mechanisms driving system behavior, 
 black-box controllers derived purely from data can be 
 difficult to analyze or verify~\cite{Brunton_Kutz_2022}. 
-
 Finally, issues of robustness and generalization remain 
 open problems, as controllers trained on one operational 
 regime may fail to extrapolate reliably to unseen 
@@ -482,7 +475,7 @@ that exhibits emergent collective behavior which is not the simple summation of 
 
 
 Model-based control of such systems can be intractable to compute and sensitive to uncertainty~\cite{YU2025126253}.
-It has been shown that by imposing locality/separability, 
+It has been shown that by imposing locality or separability, 
 many large optimal control problems decompose into parallel local subproblems whose complexity does not grow with the total system size, 
 using techniques such as system-level synthesis~\cite{wang2017separablelocalizedlevelsynthesis}.
 Techniques used to handle control of large-scale and complex systems include
@@ -491,14 +484,9 @@ utilising non-centralised control architectures and including
 communication protocols and interconnects between individual subsystems into the control model.  
 
 
-\subsubsection{Model Order Reduction}
-
-The size and complexity of large scale systems can be hard to deal with.
-Model Order Reduction (MOR) methods tackle the problem of reducing their complexity.
-This technique attempts to generate
-reduced models reproducing the input-output behavior 
-of large-scale systems accurately.
-
+Model Order Reduction (MOR) methods tackle the problem of reducing the complexity of large-scale systems.
+This technique attempts to generate reduced models reproducing the input-output behavior 
+of large-scale systems accurately enough for the desired use-case.
 Traditional model reduction methods fall into two categories: SVD-based and moment matching methods.
 SVD-based techniques are related to the eponymous singular value decomposition.
 They core idea is the computation of controllability and observability 
@@ -506,7 +494,6 @@ Gramians, eliminating hard-to-reach and -observe states~\cite{lowenerIntro}.
 Their advantages include the preservation of stability and a computable error bound. 
 While work is being done to make them more efficient using approximations \cite{numSolutionLargeScale, prajapati2022model}, their resource requirements
 remain their main drawback~\cite{lowenerIntro}. A popular method in this class of MOR techniques is Balanced truncation (BT)~\cite{balancedtruncationOriginal}.
-
 Moment matching methods consider the problem of matching the coefficients of power
 series expansions of the transfer function at selected points, reducing model reduction
 to rational interpolation. They tend to be cheaper to compute than SVD-based methods, 
@@ -516,29 +503,90 @@ A prominent example are Krylov subspace methods~\cite{freund2003model}.
 %This distinction does not necessarily apply to the techniques themselves, though, but rather to their
 %implementation. 
 
+The second key approach taken to enable the control of large-scale sytems is the decomposition of the centralised
+control problem into smaller, more manageable control-tasks distributed to sub-controllers.
+A centralised controller often does not suffice for effectively controlling large 
+scale systems, the necessity of multiple controllers even being part of some definitions of large-scale sytems~\cite{kordestani2021recent}. 
+Depending on the interaction between the controllers, such approaches can
+be categorised into decentralised, distributed and hierarchical control architectures, in addition to hybrids thereof.[cite]
 
-\subsubsection{Control Architectures}
-
-A centralised controller tends to fail at effectively controlling large scale systems. Alternatives are strategies such as decentralised and distributed control...
-
-\subsubsection{Approaches for Control}
-
-The approaches taken for controlling large scale systems can roughly be categorised into three distinct levels: Node control, Edge control and Structural control~\cite{ControllingComplexSystem}.
-
-\paragraph{Node Control}
-
-Control at this level concerns itself with the immediate determination of dynamics of a subset of agents at the lowest, microscopic view.
-
-\paragraph{Edge Control}
-
-On this abstraction level, control works by dynamically adjusting the communication protocol between the individual agents.
-
-\paragraph{Structural Control}
-
-At the highest level, the network topology can be reshaped in order to guide behaviour at the macroscopic level.
-
+Control of large-scale sytems taken can roughly be categorised into three distinct levels: Node control, Edge control and Structural control~\cite{ControllingComplexSystem}.
+Node control concerns itself with the immediate determination of dynamics of a subset of agents at the lowest, microscopic view.
+Edge control works by dynamically adjusting the communication protocol between the individual agents.
+In structural control, the network topology can be reshaped in order to guide behaviour at the macroscopic level.
 Most works are concerned with node control, as this resembles the traditional single, small-system control the closest.
-Best results are usually achieved when considering them all though~\cite{ControllingComplexSystem}.
+While not all layers might be controllable for a specific use-case, such as the network topology being fixed and unchangeable, the best results are usually achieved when considering all levels~\cite{ControllingComplexSystem}.
+
+\subsection{Safety filters}
+
+%\subsection{Safety \& Certification}
+
+
+Ensuring safety and certifiability in remains one of the
+central challenges. 
+A system \(\dot{x}(t)  = f(x(t), u(t))\) is called safe if 
+
+\begin{equation}
+\forall t\in \mathbb{R}_{\geq 0} x(t) \in \mathcal{X} \land u(t) \in \mathcal{U}
+\end{equation}
+
+where \(\mathcal{X}\) and \(\mathcal{U}\) are the state constraint set and the input constraint set, respectively~\cite{10266799}.
+
+Unlike traditional model-based designs, 
+learning-driven controllers must operate under 
+epistemic uncertainty arising from limited data, 
+unmodeled dynamics, and distributional drift. 
+Consequently, a major strand of recent work focuses on 
+safety filters. These filters are supervisory mechanisms that ensure system 
+trajectories remain within a certified safe set, 
+even when the underlying controller or policy is learned. 
+Among these, three major methodological families 
+dominate current research: Control Barrier Function (CBF) 
+approaches, Reachability-based methods, and Predictive control 
+formulations~\cite{10266799}.
+
+%\subsubsection{Control barrier function (CBF) approaches}
+
+
+For a known control affine system \(\dot{x} = f(x)  + g(t)u\), a 
+Control Barrier Function can be defined as follows~\cite{jin2023robust}: 
+a continuously differentiable function \(h: \mathcal{X} \to \mathbb{R}\) 
+is a CBR if there exists an  extended class \(K_\infty\) function \(\alpha\):
+\begin{equation}
+\sup_{u\in \mathcal{U}} \dot{h}(x,u)\geq -\alpha(h(x))
+\end{equation}
+
+for all \(x\in\mathcal{X}\) where \(\dot{h}(x, u) = \nabla h(x)
+f(x) + \nabla h(x) g(x)u\).
+
+The key idea is that for the safety set \(S = \{x \in \mathcal{X} | \exists u \in \mathcal{U} \land h(x) \geq 0\}\),
+any Lipschitz continuous controller \(u(t)\) is safe~\cite{ames2016control}.
+
+
+%CBFs rely on
+%Lyapunov theory to determine inputs to a system that
+%ensure set invariance.
+
+%---
+%
+%
+%Hsu et al.~\cite{hsu2025statistical} introduce conformal robustness,  
+%robustifying finite-horizon stability
+%and safety guarantees in data-driven nonlinear dynamical
+%systems.
+%Through a conformally robust control Lyapunov
+%function (CR-CLF) and control barrier function (CR-CBF), 
+%systematic closed-loop control designs with provable 
+%finite-horizon stability and safety guarantees are enabled.
+
+
+%\subsubsection{Reachability-based approaches}
+
+%based on a set-based propagation
+%of all possible system trajectories determined by the
+%system inputs and disturbances.
+
+%\subsubsection{Predictive control approaches}
 
 
 
@@ -1298,6 +1346,27 @@ decentralized local correction at each node which ensures the system stays robus
 %https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10025385&casa_token=qjvIbDAx4-IAAAAA:M_4c8XzQjozwgwnYrNPirBtIXLgr0FI3ZlBIOL4bbFzo0MrfkKRA-L2I-HbvmhhS9Utle5M0ykQ&tag=1
 
 
+Recent work in distributed hierarchical control
+emphasises certifiable safety through layered protocols
+that ensure safe interaction among agents under
+communication and dynamic coupling.
+\cite{khaledi2025data} constrains a direct data-driven distributed controller for multi agent systems
+via Control Barrier Functions incorporating quadratic programming optimisations. 
+The online computational complexity is dominated by the interior-point QP, which is, for \(m_i\) being the control input
+dimension for agent \(i\), \(\mathcal{O}((\sum_im_i)^3)\) due to the factorization of
+the Karush-Kuhn-Tucker (KKT) system for dense data~\cite{ye1989extension}, making it suitable for suitable for real-time computation in moderately sized systems.
+
+\cite{convens2022safe} formulates a novel Trajectory-Tube
+Distributed Explicit Reference Governor (TT-D-ERG) approach for the control of aerial robot swarms.
+The core idea is to predict the future higher-order nonlinear dynamics and
+embed it in a time-varying safety tube, information about which is shared with the neighbours.
+They identified their technique to achieve provably safe constrained control of resource constrained
+UAV swarms, given its low requirements of computational resources and has little communication overhead, 
+scaling well for even large swarms.
+
+%\cite{shaham2024learning} presents a safe distributed certifiably stable neural network controller  for heterogeneous platoon control.
+
+
 \subsection{Hierarchical control}
 
 % A Data-driven Hierarchical Control Structure for Systems with Uncertainty
@@ -1457,10 +1526,10 @@ on global dynamics.
 
 
 
-\section{Safety \& Certification at Scale}
+%\section{Safety \& Certification at Scale}
 
-A continuing challenge in the field of data driven control remains the question of verifyable safety.
-In many application areas of control theory, guarantees are required for methods to have any use at all.
+%A continuing challenge in the field of data driven control remains the question of verifyable safety.
+%In many application areas of control theory, guarantees are required for methods to have any use at all.
 
 
 
@@ -1531,74 +1600,6 @@ In many application areas of control theory, guarantees are required for methods
 %
 %
 %
-\subsection{Safety \& Certification}
-
-
-Ensuring safety and certifiability in data-driven control 
-remains one of the central open challenges. 
-A system \(\dot{x}(t)  = f(x(t), u(t))\) is called safe if 
-
-\begin{equation}
-\forall t\in \mathbb{R}_{\geq 0} x(t) \in \mathcal{X} \land u(t) \in \mathcal{U}
-\end{equation}
-
-where \(\mathcal{X}\) and \(\mathcal{U}\) are the state constraint set and the input constraint set, respectively~\cite{10266799}.
-
-Unlike traditional model-based designs, 
-learning-driven controllers must operate under 
-epistemic uncertainty arising from limited data, 
-unmodeled dynamics, and distributional drift. 
-Consequently, a major strand of recent work focuses on 
-safety filters. These filters are supervisory mechanisms that ensure system 
-trajectories remain within a certified safe set, 
-even when the underlying controller or policy is learned. 
-Among these, three major methodological families 
-dominate current research: Control Barrier Function (CBF) 
-approaches, Reachability-based methods, and Predictive control 
-formulations~\cite{10266799}.
-
-\subsubsection{Control barrier function (CBF) approaches}
-
-
-For a known control affine system \(\dot{x} = f(x)  + g(t)u\), a 
-Control Barrier Function can be defined as follows~\cite{jin2023robust}: 
-a continuously differentiable function \(h: \mathcal{X} \to \mathbb{R}\) 
-is a CBR if there exists an  extended class \(K_\infty\) function \(\alpha\):
-\begin{equation}
-\sup_{u\in \mathcal{U}} \dot{h}(x,u)\geq -\alpha(h(x))
-\end{equation}
-
-for all \(x\in\mathcal{X}\) where \(\dot{h}(x, u) = \nabla h(x)
-f(x) + \nabla h(x) g(x)u\).
-
-The key idea is that for the safety set \(S = \{x \in \mathcal{X} | \exists u \in \mathcal{U} \land h(x) \geq 0\}\),
-any Lipschitz continuous controller \(u(t)\) is safe~\cite{ames2016control}.
-
-
-%CBFs rely on
-%Lyapunov theory to determine inputs to a system that
-%ensure set invariance.
-
----
-
-
-Hsu et al.~\cite{hsu2025statistical} introduce conformal robustness,  
-robustifying finite-horizon stability
-and safety guarantees in data-driven nonlinear dynamical
-systems.
-Through a conformally robust control Lyapunov
-function (CR-CLF) and control barrier function (CR-CBF), 
-systematic closed-loop control designs with provable 
-finite-horizon stability and safety guarantees are enabled.
-
-
-\subsubsection{Reachability-based approaches}
-
-%based on a set-based propagation
-%of all possible system trajectories determined by the
-%system inputs and disturbances.
-
-\subsubsection{Predictive control approaches}
 
 %e based on a receding-horizon open-loop optimal control problem, which is guaranteed to be solvable
 %and ensures constraint satisfaction at every control sampling time step. 
