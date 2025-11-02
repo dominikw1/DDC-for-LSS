@@ -542,10 +542,13 @@ unmodeled dynamics, and distributional drift.
 Consequently, a major strand of recent work focuses on 
 safety filters. These filters are supervisory mechanisms that ensure system 
 trajectories remain within a certified safe set, 
-even when the underlying controller or policy is learned. 
+even when the underlying controller or policy is learned. Formally, a safety filter 
+is a function \(\kappa: \mathbb{R}^{n_x}\times \mathbb{R}^{n_u}\to \mathcal{U}\)
+which transforms the control signal (\(u(t) = \kappa(x(t), u_{contr}(t))\)) determined by the controller \(u_{contr}\)
+such that safety constrants are respected and the modification is minimal, i.e. minimising \(\int_{0}^\infty||\kappa(x(t),u_{contr}(t))-u_{contr}(t)dt\).
 Among these, three major methodological families 
 dominate current research: Control Barrier Function (CBF) 
-approaches, Reachability-based methods, and Predictive control 
+approaches, Hamilton-Jacobi (HJ) reachability-based methods, and Predictive control 
 formulations~\cite{10266799}.
 
 %\subsubsection{Control barrier function (CBF) approaches}
@@ -564,6 +567,27 @@ f(x) + \nabla h(x) g(x)u\).
 
 The key idea is that for the safety set \(S = \{x \in \mathcal{X} | \exists u \in \mathcal{U} \land h(x) \geq 0\}\),
 any Lipschitz continuous controller \(u(t)\) is safe~\cite{ames2016control}.
+While CBFs traditionally rely on explicit system models, recent research
+has proven the viability of learning them from data as well~\cite{wang2022data,bajelani2025data}.
+
+
+Hamilton-Jacobi (HJ) reachability analysis computes the backward reachable tube
+(BRT), a collection of all initial states with trajectories eventually reaching a target set even under the worst-case disturbance.
+For safety, this target set can be the set of all unsafe states, the BRT then representing all potentially unsafe, to-be-avoided states~\cite{borquez2024safety}.
+While this approach is easily generalisable to many applications, scalability concerns can be a limiting factor~\cite{leeman2023predictive}.
+
+Predictive safety filters (PSFs) 
+enforce safety constraints by solving a constrained optimization problem that minimally corrects the nominal control input.
+At each time step, the filter predicts the future 
+system evolution over a finite horizon and ensures
+that all reachable states remain within the safety set.
+A key concept is the use of backup trajectories, feasible fallback control sequences that guarantee the system can return to a terminal safe set even if the nominal policy becomes unsafe. 
+By verifying the existence of such a backup trajectory
+before applying the proposed control,
+predictive safety filters ensure recursive feasibility and forward
+invariance of the safety set~\cite{milios2024stability}.
+
+% comparison: https://proceedings.mlr.press/v211/leeman23a/leeman23a.pdf
 
 
 %CBFs rely on
