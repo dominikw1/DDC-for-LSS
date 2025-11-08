@@ -1308,8 +1308,12 @@ and Nesterov-accelerated-gradient~\cite{8304602} approaches have been used succe
 
 For computational and operational efficiency reasons, constraining the communication of subsystems to a local neighbourhood
 can be advantageous. DLMPC~\cite{alonso2022distributed} and the corresponding data-driven formulation \(D^3\)LMPC~\cite{alonso2022data}
-use the System Level Synthesis (SLS) framework to generate a distributed model-predictive controller, which shares information only locally, the neighbourhood sizes being adjustable.
-This is achieved through a locality constraint on the system response, the result of the SLS reformulation.
+use the System Level Synthesis (SLS) framework~\cite{anderson2019system} to generate a distributed model-predictive controller, which shares information only locally, the neighbourhood sizes being adjustable.
+The SLS framework parameterizes the entire closed-loop system using two transfer matrices called system responses \(\{\Phi_x, \Phi_u\}\), such that 
+\(\begin{pmatrix}x\\u\end{pmatrix} = \begin{pmatrix}\Phi_x\\\Phi_u\end{pmatrix}w\), \(w\) being the exogenous disturbance.
+The data driven formulation uses Hankel matrices to replace to closed-form system responses~\cite{xue2021data}.
+DLMPC achieves the restriction of neighbourhood size, the maximum number of hops in the communication graph a subsystem can communicate with, 
+through a locality constraint on the system response.
 The data-driven DLMPC provides the same guarantees as the standard DLMPC, namely recursive feasibility, stability and convergence for both nominal and robust settings~\cite{alonso2023distributed}.
 
 \subsubsection{Multi-Agent RL (MARL)}
