@@ -945,12 +945,32 @@ algorithm formulations, decomposing the
 global DeePC optimization into coupled
 subproblems solved locally with limited coordination,
 improving scalability and communication efficiency~\cite{YU2024110360,10667672}.
-Kernel-based DeePC enables the control of nonlinear systems,
+
+Kernelized DeePC (RoKDeePC) enables the control of nonlinear systems,
 reformulating the optimisation as a nonconvex but
-structured minimization problem.~\cite{huang2023robust}.
+structured minimization problem.~\cite{huang2023robust}. 
+The core idea is to take the advantages of both robust predictive control and 
+regularised kernel methods, namely the non-parametric representation of nonlinear systems.
+Using a projected gradient descent algorithm, the optimal control action can be determined efficiently.
+
+Another recent work also using kernel functions considers an operator-based DeePC formulation, KerODeePC~\cite{de2025kernelized}.
+Jong et al. propose using a product reproducing-kernel Hilbert space (RKHS) 
+representation of the nonlinear operator that maps
+input and initial state to the output trajectory. The goal is to learn the
+operator \(G\), such that \(y=G(u)(x)\), where \(G(u)(x) =\Theta^*k_\otimes(u,x)\),
+\(k_\otimes\) being the product kernel function and \(\Theta^*\) being the value to optimise over.
+Based on this, a DeePC-style optimisation problem formulation can be stated, yielding 
+a computationally efficient approach to the control of non-linear systems.
+
 Recent works further address online computational efficiency through recursive
 and low-rank DeePC updates, allowing adaptive, 
 real-time control under streaming data constraints~\cite{shi2024efficient}.
+The DeePC formulation is transformed into a low-dimensional 
+form via Singular Value Decomposition (SVD). Then a fast SVD update mechanism is provided
+to avoid recomputing everything from scratch every time new data arrives.
+This drastically improves online use viability.
+
+
 
 \subsubsection{Robustness}
 
@@ -1231,6 +1251,7 @@ dDeeP-LCC~\cite{shang2024decentralized}, a decentralised formulation of DeePC, a
 
 \subsubsection{Robustness}
 
+[TODO]
 
 %https://pure.tue.nl/ws/portalfiles/portal/167568910/1312561_Anupama.pdf
 
@@ -1243,6 +1264,9 @@ As for model-based methods, \cite{baghaee2017decentralized} proposes a decentral
 
 
 \subsubsection{Safety}
+
+
+[TODO]
 
 \cite{zhang2023data} proposes a decentralised deep reinforcement learning approach with safety guaranteed by  embedded
 safe policy projection, restricting the action space and avoiding constraint violation.
@@ -1534,6 +1558,7 @@ safe-set so-called waypoints or regions informed by data-driven transfer of
 experience and the local layer running an MPC whose terminal set is
 the safe region, thereby guaranteeing closed-loop feasibility and safety.
 The safety guarantees thus stem from embedding experience-derived safe sets as terminal constraints in the hierarchical control scheme.
+
 
 
 %\subsection{Higher Level Control}
