@@ -549,7 +549,7 @@ trajectories remain within a certified safe set,
 even when the underlying controller or policy is learned. Formally, a safety filter 
 is a function \(\kappa: \mathbb{R}^{n_x}\times \mathbb{R}^{n_u}\to \mathcal{U}\)
 which transforms the control signal (\(u(t) = \kappa(x(t), u_{contr}(t))\)) determined by the controller \(u_{contr}\)
-such that safety constrants are respected and the modification is minimal, i.e. minimising 
+such that safety constraints are respected, and the modification is minimal, i.e. minimising 
 
 \begin{equation}
 \int_{0}^\infty||\kappa(x(t),u_{contr}(t))-u_{contr}(t)||dt
@@ -649,7 +649,7 @@ or impulse responses and produce a reduced representation of the system's dynami
 A widely-used approach is data-driven interpolatory model reduction.
 One such method, the Loewner framework, constructs a reduced linear
 model from transfer-function data or sampled impulse responses~\cite{gosea2021datadrivenmodelingcontrollargescale}.
-The main element of the Loewner framework is the Loewner Matrix. For two lists of complex number pairs \(u_i, v_i\) and \(\mu_j, \lambda_j\), it is defined as follows ~\cite{lowenerIntro}: 
+The main element of the Loewner framework is the Loewner Matrix. For two lists of complex number pairs \(u_i, v_i\) and \(\mu_j, \lambda_j\), it is defined as follows~\cite{lowenerIntro}: 
 
 $$\begin{pmatrix}
 \frac{v_1-w_1}{\mu_1-\lambda_1} & \dots & \frac{v_1-w_k}{\mu_1 - \lambda_k}\\
