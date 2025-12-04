@@ -487,16 +487,16 @@ communication protocols and interconnects between individual subsystems into the
 
 
 
-Model Order Reduction (MOR) methods tackle the problem of reducing the complexity of large-scale systems.
+Model Order Reduction methods tackle the problem of reducing the complexity of large-scale systems.
 This technique attempts to generate reduced models reproducing the input-output behavior 
 of large-scale systems accurately enough for the desired use-case.
-Traditional model reduction methods fall into two categories: SVD-based and moment matching methods.
+Traditional model reduction methods fall into two categories: Singular Value Decomposition (SVD)-based and moment matching methods.
 SVD-based techniques are related to the eponymous singular value decomposition.
 Their core idea is the computation of controllability and observability 
 Gramians, eliminating hard-to-reach and -observe states~\cite{lowenerIntro}. 
 Their advantages include the preservation of stability and a computable error bound. 
 While work is being done to make them more efficient using approximations \cite{numSolutionLargeScale, prajapati2022model}, their resource requirements
-remain their main drawback~\cite{lowenerIntro}. A popular method in this class of MOR techniques is Balanced truncation (BT)~\cite{balancedtruncationOriginal}.
+remain their main drawback~\cite{lowenerIntro}. A popular method in this class of model order reduction techniques is Balanced truncation (BT)~\cite{balancedtruncationOriginal}.
 Moment matching methods consider the problem of matching the coefficients of power
 series expansions of the transfer function at selected points, reducing model reduction
 to rational interpolation. They tend to be cheaper to compute than SVD-based methods, 
@@ -558,7 +558,7 @@ such that safety constraints are respected, and the modification is minimal, i.e
 
 Among these, three major methodological families 
 dominate current research: Control Barrier Function (CBF) 
-approaches, Hamilton-Jacobi (HJ) reachability-based methods, and Predictive control 
+approaches, Hamilton-Jacobi reachability-based methods, and Predictive control 
 formulations~\cite{10266799}.
 
 %\subsubsection{Control barrier function (CBF) approaches}
@@ -581,12 +581,11 @@ While CBFs traditionally rely on explicit system models, recent research
 has proven the viability of learning them from data as well~\cite{wang2022data,bajelani2025data}.
 
 
-Hamilton-Jacobi (HJ) reachability analysis computes the backward reachable tube
-(BRT), a collection of all initial states with trajectories eventually reaching a target set even under the worst-case disturbance.
-For safety, this target set can be the set of all unsafe states, the BRT then representing all potentially unsafe, to-be-avoided states~\cite{borquez2024safety}.
+Hamilton-Jacobi reachability analysis computes the backward reachable tube, a collection of all initial states with trajectories eventually reaching a target set even under the worst-case disturbance.
+For safety, this target set can be the set of all unsafe states, the backward reachable tube then representing all potentially unsafe, to-be-avoided states~\cite{borquez2024safety}.
 While this approach is easily generalisable to many applications, scalability concerns can be a limiting factor~\cite{leeman2023predictive}.
 
-Predictive safety filters (PSFs) 
+Predictive safety filters 
 enforce safety constraints by solving a constrained optimization problem that minimally corrects the nominal control input.
 At each time step, the filter predicts the future 
 system evolution over a finite horizon and ensures
@@ -639,8 +638,8 @@ where this decentralisation can be configured and is not forced by physical real
 \subsection{System Identification}
 
 As large-scale systems tend to produce system models that are
-unweildly to handle, data-driven model order reduction (MOR) techniques
-receive special attention~\cite{baumann2022data}. Data-driven MOR methods rely
+unweildly to handle, data-driven model order reduction techniques
+receive special attention~\cite{baumann2022data}. Data-driven model order reduction methods rely
 only on measured trajectories, frequency response data, 
 or impulse responses and produce a reduced representation of the system's dynamics.
 
@@ -675,7 +674,7 @@ are then directly computed from the projected Loewner matrices
 and the data vectors~\cite{lowenerIntro}. % double chekck
 
 
-Another interpolatory MOR technique is the AAA algorithm~\cite{nakatsukasa2018aaa}, which builds rational
+Another interpolatory model order reduction technique is the AAA algorithm~\cite{nakatsukasa2018aaa}, which builds rational
 approximants adaptively by selecting 
 interpolation points based on approximation error. 
 This method is attractive when only frequency response data is available, 
@@ -684,8 +683,7 @@ as it balances accuracy and model complexity with minimal user intervention.
 
 \subsubsection{Balanced truncation methods}
 
-
-Balanced truncation (BT)~\cite{balancedtruncationOriginal} is a widely successfully employed MOR technique for large systems~\cite{salehi2021mixed}, traditionally relying on controllability and observability Gramians and hence access to system matrices.
+Balanced truncation~\cite{balancedtruncationOriginal} is a widely successfully employed model order reduction technique for large systems~\cite{salehi2021mixed}, traditionally relying on controllability and observability Gramians and hence access to system matrices.
 A data-driven reformulation is presented in \cite{gosea2021datadrivenbalancinglineardynamical}.
 The fundamental insight driving this development is that BT does not use the Gramians directly,
 but rather their product, which can be approximated from data. The results of the numerical BT method 
@@ -703,10 +701,10 @@ can get arbitrary close to those of classical BT, depending on how much computat
 
 \subsubsection{Modal decomposition methods}
 
-Proper orthogonal decomposition (POD) is one of the most widely used dimensionality-reduction techniques in dynamical systems.
+Proper orthogonal decomposition is one of the most widely used dimensionality-reduction techniques in dynamical systems.
 The key idea is to approximate system trajectories by 
 projecting them onto a low-dimensional basis obtained directly from data.
-For a dataset \(X = [x_1x_2...x_m], x_i \in \mathbb{R}^n\), POD seeks an orthonormal basis
+For a dataset \(X = [x_1x_2...x_m], x_i \in \mathbb{R}^n\), proper orthogonal decomposition seeks an orthonormal basis
 \(U_r\in\mathbb{R}^{n\times r}\) that minimises the projection error 
 
 \begin{equation}
@@ -717,7 +715,7 @@ This optimization problem is solved by computing the singular value decompositio
 The dominant singular vectors define the reduced basis, and the singular values quantify the energy captured by each mode~\cite{eskew2023new}.
 
 
-A closely related algorithm is Dynamic Mode Decomposition is Dynamic Mode Decomposition (DMD).
+A closely related algorithm is Dynamic Mode Decomposition (DMD).
 Given snapshot pairs \(S^- = [x_1, ... , x_{m-1}]\) and \(S^+ = [x_2, ..., x_{m}]\), DMD approximates the system by finding
 a matrix \(A\) such that 
 
@@ -871,7 +869,7 @@ respectively.
 The core objective is to determine the best-fit linear 
 operator \(A\) such that \(Y \approx A X\). 
 To ensure robustness and manage high-dimensional data, the method 
-utilizes the Singular Value Decomposition (SVD) of the state
+utilizes the SVD of the state
 matrix \(X \approx U_r \Sigma_r V_r^*\) to project the 
 dynamics onto a rank-\(r\) subspace~\cite{kutz2016dynamic}. 
 The low-rank approximation of the Koopman operator is then calculated as
@@ -947,8 +945,8 @@ to unseen conditions, regularized DeePC formulations
 introduce penalties on the trajectory coefficients
 and slack variables, effectively mitigating overfitting
 to specific datasets~\cite{ramadan2025floodgates}.
-\cite{wang2024mechanical} adds a dimension reduction step to the traditional DeePC 
-technique, greatly improving scalability.
+Scalability can be improved greatly by adding a dimension reduction step to the traditional DeePC 
+technique~\cite{wang2024mechanical}.
 
 
 Its applicabiltiy to large-scale systems is primarily driven through 
@@ -980,7 +978,7 @@ greatly enhancing computational efficiency~\cite{huang2023robust}.
 
 
 Another recent work also using kernel functions considers an operator-based DeePC formulation, KerODeePC~\cite{de2025kernelized}.
-Jong et al. propose using a product reproducing-kernel Hilbert space (RKHS) 
+Jong et al. propose using a product reproducing-kernel Hilbert space
 representation of the nonlinear operator that maps
 input and initial state to the output trajectory. The goal is to learn the
 operator \(G\), such that \(y=G(u)(x)\), where \(G(u)(x) =\Theta^*k_\otimes(u,x)\),
@@ -992,7 +990,7 @@ Recent works further address online computational efficiency through recursive
 and low-rank DeePC updates, allowing adaptive, 
 real-time control under streaming data constraints~\cite{shi2024efficient}.
 The DeePC formulation is transformed into a low-dimensional 
-form via Singular Value Decomposition (SVD). Then a fast SVD update mechanism is provided
+form via SVD. Then a fast SVD update mechanism is provided
 to avoid recomputing everything from scratch every time new data arrives.
 This drastically improves online use viability.
 
@@ -1068,8 +1066,6 @@ transformed into a shorter set of data, being the basis for a lower-dimensional
 inferred controller than the original, decreasing the time complexity from \(O(L^6)\) to \(O(L^4)\), where \(L\) denotes a natural number valued design parameter of the algorithm~\cite{sadamoto2021fast}.
 
 
-\subsubsection{Offline Learning}
-
 A central distinction is to be made between online and offline RL.
 Traditionally, RL is viewed as an active
 learning process requiring interaction with the environment. 
@@ -1096,23 +1092,13 @@ Offline RL has also been extended to multi-agent and distributed settings. Count
 counterfactually determining conservative regularization
 for each agent separately and subsequently combining them linearly, leading to an overall conservative estimation~\cite{NEURIPS2023_f3f2ff95}.
 
-
-
-\subsubsection{Robustness}
-
-Generally, robustness approaches in Reinforcement Learning can be categorised into four classes, as proposed by Moos et al.~\cite{moos2022robust}:
-Transition robust methods adjust the transition probabilities between states,
-disturbance robust ones model uncertainty via external forces, 
-action robust techniques corrupt agents' outputs in order to redirect system transitions,
-and observation robust methods change the policy's perceived system state.
-In the transition uncertainty case, the maximisation problem presented in 
-\cref{eq:reinforcement} might be reformulated as follows~\cite{moos2022robust}, assuming an unknown transition matrix \(P\) to be fixed and lying within a known uncertainty set \(\mathcal{U}_P\):
+To achieve robustness in reinforcement learning, the maximisation problem presented in \cref{eq:reinforcement}.
+can be reformulated, depending on where the uncertainty is assumed to stem from~\cite{moos2022robust}. In the case of an unknown transition matrix \(P\), fixed and lying within a known uncertainty set \(\mathcal{U}_P\), this might look as follows:
 
 \begin{equation}
 \max_{\pi\in\Pi}\min_{P\in \mathcal{U}_P}\mathbb{E}_{P,\pi} \left[\gamma^t r(s_t,a_t)\right]
 \end{equation}
 
-\subsubsection{Safety}
 
 Since reinforcement learning approaches make random decisions in the process of exploration
 that can violate safety constraints and lead to unacceptable system behaviour, naive RL methods
@@ -1121,7 +1107,8 @@ One approach to safe RL is to utilise Lyapunov functions determined through line
 guarantee safety and robust learning~\cite{chow2018lyapunov}.
 An alternative methodology involves adding control barrier functions, dropping the reward to minus infinity in
 safety violation situations, ensuring the learned optimal control policy respects the safety bounds~\cite{vu2021barrier}.
-These CBFs can further be learned efficiently using neural networks, as demonstrated by \cite{yang2023model}.
+These CBFs can further be learned efficiently using neural networks, as demonstrated by \cite{yang2023model},
+improving this method's applicabiltiy to large-scale systems.
 A formal methods based approach presented in \cite{hasanbeig2020cautious} safety constraints 
 expressed in LTL guide the exploration. A key drawback of this, despite success in the safety dimension, is the necessity of manual 
 formulation of these constraints~\cite{gu2024review}. 
@@ -1166,10 +1153,7 @@ simply restricting the controllers from actively negotiating~\cite{bemporad2010d
 % https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10127863&casa_token=Ko36uD2854kAAAAA:ynMRD7IwURNZU4uS1boXJgMnyyIX5uHKjdMOfL0Iw4WQ6snn9hCol0oUsfaFqD-1IQBFxbjnBWaB9A
 
 
-
-
-\subsubsection{Decentralised Model Predictive Control}
-
+A natural approach to decentralised control is the extension of the popular MPC to this setting. 
 In general, data-driven MPC can be formulated as presented in \cite{berberich2024overview} for noise-free data:
 Given input-output data \(\{u_k^d, y_k^d\}_{k=0}^{N-1}\) and the goal 
 of tracking a setpoint \((u^s, y^s)\) under the constraints \(u_k\in \mathbf{U}, y_k\in \mathbf{Y} \forall k\in \mathbf{I}_{\geq 0}\),
@@ -1215,7 +1199,7 @@ cost matrices \(Q\) and \(R\), constraint sets \(\mathbf{U}\) and \(\mathbf{Y}\)
 for each timestep, the optimisation problem can be solved and the first optimal input component applied to the system, repeating until convergence~\cite{berberich2024overview}.
 
 To illustrate the changes in a decentralised MPC method,
-the (linear) dynamics of the the \(i\)th subsystem controller in a model-based view could be described as~\cite{kofler2022agent}
+the linear dynamics of the the \(i\)th subsystem controller in a model-based view could be described as~\cite{kofler2022agent}
 
 \begin{equation}
 \dot{x}_i = Ax_i + B u_i +Ex_c
@@ -1271,11 +1255,11 @@ dDeeP-LCC~\cite{shang2024decentralized}, a decentralised formulation of DeePC, a
 %a core open problem.
 
 
-\subsubsection{Robustness}
-
 
 %https://pure.tue.nl/ws/portalfiles/portal/167568910/1312561_Anupama.pdf
 %https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10810289&casa_token=0MxFKu6tynsAAAAA:28_1yQLNbASP1_ldp1jf39HW8Ol3EEJ7Ru8A81yKw7theSVp4tLAlQepsyR-KnBVNG77H6e85PvPxw
+
+\subsubsection{Robustness}
 
 Robustness in decentralized data-driven control addresses 
 the challenges of uncertainty in subsystem interactions and
@@ -1393,13 +1377,13 @@ despite only implicitly gaining information from the other subcontrollers, no di
 being available, safety hence having to be enforced locally and independently.
 
 
-\cite{zhang2023data} proposes a decentralised deep reinforcement learning approach for Inverter-Based Renewable Energy Sources.
+Zhang et al.~\cite{zhang2023data} propose a decentralised deep reinforcement learning approach for Inverter-Based Renewable Energy Sources.
 Its safety is guaranteed via an embedded safe policy projection mechanism, a kind of safety filter.
 This approach operates by decoupling the learning process from constraint 
 adherence, 
-integrating a Guaranteed Safety Controller (GSC) 
+integrating a Guaranteed Safety Controller
 directly into the action selection loop of each local deep reinforcement learning agent (DRL).
-The GSC uses real-time local state measurements and
+The Guaranteed Safety Controller uses real-time local state measurements and
 analytical system knowledge to dynamically calculate a
 Safety-Critical Action Set (SCAS), which is the
 provably non-violating range of control inputs for that specific instant.
@@ -1417,8 +1401,8 @@ long-term optimality is data-driven, but the hard safety
 boundaries are model-derived and known a priori.
 
 As an alternative approach, the model-dependance can be
-removed via integrating a Graph Neural Network (GNN), as shown in ~\cite{hashemnezhad5371728safe} for the purpose of fast, local power flow estimation.
-This GNN is trained on historical data to serve as a data-driven safety predictor, quickly estimating the effect of the agent's proposed action on local state variables.
+removed via integrating a graph neural network, as shown in ~\cite{hashemnezhad5371728safe} for the purpose of fast, local power flow estimation.
+This graph neural network is trained on historical data to serve as a data-driven safety predictor, quickly estimating the effect of the agent's proposed action on local state variables.
 The estimated state is then checked against the operational constraints. 
 If a violation is predicted, a separate 
 DNN-based action correction mechanism modifies the agent's 
@@ -1462,20 +1446,20 @@ overcome the sub-optimality of non-Iterative
 methods by repeatedly exchanging information until a
 consensus or near-optimal solution is reached~\cite{wu2024iterative}. 
 To realise this efficiently, decomposition techniques such as the alternating
-direction method of multipliers (ADMM)~\cite{rostami2017admm}, the dual fast gradient method~\cite{wu2024iterative}
+direction method of multipliers~\cite{rostami2017admm}, the dual fast gradient method~\cite{wu2024iterative}
 and Nesterov-accelerated-gradient~\cite{8304602} approaches have been used successfully.
 
 For computational and operational efficiency reasons, constraining the communication of subsystems to a local neighbourhood
 can be advantageous. DLMPC~\cite{alonso2022distributed} and the corresponding data-driven formulation \(D^3\)LMPC~\cite{alonso2022data}
-use the System Level Synthesis (SLS) framework~\cite{anderson2019system} to generate a distributed model-predictive controller, which shares information only locally, the neighbourhood sizes being adjustable.
-The SLS framework parameterizes the entire closed-loop system using two transfer matrices called system responses \(\{\Phi_x, \Phi_u\}\), such that 
+use the system level synthesis framework~\cite{anderson2019system} to generate a distributed model-predictive controller, which shares information only locally, the neighbourhood sizes being adjustable.
+The system level synthesis framework parameterizes the entire closed-loop system using two transfer matrices called system responses \(\{\Phi_x, \Phi_u\}\), such that 
 \(\begin{pmatrix}x\\u\end{pmatrix} = \begin{pmatrix}\Phi_x\\\Phi_u\end{pmatrix}w\), \(w\) being the exogenous disturbance.
 The data-driven formulation uses Hankel matrices to replace to closed-form system responses~\cite{xue2021data}.
 DLMPC achieves the restriction of neighbourhood size, the maximum number of hops in the communication graph a subsystem can communicate with, 
 through a locality constraint on the system response.
 The data-driven DLMPC provides the same guarantees as the standard DLMPC, namely recursive feasibility, stability and convergence for both nominal and robust settings~\cite{alonso2023distributed}.
 
-\subsubsection{Multi-Agent RL (MARL)}
+\subsubsection{Multi-Agent RL}
 
 In Multi-Agent RL, each agent controls a subsystem 
 and must learn policies in a partially observable environment while interacting with other agents.
@@ -1495,12 +1479,12 @@ efficiently control in a centralised fashion~\cite{chu2019multi}.
 %\end{equation}
 
 A central distinction is to be made between 
-centralized training with decentralized execution (CTDE) and decentralized training with
-decentralized execution (DTDE). 
-In CTDE, agents can freely communicate during the learning phase, which is performed by a centralised
+centralized training with decentralized execution and decentralized training with
+decentralized execution. 
+In centralized training with decentralized execution, agents can freely communicate during the learning phase, which is performed by a centralised
 algorithm. The policies are, however, executed in a decentralised fashion, agents communicating only via 
 restricted channels~\cite{foerster2016learning}.
-In DTDE, independent learners train policies without explicitly modeling other 
+In decentralized training with decentralized execution, independent learners train policies without explicitly modeling other 
 agents, which provides improved scalability~\cite{du2021survey}.
 
 
@@ -1549,14 +1533,14 @@ modelling assumptions.
 
 
 Event-triggered data-driven distributed control has found application in a variety of areas.
-\cite{bu2025event} developed a data-driven control algorithm
+Bu et al.~\cite{bu2025event} develop a data-driven control algorithm
 for multimicrogrid interconnected systems with time delays, 
 triggering communication only when the control error exceeds a tunable threshold,
 proving convergence via Lyapunov theory.
-\cite{10337762} proposes a method for connected heterogeneous vehicle platoon control
+Zhu et al.~\cite{10337762} propose a method for connected heterogeneous vehicle platoon control
 considering sensor faults, network resource usage minimised through the effective use of triggering conditions.
-\cite{yu2023distributed} develops an iterative learning approach for the control of 
-Multiple High-Speed Trains (MHSTs) with sitching topologies, proving 
+Yu et al.~\cite{yu2023distributed} develop an iterative learning approach for the control of 
+Multiple High-Speed Trains with sitching topologies, proving 
 stability and reduced bandwidth occupancy while retaining
 sufficient performance.
 
@@ -1580,8 +1564,8 @@ A robust distributed model-free controller is constructed in \cite{li2022robust}
 for the domain of volt/VAR regulation over power distribution networks. 
 Each local agent uses robust regression 
 to mitigate bad measurement data
-and iteratively updates its control strategy via a distributed ADMM
-algorithm enhanced with Nesterov acceleration, enabling scalability. 
+and iteratively updates its control strategy via a distributed alternating
+direction method of multipliers algorithm enhanced with Nesterov acceleration, enabling scalability. 
 Efficient robustness is hence achieved via the model-free, data-driven feedback loop
 which tolerates measurement errors and model mismatch,
 the distributed optimization architecture where only limited peer exchange is required and convergence is accelerated, and
@@ -1598,14 +1582,14 @@ Recent work in distributed hierarchical control
 emphasises certifiable safety through layered protocols
 that ensure safe interaction among agents under
 communication and dynamic coupling.
-\cite{khaledi2025data} constrains a direct data-driven distributed controller for multi agent systems
+Khaledi et al.~\cite{khaledi2025data} constrain a direct data-driven distributed controller for multi agent systems
 via Control Barrier Functions incorporating quadratic programming optimisations. 
 The online computational complexity is dominated by the interior-point QP, which is, for \(m_i\) being the control input
 dimension for agent \(i\), \(\mathcal{O}((\sum_im_i)^3)\) due to the factorization of
-the Karush-Kuhn-Tucker (KKT) system for dense data~\cite{ye1989extension}, making it suitable for suitable for real-time computation in moderately sized systems.
+the Karush-Kuhn-Tucker system for dense data~\cite{ye1989extension}, making it suitable for suitable for real-time computation in moderately sized systems.
 
-\cite{convens2022safe} formulates a novel Trajectory-Tube
-Distributed Explicit Reference Governor (TT-D-ERG) approach for the control of aerial robot swarms.
+Alternatively, a novel Trajectory-Tube
+Distributed Explicit Reference Governor approach can be formulated, as shown on the example of control of aerial robot swarms~\cite{convens2022safe}.
 The core idea is to predict the future higher-order nonlinear dynamics and
 embed it in a time-varying safety tube, information about which is shared with the neighbours.
 They identified their technique to achieve provably safe constrained control of resource constrained
@@ -1655,7 +1639,7 @@ improved modularity~\cite{maestre2014distributed}.
 
 \subsubsection{Data-driven hierarchical model predictive control}
 
-Hierarchical Model Predictive Control (HMPC) extends MPC to a multi-level framework, where upper layers solve relaxed or aggregated optimization problems whose 
+Hierarchical Model Predictive Control extends MPC to a multi-level framework, where upper layers solve relaxed or aggregated optimization problems whose 
 outputs guide lower layers~\cite{SCATTOLINI2009723}. 
 
 \cite{shi2020data} presents an indirect data-driven hierarchical control structure for systems operating under uncertainty.
@@ -1670,14 +1654,14 @@ global vehicle repositioning and the lower layer applies local DeePC to individu
 
 \subsubsection{Reinforcement Learning}
 
-One of the early papers in the field of hierarchical reinforcement learning (HRL) was \cite{singh1992transfer},
+One of the early papers in the field of hierarchical reinforcement learning was \cite{singh1992transfer},
 proposes a technique of decomposing tasks, solving them individually using Q-modules and sharing solutions across multiple composite tasks,
-laying the groundwork for the widely successful HRL framework. 
+laying the groundwork for the widely successful hierarchical reinforcement learning framework. 
 
 % defintiion for HRL https://arxiv.org/pdf/2011.04752
 
 Formally, given a high-level controller \(Q_1\) declaring the subgoal \(g\) and the lower-level controller \(Q_2\) generating the corresponding action \(a\),
-HRL can be expressed as follows~\cite{naveed2021trajectory}, where \(Y\) denotes the Bellman Target:
+hierarchical reinforcement learning can be expressed as follows~\cite{naveed2021trajectory}, where \(Y\) denotes the Bellman Target:
 
 \begin{equation}
 Y_t^{Q^1} = \sum_{t'=t+1}^{t+1+N} R_{t'} + \gamma \max_g(s_{t+1+N},g)
@@ -1688,7 +1672,7 @@ Y_t^{Q^2} = R_{t+1} + \gamma \max_aQ(s_{t+1}, a| g)
 \end{equation}
 
 
-Applying HRL naively to large-scale systems can lead to computational inefficiency and convergence difficulties due to the inherent challenge of a high-dimensional action space,
+Applying hierarchical reinforcement learning naively to large-scale systems can lead to computational inefficiency and convergence difficulties due to the inherent challenge of a high-dimensional action space,
 leading to a trend towards combining hierarchical and distributed reinforcement learning, intending to reduce task complexity and accelerate training speeds.
 One such work is \cite{chen2023distributed}, a distributed hierarchical controller using deep reinforcement learning.
 The authors develop a new framework coined hierarchical reduction reinforcement learning (HR2L),
@@ -1772,7 +1756,7 @@ bounded invariance through reachability-based compensation.
 \subsubsection{Safety}
 
 
-Hierarchical Multi-Agent Reinforcement Learning (HMARL) 
+Hierarchical Multi-Agent Reinforcement Learning 
 can be made to provide near-perfect safety guarantees
 using Control Barrier functions,
 addressing the control problem at the level of learning joint cooperative behavior
