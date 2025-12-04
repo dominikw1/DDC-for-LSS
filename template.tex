@@ -358,7 +358,7 @@
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
 % Do not put math or special symbols in the title.
-\title{Data Driven Control for Large Scale Systems: \\ A Survey}
+\title{Data-Driven Control for Large-Scale Systems: \\ A Survey}
 
 
 % author names and affiliations
@@ -366,7 +366,7 @@
 % affiliations
 \author{\IEEEauthorblockN{Dominik M. Weber}
 \IEEEauthorblockA{Technical University of Munich\\
-Email: dominik.m.weber@gmail.com}}
+Email: dominik.m.weber@tum.de}}
 
 % conference papers do not typically use \thanks and this command
 % is locked out in conference mode. If really needed, such as for
@@ -406,14 +406,12 @@ The abstract goes here.
 
 \section{Introduction}
 
-\section{Background}
-
 %https://pdf.sciencedirectassets.com/791905/AIP/1-s2.0-S3050744825000106/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjELX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIEz4%2B%2Fkg9Y5%2FYfr7WeX1j8hZzSBIxjzt%2F%2Fap0%2FUOg3WEAiEA4aYwbCOiunuCF06Ku81ibq2LB27GQopCbdVd6TbNqaoqsgUIfhAFGgwwNTkwMDM1NDY4NjUiDGYg1FEumCZ7KGm%2BQiqPBd7779jTpyZpw3qHgX1UfChGnifRyLmU6Gx758auDRTE1lfE7xkFXShjmgEgD%2B4L1j0AZX%2BAqNv9iCAs1ufDJhpwuvn0MvJJsZWO%2Bam59GIjw9frUa8n0tpkEq9DPt%2F1L1XJJGTquEohPSaxpOMf7KenCa58IIs59L3erXOdaJR590sBMZeOcnKShlaUflkdmThvBHGS4Qrh6XaOg9phH2N0TU%2BReFbEqoslLTXLrogoGMGnBofRtSbwWL2PXHz7peR9WZLF10xHnmuXaxBm2lEtcznFlPp9okAIRlG8dtUcdmjrJoosewBxcwmY%2BrVGKIWOJJQLY%2BDXRSRHxVX7EMwaL%2FNRkjgjN3tHI9K7jsnMDR0iCT5L4ww6uq9CYs4%2FSQPynvWuxfCHYspPCt1o%2By79AgrTLFINXJj2bocRxPU5%2BZoKIHtXTahwp0XpSU078%2FkVGTTLalzlOi8Bs4NZOdQyFihoLwxvw7FOO7bN4tTCQp9h5wjh0WzLxo3lpSGenZL7qWctaEJ67RRQlfsJHnetBTFWDarmnUyvtIz2M5H92e%2FE6yGo4Bu1BfIx%2Bodbyfoe46H%2BdpzfUd8NwWsuSeWSL5NblSq6zjo8B1go44W65rAIjbtrjmqs%2BFeCWJ0lEvEnbJpf8E7rqkjHOGUgpiXZv2FVHlDlLnIjakhGLfa%2ByWc%2FFqHnZCKtDZkA%2FQMQ8LNaIsH1YYPDaWHD00otZO2kC3YEQQQM2emRBsS8sPMmyMhEja2QVL3NtPt8LsPTuzoT2DB7PNVMS9%2B1qli9wgvXaAEbCJjVi9aodbHXJuEmundCS%2FKKnMQYy%2Fv28nM4EBQlt%2Bd8pC0oMGt4tPB0jhzuohzvd4dpr6egxmddlbgw2PPhyAY6sQHDSwSxUhMSCj5VuxEUEG1UxwonZ2FwzcfGx%2FHBwqoFOiAhAXTQ3QuZIuK0jvjaEGv9A8OSwb8fed8PKnPAPu%2Fm4aBv6pNUrQ9YgJBG3LnwhFeAOt%2FPTG7uBGwM8DDrh5Q4iRX%2BpQK%2BIVixdTF7diwZBEi97rJEJxHHYxSr%2Bh8dNkHXFVckNU2YqyBYx8bCdIaqWXEHMRkTinweb1QKBhGvele3avTo0B7h4yosoFNcYDc%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20251115T133547Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYUDP3E2MG%2F20251115%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=7c858a985fd1ace403ab7d9dd6fecf198999ddf5aa63f02e2cd87e3b4f70cd82&hash=e7d7780dacefe8dec9e39cada7c3e505326ce01c09b4833e54846d2ff3637589&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S3050744825000106&tid=spdf-6398be90-0a83-4ff8-8643-f0e0edb80f3f&sid=d24a09c8193a7449834b42f3eb10962b751egxrqb&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&rh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=1e035f5d070552545056&rr=99ef22439c1203b8&cc=de&kca=eyJrZXkiOiJQdytLUUt5amQ0VTlHdjRwK1pvcENpeVF0QVllZjFKdHZaSGFaZDN4R05MRk42ekwxRTV4ZWZPMWNpNFhaT2tkeWhFZ2ViVDc0OFJubTQzKzlvMDJMTWFvOExUN2tqQ2VmM3Q5RGwwN2pvUk5zMUJ1dmFZSWRDckthRUhGdk5NUmNlV3haRzh6Z21GaExzMGJCb3RmQ3ExYzJkQXZMd01UYnFLaVdJaWV5ME4xVjZYUm82TT0iLCJpdiI6IjFjYWNiYTQ5NDc4NWJlZjM0ODE2MjUyMGE4MzgzOGJjIn0=_1763213765135
 
 
 
 % no \IEEEPARstart
-\subsection{Data Driven Control}
+\subsection{Data-Driven Control}
 
 
 
@@ -422,7 +420,7 @@ from first principles and afterwards building a controller upon it.
 %A premier example of such an approach is MPC, model predictive control.
 Such model-based control can become intractible or inaccurate for complex large-scale systems, though~\cite{DDC_Overview}.
 %\subsubsection{Classification}
-A fundamental delimination in data driven control can be made between direct and indirect approaches. 
+A fundamental delimination in data-driven control can be made between direct and indirect approaches. 
 In indirect methods, a model is learned from data - a process termed system identification (SI) - and, as in traditional control, a controller built upon it.
 %Examples of techniques using this strategy are Koopman-theory~\cite{Korda_2018} and Gaussian process~\cite{Kocijan01122005} based approaches.
 In direct data-driven control, the dynamics of the system are treated as a black box and the controller is directly built from the data~\cite{DDC_Overview}.
@@ -464,10 +462,10 @@ conditions~\cite{ramadan2025floodgatescontaindeepclimit}.
 
 %For large and complex systems, automatic system identification hence   
 
-\subsection{Large Scale Systems}
+\subsection{Large-Scale Systems}
 
 
-Large Scale Systems do not have a single clear definition.
+Large-Scale Systems do not have a single clear definition.
 The term is rather used whenever a system grows unweildly to control with traditional strategies.
 It is further often used synonymously with complex system, a system consisting of multiple interacting units 
 that exhibits emergent collective behavior which is not the simple summation of its parts~\cite{ControllingComplexSystem}.
@@ -528,9 +526,12 @@ While not all layers might be controllable for a specific use-case, such as the 
 
 The inherent complexity of large-scale systems not only
 challenges tractability but also exacerbates
-safety and certification concerns. 
+safety and certification concerns.
 As data-driven controllers replace interpretable physics-based models,
-formal guarantees must often be reintroduced.
+formal guarantees must often be reintroduced. 
+This section serves as an introduction to safety filters,
+a popular approach for achieving formal guarantees in data-driven large-scale systems~\cite{zhang2023data, ahmad2025hierarchical,khaledi2025data}. 
+
 A system \(\dot{x}(t)  = f(x(t), u(t))\) is called safe if 
 
 \begin{equation}
@@ -627,7 +628,7 @@ invariance of the safety set~\cite{milios2024stability}.
 
 
 
-\section{Scalable Data-Driven Modeling}
+\section{Data-Driven Modeling}
 
 To enable indirect data-driven control techniques, a model of the to be controlled system needs to be
 identified. Techniques in this section are also crucial for direct methods, however, as
@@ -741,10 +742,12 @@ contain the essential information about the system's evolution and can be used t
 
 \subsection{Topology Identification and Decomposition}
 
-Whereas system identification seeks compact dynamic representations,
-topology identification extends this goal to structural discovery.
-In large scale systems, the goal of modeling is often to 
-identify a sparse structure therein. This lies the necessary basis for popular 
+An aspect of system identification central for large-scale systems is
+topology identification. Whereas classical SI seeks simply to determine 
+compact dynamic representations, topology identification 
+aims to discover structural information about the subcomponents of the system. 
+In large-scale systems, the goal of modeling is often to 
+identify a sparse structure therein. This lays the necessary basis for popular 
 decentralised and distributed control techniques~\cite{ocampo2011partitioning}.
 Formally, given a 
 set of variables \(V\), a directed graph \(\mathcal{G} = (V,\mathcal{E})\) 
@@ -756,7 +759,7 @@ different interacting subsystems.
 The two primary decomposition methodologies are physical and numerical. 
 In the former, the subsystems are defined by the physical components of the system, such as individual robots in a swarm~\cite{bakule2012decentralized}.
 The latter imposes the structure based on computational reasons,
-an approach more suited for large scale systems, as obtaining partitions by physical reasoning can become intractible~\cite{ocampo2011partitioning}.
+an approach more suited for large-scale systems, as obtaining partitions by physical reasoning can become intractible~\cite{ocampo2011partitioning}.
 
 A widely adopted approach is the Sparse Identification of Nonlinear Dynamics (SINDy) framework~\cite{sindy}.
 It constructs a library of candidate nonlinear functions \(\Theta(X)\) 
@@ -883,7 +886,7 @@ though approximate kernel methods are a topic of active research~\cite{baddoo202
 
 
 
-\section{Scalable Model-Free Control}
+\section{Model-Free Control}
 
 Instead of data-driven modeling, where data approximates the
 underlying system to enable model-based control, an orthogonal strand of research
@@ -893,9 +896,9 @@ Data-enabled Predictive Control (DeePC) and
 Reinforcement Learning, 
 have received much attention lately.
 
-\subsection{Data-enabled Predictive Control (DeePC)}
+\subsection{Data-enabled Predictive Control}
 
-Data-enabled Predictive Control (DeePC)~\cite{coulson2019data} is 
+Data-enabled Predictive Control~\cite{coulson2019data} is 
 a model-free control framework that extends 
 the principles of Model Predictive Control (MPC) 
 to a purely data-driven setting.
@@ -948,19 +951,33 @@ to specific datasets~\cite{ramadan2025floodgates}.
 technique, greatly improving scalability.
 
 
-Its applicabiltiy to large scale systems is primarily driven through 
+Its applicabiltiy to large-scale systems is primarily driven through 
 distributed and hierarchical DeePC
 algorithm formulations, decomposing the 
 global DeePC optimization into coupled
 subproblems solved locally with limited coordination,
 improving scalability and communication efficiency~\cite{YU2024110360,10667672}.
 
-Kernelized DeePC (RoKDeePC) enables the control of nonlinear systems,
-reformulating the optimisation as a nonconvex but
-structured minimization problem.~\cite{huang2023robust}. 
-The core idea is to take the advantages of both robust predictive control and 
-regularised kernel methods, namely the non-parametric representation of nonlinear systems.
-Using a projected gradient descent algorithm, the optimal control action can be determined efficiently.
+Kernelized DeePC (RoKDeePC)~\cite{huang2023robust} enables the efficient control of nonlinear systems.
+It uses a nonparametric predictor of future outputs over a horizon by embedding data into a reproducing-kernel Hilbert space,
+seeking a function \(f\in \mathcal{H}\) minimizing a regularized least-squares objective of the form
+
+\begin{equation}
+f^* = \argmin_{f\in\mathcal{H}}\sum_{j=1}^N ||y_j-f(z_j)||^2 + \gamma||f||_\mathcal{H}^2
+\end{equation}
+
+where \(z_j\) is a suitably defined past-input/output regressor, \(\gamma\) a regularization parameter
+and \(|| ||_\mathcal{H}\) the reproducing-kernel Hilbert space norm. 
+By the representer theorem~\cite{scholkopf2001generalized}, \(f^*\) can be written as 
+\(f^*(\cdot) = \sum_{j=1}^N \alpha_jk(z_k, \cdot)\) for some coefficients \(\alpha_j\), where \(k\) is the chosen kernel.
+
+Given this predictor, control is then formulated as a robust min-max optimization over disturbance sets on inputs and outputs.
+To efficiently solve this problem generally non-convex in \(u\), customized gradient descent methods tailored to the RoKDeePC structure are proposed.
+These utilise the separable structure of the decision variables by performing projected gradient steps on the input \(u\)
+while solving the predictor variable exactly via its convex subproblem. If output constraints are inactive,
+a closed-form solution using only linear mappings can be determined,
+greatly enhancing computational efficiency~\cite{huang2023robust}.
+
 
 Another recent work also using kernel functions considers an operator-based DeePC formulation, KerODeePC~\cite{de2025kernelized}.
 Jong et al. propose using a product reproducing-kernel Hilbert space (RKHS) 
@@ -980,29 +997,15 @@ to avoid recomputing everything from scratch every time new data arrives.
 This drastically improves online use viability.
 
 
-
-\subsubsection{Robustness}
-
-Robust DeePC variants employ
-distributional robustness concepts,
-e.g., Wasserstein ambiguity sets or
-chance-constrained formulations,
-to ensure performance under measurement
-noise and modeling uncertainty~\cite{coulson2019regularized}.
-\cite{huang2023robust} proposes a computationally tractable reformulation of DeePC's traditional min-max optimisation
+DeePC-style control can be made robust, as proposed in \cite{huang2023robust}, 
+a computationally tractable reformulation of DeePC's traditional min-max optimisation
 problem via uncertainty sets, providing performance guarantees for the open-loop realized input/output cost.
-For partially known systems, hybrid data-enabled predictive control (HDeePC)~\cite{watson2025hybrid}
+For partially known systems, hybrid data-enabled predictive control~\cite{watson2025hybrid}
 presents an approach providing improved computational cost and robustness
 via an inclusion of model knowledge into DeePC. 
 
-
-\subsubsection{Safety}
-
-Unlike classical MPC where a
-model provides invariant sets and Lyapunov proofs, 
-DeePC lacks an explicit parametric model and 
-thus must embed safety via data-driven mechanisms.
-Recent work proposes hybrid controller architectures
+To guarantee safety constraint satisfaction, 
+recent work proposes hybrid controller architectures
 that combine a data-driven predictive element
 with a reactive safeguarding feedback loop.
 Bold et al.~\cite{bold2025two} design a two-component controller where
@@ -1017,7 +1020,9 @@ decoupling the system into error system and nominal system,
 the former prividing data-driven reachability sets 
 for the enhanced safety constraints
 in the nominal system~\cite{li2024robust}.
-
+This is directly relevant for large-scale system control, as these approaches 
+can be used in the safe control of subsystems in situations where the global safety
+constraint is decomposable into local conditions for each subsystem.
 
 \subsection{Reinforcement Learning}
 
@@ -1026,10 +1031,9 @@ method for dealing with the ever-growing complexity of modern systems,
 providing the benefit of determining optimal control policies without 
 necessitating detailed system models~\cite{9261330}.
 RL-based controllers require no labeled datasets and are instead guided by feedback and learn in a trial-and-error fashion,
-making them well-suited for large scale systems where 
+making them well-suited for large-scale systems where 
 explicit system models are missing for reasons such as 
 nonlinear dynamics and multi-timescale operations~\cite{rfAndIntro}.
-
 
 Another advantage of RL is its statement of the control problem as Markov decision processes
 (MDPs), providing great generality. 
@@ -1058,7 +1062,7 @@ J(\pi) = \mathbb{E}_\pi \left[\sum_{t=0}^\infty\gamma^tr(s_t,a_t)\right]
 \noindent \(\gamma\in [0,1]\) denotes a factor balancing immediate against
 long-term goals and \(r\) encodes control objectives as scalar rewards, possibly differing across individual controllers, e.g. in hierarchical systems~\cite{mfrlMG}.
 
-To enable real-time online reinforcement for large scale systems,
+To enable real-time online reinforcement for large-scale systems,
 approximation approaches have been proposed, where the input-output history is
 transformed into a shorter set of data, being the basis for a lower-dimensional
 inferred controller than the original, decreasing the time complexity from \(O(L^6)\) to \(O(L^4)\), where \(L\) denotes a natural number valued design parameter of the algorithm~\cite{sadamoto2021fast}.
@@ -1383,7 +1387,7 @@ as demonstrated in simulations on a multimachine power system.
 \subsubsection{Safety}
 
 
-The decentralised control of large scale systems poses a special challenge
+The decentralised control of large-scale systems poses a special challenge
 for safety guarantees, as the local subsystem controllers have to ensure constraint satisfaction
 despite only implicitly gaining information from the other subcontrollers, no direct communication channel
 being available, safety hence having to be enforced locally and independently.
@@ -1420,7 +1424,7 @@ If a violation is predicted, a separate
 DNN-based action correction mechanism modifies the agent's 
 action to the nearest safe point.
 
-Comparatively little research is being conducted on developing safe and robust data driven controllers for 
+Comparatively little research is being conducted on developing safe and robust data-driven controllers for 
 decentralised architectures. One reason for this could be the relatively disadvantageous starting position,
 no communication being possible between subcontrollers, whereas global safety constraints must be met at all times.
 However, not all systems allow for communication, making the design of such controllers
@@ -1466,7 +1470,7 @@ can be advantageous. DLMPC~\cite{alonso2022distributed} and the corresponding da
 use the System Level Synthesis (SLS) framework~\cite{anderson2019system} to generate a distributed model-predictive controller, which shares information only locally, the neighbourhood sizes being adjustable.
 The SLS framework parameterizes the entire closed-loop system using two transfer matrices called system responses \(\{\Phi_x, \Phi_u\}\), such that 
 \(\begin{pmatrix}x\\u\end{pmatrix} = \begin{pmatrix}\Phi_x\\\Phi_u\end{pmatrix}w\), \(w\) being the exogenous disturbance.
-The data driven formulation uses Hankel matrices to replace to closed-form system responses~\cite{xue2021data}.
+The data-driven formulation uses Hankel matrices to replace to closed-form system responses~\cite{xue2021data}.
 DLMPC achieves the restriction of neighbourhood size, the maximum number of hops in the communication graph a subsystem can communicate with, 
 through a locality constraint on the system response.
 The data-driven DLMPC provides the same guarantees as the standard DLMPC, namely recursive feasibility, stability and convergence for both nominal and robust settings~\cite{alonso2023distributed}.
@@ -1617,7 +1621,7 @@ scaling well for even large swarms.
 
 In hierarchical control scenarios, the control structure is conceptually arranged in multiple levels.
 The higher level controllers coordinate the actions of the lower level ones, 
-being responsible for meeting the overall goal of the large scale system~\cite{SCATTOLINI2009723}.
+being responsible for meeting the overall goal of the large-scale system~\cite{SCATTOLINI2009723}.
 Hierarchical control could be viewed as a special case of distributed control, 
 where some controllers take on special coordination roles.
 
@@ -1658,7 +1662,7 @@ outputs guide lower layers~\cite{SCATTOLINI2009723}.
 The controller lower in the hierarchy identifies a linear approximation between the higher-level signals and output, whereas the higher-level controller component  
 has the task of dealing with the modeling errors and environment uncertainties.
 
-As for direct data driven methods, model-free
+As for direct data-driven methods, model-free
 formulations such as hierarchical DeePC have emerged~\cite{10667672}, demonstrating
 such a structure for autonomous mobility-on-demand fleets: the upper layer optimizes
 global vehicle repositioning and the lower layer applies local DeePC to individual agents.
@@ -1684,7 +1688,7 @@ Y_t^{Q^2} = R_{t+1} + \gamma \max_aQ(s_{t+1}, a| g)
 \end{equation}
 
 
-Applying HRL naively to large scale systems can lead to computational inefficiency and convergence difficulties due to the inherent challenge of a high-dimensional action space,
+Applying HRL naively to large-scale systems can lead to computational inefficiency and convergence difficulties due to the inherent challenge of a high-dimensional action space,
 leading to a trend towards combining hierarchical and distributed reinforcement learning, intending to reduce task complexity and accelerate training speeds.
 One such work is \cite{chen2023distributed}, a distributed hierarchical controller using deep reinforcement learning.
 The authors develop a new framework coined hierarchical reduction reinforcement learning (HR2L),
@@ -1813,7 +1817,7 @@ The safety guarantees thus stem from embedding experience-derived safe sets as t
 
 %\section{Safety \& Certification at Scale}
 
-%A continuing challenge in the field of data driven control remains the question of verifyable safety.
+%A continuing challenge in the field of data-driven control remains the question of verifyable safety.
 %In many application areas of control theory, guarantees are required for methods to have any use at all.
 
 
