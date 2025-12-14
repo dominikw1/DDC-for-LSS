@@ -1,0 +1,7 @@
+*.log
+*.bbl
+*.blg
+*Zone.Identifier
+*.aux
+*.bcf
+*.pdf
