@@ -384,7 +384,18 @@ Email: dominik.m.weber@tum.de}}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-The abstract goes here.
+Large-scale dynamical systems pose fundamental challenges for classical control due to high 
+dimensionality and modeling complexity.
+Data-driven control offers an alternative by using measured data instead
+of relying on first-principles models.
+This survey reviews data-driven control methods for
+large-scale systems, covering both data-driven modeling techniques and direct model-free approaches.
+The control architectures of decentralized, distributed, and hierarchical control are discussed
+with a focus on enabling scalability to large scale systems.
+The survey highlights the state of the art in
+applying data-driven approaches to large-scale sytems, including trade-offs and open research challenges.
+
+
 \end{abstract}
 
 % no keywords
@@ -408,7 +419,40 @@ The abstract goes here.
 
 %https://pdf.sciencedirectassets.com/791905/AIP/1-s2.0-S3050744825000106/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjELX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJHMEUCIEz4%2B%2Fkg9Y5%2FYfr7WeX1j8hZzSBIxjzt%2F%2Fap0%2FUOg3WEAiEA4aYwbCOiunuCF06Ku81ibq2LB27GQopCbdVd6TbNqaoqsgUIfhAFGgwwNTkwMDM1NDY4NjUiDGYg1FEumCZ7KGm%2BQiqPBd7779jTpyZpw3qHgX1UfChGnifRyLmU6Gx758auDRTE1lfE7xkFXShjmgEgD%2B4L1j0AZX%2BAqNv9iCAs1ufDJhpwuvn0MvJJsZWO%2Bam59GIjw9frUa8n0tpkEq9DPt%2F1L1XJJGTquEohPSaxpOMf7KenCa58IIs59L3erXOdaJR590sBMZeOcnKShlaUflkdmThvBHGS4Qrh6XaOg9phH2N0TU%2BReFbEqoslLTXLrogoGMGnBofRtSbwWL2PXHz7peR9WZLF10xHnmuXaxBm2lEtcznFlPp9okAIRlG8dtUcdmjrJoosewBxcwmY%2BrVGKIWOJJQLY%2BDXRSRHxVX7EMwaL%2FNRkjgjN3tHI9K7jsnMDR0iCT5L4ww6uq9CYs4%2FSQPynvWuxfCHYspPCt1o%2By79AgrTLFINXJj2bocRxPU5%2BZoKIHtXTahwp0XpSU078%2FkVGTTLalzlOi8Bs4NZOdQyFihoLwxvw7FOO7bN4tTCQp9h5wjh0WzLxo3lpSGenZL7qWctaEJ67RRQlfsJHnetBTFWDarmnUyvtIz2M5H92e%2FE6yGo4Bu1BfIx%2Bodbyfoe46H%2BdpzfUd8NwWsuSeWSL5NblSq6zjo8B1go44W65rAIjbtrjmqs%2BFeCWJ0lEvEnbJpf8E7rqkjHOGUgpiXZv2FVHlDlLnIjakhGLfa%2ByWc%2FFqHnZCKtDZkA%2FQMQ8LNaIsH1YYPDaWHD00otZO2kC3YEQQQM2emRBsS8sPMmyMhEja2QVL3NtPt8LsPTuzoT2DB7PNVMS9%2B1qli9wgvXaAEbCJjVi9aodbHXJuEmundCS%2FKKnMQYy%2Fv28nM4EBQlt%2Bd8pC0oMGt4tPB0jhzuohzvd4dpr6egxmddlbgw2PPhyAY6sQHDSwSxUhMSCj5VuxEUEG1UxwonZ2FwzcfGx%2FHBwqoFOiAhAXTQ3QuZIuK0jvjaEGv9A8OSwb8fed8PKnPAPu%2Fm4aBv6pNUrQ9YgJBG3LnwhFeAOt%2FPTG7uBGwM8DDrh5Q4iRX%2BpQK%2BIVixdTF7diwZBEi97rJEJxHHYxSr%2Bh8dNkHXFVckNU2YqyBYx8bCdIaqWXEHMRkTinweb1QKBhGvele3avTo0B7h4yosoFNcYDc%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20251115T133547Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYUDP3E2MG%2F20251115%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=7c858a985fd1ace403ab7d9dd6fecf198999ddf5aa63f02e2cd87e3b4f70cd82&hash=e7d7780dacefe8dec9e39cada7c3e505326ce01c09b4833e54846d2ff3637589&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S3050744825000106&tid=spdf-6398be90-0a83-4ff8-8643-f0e0edb80f3f&sid=d24a09c8193a7449834b42f3eb10962b751egxrqb&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&rh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=1e035f5d070552545056&rr=99ef22439c1203b8&cc=de&kca=eyJrZXkiOiJQdytLUUt5amQ0VTlHdjRwK1pvcENpeVF0QVllZjFKdHZaSGFaZDN4R05MRk42ekwxRTV4ZWZPMWNpNFhaT2tkeWhFZ2ViVDc0OFJubTQzKzlvMDJMTWFvOExUN2tqQ2VmM3Q5RGwwN2pvUk5zMUJ1dmFZSWRDckthRUhGdk5NUmNlV3haRzh6Z21GaExzMGJCb3RmQ3ExYzJkQXZMd01UYnFLaVdJaWV5ME4xVjZYUm82TT0iLCJpdiI6IjFjYWNiYTQ5NDc4NWJlZjM0ODE2MjUyMGE4MzgzOGJjIn0=_1763213765135
 
+Large-scale dynamical systems arise in a wide range of application domains, including power and energy networks, transportation systems, industrial processes, and multi-agent robotic systems~\cite{kordestani2021recent}. 
+Their defining characteristics, including high dimensionality, strong interconnections, and heterogeneous
+dynamics, render classical centralized control approaches difficult to model,
+computationally intractable, or insufficiently flexible.
+As system complexity grows, deriving accurate first-principles models 
+designing controllers around them becomes increasingly costly and error-prone~\cite{DDC_Overview}.
 
+Data-driven control has emerged as a promising solution to some of these limitations. 
+Instead of relying on explicit physical modeling, data-driven approaches exploit measured
+system trajectories to infer models or synthesize controllers directly. 
+This shift has enabled control designs for systems where traditional modeling is infeasible
+or where operating conditions change over time~\cite{behavioralDataDrivenControl}.
+However, the applicability of data-driven methods to large-scale systems is not solely determined by learning algorithms alone.
+Scalability hinges on how systems are decomposed, how information is exchanged, and how control decisions are coordinated across subsystems~\cite{ma2024efficient}.
+
+While the literature on data-driven control is extensive, its interplay with large-scale sytsem control scenarios has received 
+less focus. Conversely, research on large-scale control architectures often assumes access to accurate models and does
+not fully account for model uncertainties and difficulties for obtaining such models in real-world settings~\cite{xia2024predictor, aljohani2024tri, ma2024cloud}.
+This survey aims to provide a structured overview of data-driven control for large-scale systems, emphasizing how modeling choices, control paradigms, 
+and architectural design jointly determine scalability. 
+It highlights trade-offs between indirect and direct data-driven control, 
+centralized and non-centralized architectures, and modeling fidelity versus computational tractability.
+
+The remainder of the survey is organized as follows. 
+Section II provides a brief background on data-driven control, large-scale systems and safety filters, the central
+technique for providing formal guarantees for data-driven controllers. 
+Section III reviews data-driven modeling techniques relevant to large-scale systems, enabling system decomposition and dimensionality reduction. 
+Section IV covers direct, model-free control approaches and their extensions to large-scale and distributed settings. 
+Section V discusses decentralized, distributed, and hierarchical control architectures, analyzing how architectural choices affect scalability, 
+coordination, and performance. Safety and robustness mechanisms are introduced focusing on aspects necessitated by the system's scale.
+Section VI concludes with a brief discussion of open challenges and directions for future research.
+
+
+\section{Background}
 
 % no \IEEEPARstart
 \subsection{Data-Driven Control}
@@ -1116,6 +1160,9 @@ formulation of these constraints~\cite{gu2024review}.
 
 \section{Control Architectures for Large-Scale Systems}
 
+% https://pdf.sciencedirectassets.com/777797/1-s2.0-S2666792424X00025/1-s2.0-S2666792424000155/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGkaCXVzLWVhc3QtMSJGMEQCIAegW7oXZKt3V9iBiEi2msqM%2BAY9A%2BPnHt18CO8%2BJYaCAiBoGcwAz5MjgiQ%2B4cRBI8XgsRtqQCxLZFfd4fvDJoqWRSqyBQgxEAUaDDA1OTAwMzU0Njg2NSIMMYuZTXbWxxUOh%2FfyKo8Fye1UeN2ILOpLtc%2FIb2pNV5TpvXUMeJG9ty9tlHXnkecB3WvX2h9g%2FH0P8NpDY6ufHHbh5cpFPlre%2FdfskqzV6o%2FblkED1IVm2WmMlZcSjkMZmht0AoQvX2oRH%2BuLGlSYpZlJAYUps1c%2BsgAnXlyXTOIYjBuzacVG6NB7rpVKsvgdzW2gnkxqjLz%2BnsS3CgAUPivEIVnN%2BG%2BAaQjLhSpKw%2Ba80Lp6alALVrJVc%2FVhfYZm4%2FJsgBuscEXsc5CJjLUUlY4Nus%2FFuSf7BIdTHTsI89VhQr5zPnKIpctRYlrxYMq8dHCKQMXJvZReLhUGUgLDhZMRqxm%2Fnn8OlN9ST%2FfSuN%2BKp4yVQI19TjGDLYHVegb032PEwh3twWlj8IVxNypcBq0r%2BW0Z2eeO%2F3PsfL1LOZJIEZrh2k9WGr%2Bv%2BERbOexA6KLvTGp2v4PVhFjD9m3GTaZmKuCUNI7qhbrGHAr26g2wFuWWGNahHxekZKxz6UijxHnMRuM5%2BnBkLB40NT2ewjbT4RdIjXJC4k4Y2uOFe9Xg8ySbHDpq1%2FbtwiiKqD75807SeBlKjkNbYmXj1decWIJuzDzEh1SqkPr6qb%2B4DbKtbok2txp5aSSBmTNjA%2FB8CsPGFh3LKIM5q5nVAFHTifdCcAPF0mR%2BeIjya0UL%2BRiW84hqopNC0upT2vN0gXHJ%2B9lV5Hw2n3HNnyughWW0A8cZVKyrxM%2BLh1giUBGUJ4gVfJeK7gTnT4HRSTETrW0%2BOT%2Bbv4yTc1CHrd9kacMp1S%2FlxJOcaT%2F5nUHbeX8qXOscXPlW5LN7hAuNS4MStaa1sSxcTQ29UEVL%2FQZ2%2BM%2BRziaJAzeR2V5DzJOAchRh5rc5w3VEgQu78PntDJ%2BQjjCA4PnJBjqyAaYDkrd09y6EdJPfV%2B1ANuT%2FlIKHvBfvvEXvUML6COsvmNPtlpliOUUuULrXC41pdkrcnPWKqgKyyDa%2B8zmlg2xdDJUMpW1Myf96IMiFjwiEs29tIjR29L5qvd83Tw8l9ogGK0I4MCtuK06bTav5TccoqYdDuVm1ckAT20DqiGIDWSRPqoQjHitHLnfVSAkk4%2FgPka0WFemDutl%2B3Y4P1BIwjw%2Byx81lKKhLoWRKQRDt%2BGY%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20251214T091122Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYT2S7FDUI%2F20251214%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=5d489fcf529487e486b06c5ecba3a76628a5ea534a8b7bf1bee25a8726ad7f33&hash=bed937f3c0baeabfb6c35e812db2d332048e195209781c435cf7e2ec4583b357&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S2666792424000155&tid=spdf-884412dc-733d-4aba-a099-204207f7dde7&sid=74e7365b827934490d489a73f00ba09a78eegxrqb&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&rh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=1b125f05060059540700&rr=9adc92ceadbb8f2b&cc=at
+
+
 The scalability of data-driven control 
 depends not only on the learning or 
 identification methods employed, but also on the 
@@ -1408,8 +1455,9 @@ If a violation is predicted, a separate
 DNN-based action correction mechanism modifies the agent's 
 action to the nearest safe point.
 
-Comparatively little research is being conducted on developing safe and robust data-driven controllers for 
-decentralised architectures. One reason for this could be the relatively disadvantageous starting position,
+Reaseach on developing safe and robust data-driven controllers for 
+decentralised architectures remains comparatively sparse. 
+One reason for this could be the relatively disadvantageous starting position,
 no communication being possible between subcontrollers, whereas global safety constraints must be met at all times.
 However, not all systems allow for communication, making the design of such controllers
 an important task despite its difficulty.
@@ -1983,6 +2031,24 @@ The safety guarantees thus stem from embedding experience-derived safe sets as t
 
 \section{Conclusion}
 
+
+Data-driven control has become a central tool for addressing the scalability and modeling challenges inherent 
+to large-scale dynamical systems. 
+By shifting the emphasis from first-principles modeling to information extracted directly from data,
+these methods enable control designs that would be infeasible with traditional approaches alone.
+This survey reviewed the main paradigms in data-driven control, spanning data-driven modeling,
+direct model-free control, and the architectural choices required to deploy such methods at scale.
+
+A recurring theme across the literature is that scalability is
+rarely achieved by a single algorithmic idea. 
+Instead, practical large-scale control solutions combine dimensionality
+reduction, structural decomposition, and appropriate control architectures such as decentralized, distributed, or hierarchical schemes. 
+While data-driven methods can significantly reduce modeling effort and
+improve flexibility, they introduce new challenges related to data quality, computational complexity, and performance guarantees.
+
+Despite substantial progress, several open problems remain.
+These include XXXXXX.
+Addressing these challenges will be critical for moving data-driven control toward broadly applicable, reliable solutions for real-world large-scale systems.
 
 % conference papers do not normally have an appendix
 
