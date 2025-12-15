@@ -1319,47 +1319,28 @@ information, making explicit robustness formulations essential
 for guaranteeing stability and constraint satisfaction
 under limited information exchange.
 
-A central approach for robust decentralised predictive control 
-introduces bounded uncertainty
-sets for each subsystem. In distributed 
-contexts these arise not only from local
-disturbances or measurement noise, but
-also from inter-subsystem coupling or network effects
-whose characteristics are only partially observed.
-Shang et al.~\cite{shang2024decentralized} proposed
-such a decentralized robust
-data-driven predictive control scheme, where each subsystem
-estimates a time-varying disturbance bound from local observations
-and embeds it into the predictive optimization.
-The resulting controller achieves smooth and safe closed-loop behavior
-even under strong coupling uncertainty.
+A central approach to robust decentralised predictive control 
+introduces bounded uncertainty sets for each subsystem.
+These sets capture not only local disturbances and measurement noise, 
+but also partially observed inter-subsystem coupling and network effects.
+Shang et al.~\cite{shang2024decentralized} propose a 
+decentralized robust data-driven predictive control scheme in which each
+subsystem estimates time-varying disturbance bounds from local data and
+incorporates them into its predictive optimization, yielding stable and constraint-satisfying
+closed-loop behavior even under significant coupling uncertainty.
 Comparable ideas have also been successfully applied in other domains, 
-such as robust decentralized control for microgrids, 
-where local controllers compute data-driven disturbance 
-bounds using voltage and power measurements to maintain
-grid stability under communication and measurement noise~\cite{s22228709}.
+such as microgrids, where local controllers infer disturbance bounds from voltage and
+power measurements using voltage and power measurements to maintain
+stability under communication and measurement noise~\cite{s22228709}.
+Beyond predictive control, Li et al.~\cite{li2023decentralized} develop a robust decentralized
+data-driven control framework based on adaptive dynamic programming.
+The decentralized problem is formulated as a zero-sum differential game, with each subsystem counteracting worst-case disturbances,
+symptotically stabilising the system while guaranteeing a bounded disturbance-to-output gain.
 
-
-Outside of the realm of predictive control, \cite{li2023decentralized} develops a robust decentralized data-driven control 
-scheme for large-scale interconnected systems based on adaptive dynamic programming 
-subject to actuator faults, external disturbances,
-and model uncertainties. 
-The key idea is to cast the decentralized control problem
-into a zero-sum differential game framework,
-where each subsystem minimizes a performance index while counteracting the worst-case disturbance. 
-To achieve this without requiring knowledge of
-system dynamics, the solution of the Hamilton-Jacobi-Isaacs equation is iteratively approximated using only input-output data. 
-Each subsystem locally learns its optimal control
-and disturbance strategies through a two-stage ADP
-algorithm based on policy or value iteration, ensuring
-scalability and robustness.
-Furthermore, adaptive parameters are introduced to
-dynamically compensate for unknown and time-varying
-actuator faults.
-The resulting decentralized controllers are proven to 
-asymptotically stabilize the overall system and guarantee a
-bounded gain from disturbance to output,
-as demonstrated in simulations on a multimachine power system.
+Overall, decentralized robustness mechanisms scale well computationally, usually linearly with the number of subsystems, as they avoid global optimization and communication entirely.
+However, this scalability does not stem from exploiting the large-scale structure of the system,
+but is rather a consequence of a naive decomposition of the global robustness goal
+to the subsystem level, yielding limited system-level robustness guarantees under strong coupling conditions.
 
 
 
@@ -1422,48 +1403,37 @@ as demonstrated in simulations on a multimachine power system.
 
 The decentralised control of large-scale systems poses a special challenge
 for safety guarantees, as the local subsystem controllers have to ensure constraint satisfaction
-despite only implicitly gaining information from the other subcontrollers, no direct communication channel
-being available, safety hence having to be enforced locally and independently.
+despite only implicitly gaining information from the other subcontrollers, 
+no direct communication channel being available, safety hence having to be enforced locally and independently.
+While this tends to ensure a complexity linear in the number of subsystems, safety guarantees
+extending beyond those decomposing into local requirements can only be met under restrictive assumptions. 
 
-
-Zhang et al.~\cite{zhang2023data} propose a decentralised deep reinforcement learning approach for Inverter-Based Renewable Energy Sources.
-Its safety is guaranteed via an embedded safe policy projection mechanism, a kind of safety filter.
-This approach operates by decoupling the learning process from constraint 
-adherence, 
-integrating a Guaranteed Safety Controller
-directly into the action selection loop of each local deep reinforcement learning agent (DRL).
-The Guaranteed Safety Controller uses real-time local state measurements and
-analytical system knowledge to dynamically calculate a
-Safety-Critical Action Set (SCAS), which is the
-provably non-violating range of control inputs for that specific instant.
-The DRL policy proposes an unconstrained, 
-optimal action \(a_{\text{DRL}}\), the final executed 
-action \(a_{\text{final}}\) is 
-determined by projecting \(a_{\text{DRL}}\) onto the SCAS, \(a_{\text{final}} = \text{Projection}(a_{\text{DRL}}, \text{SCAS})\). 
-This guarantee ensures that regardless of the exploratory or off-policy nature of the DRL action, the physical control command always adheres to local constraints, resulting in a system with $100\%$ constraint satisfaction during operation.
-Crucially, the success of this
-policy projection method hinges on the existence of a
-tractable local analytical model that permits the real-time
-calculation of the SCAS. 
-This represents a hybrid approach where the 
-long-term optimality is data-driven, but the hard safety
-boundaries are model-derived and known a priori.
+Zhang et al.~\cite{zhang2023data} propose a decentralised deep reinforcement learning approach 
+for Inverter-Based Renewable Energy Sources.
+Its safety is guaranteed via an embedded safe policy
+projection mechanism, operating by decoupling the learning process from constraint 
+adherence, integrating a Guaranteed Safety Controller
+directly into the action selection loop of each local deep reinforcement learning agent.
+The action proposed by the deep reinforcement learning policy is projected onto a safety-critical action set 
+before execution, ensuring constraint satisfaction regardless of exploration.
+This hybrid architecture guarantees local safety but relies
+on the availability of a tractable local model for the computation of the action set.
 
 As an alternative approach, the model-dependance can be
-removed via integrating a graph neural network, as shown in ~\cite{hashemnezhad5371728safe} for the purpose of fast, local power flow estimation.
-This graph neural network is trained on historical data to serve as a data-driven safety predictor, quickly estimating the effect of the agent's proposed action on local state variables.
-The estimated state is then checked against the operational constraints. 
-If a violation is predicted, a separate 
-DNN-based action correction mechanism modifies the agent's 
-action to the nearest safe point.
+removed via integrating a graph neural network, 
+as shown in ~\cite{hashemnezhad5371728safe} for the purpose of fast, local power flow estimation.
+A graph neural network is trained on historical data to estimate
+the local impact of control actions on system states, enabling fast safety checks. 
+If a constraint violation is predicted,
+a separate neural network modifies the action to the nearest safe input. 
+While fully data-driven, this approach again enforces safety locally and does
+not provide compositional guarantees for global constraints.
 
-Reaseach on developing safe and robust data-driven controllers for 
-decentralised architectures remains comparatively sparse. 
-One reason for this could be the relatively disadvantageous starting position,
-no communication being possible between subcontrollers, whereas global safety constraints must be met at all times.
-However, not all systems allow for communication, making the design of such controllers
-an important task despite its difficulty.
-
+Overall, research on safety for decentralized data-driven control remains limited.
+The lack of communication fundamentally restricts the ability to guarantee global
+safety properties in strongly coupled systems, making 
+decentralized safety mechanisms most appropriate
+for settings with inherently local constraints.
 
 
 \subsection{Distributed control}
