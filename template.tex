@@ -1539,30 +1539,39 @@ sufficient performance.
 
 \subsubsection{Robustness}
 
-A class of distributed robustness strategies tackles
-network-scale uncertainty by combining data-driven uncertainty
-quantification with distributed optimization and local certified control.
-In \cite{wang2024data} each subsystem of the interconnected
-network uses measurement data to infer uncertainty sets for both its local dynamics and couplings
-and then participates in a distributed robust control optimisation
-that ensures global constraint satisfaction despite
-the worst-case admissible uncertainties.
-The robustness is achieved through three key ideas: 
-the data-driven construction of uncertainty bounds from historical measurements, 
-the distributed robust optimization so that each node enforces tightened coupling and constraint bounds under communication and coordination constraints, respectively, and 
-the fact that local controllers execute the optimized signals while guaranteeing invariant-set membership or disturbance rejection within the prescribed uncertainty set.
+The key advantage distributed architectures have over decentralised ones with regards to robustness is the ability to explicitly
+communicate among subsystems. While this allows for distributed robust control optimisation, it introduces the need for
+more extensive performance considerations to scale to large-scale systems.  
+
+In \cite{wang2024data}, robustness is achieved by explicitly modeling uncertainty on both subsystem
+dynamics and interconnection terms, and embedding these uncertainty descriptions into a distributed
+robust optimization problem whose constraints are decomposed according to the network graph.
+Rather than enforcing robustness independently at each node, 
+tightened coupling constraints are coordinated across the network so that worst-case
+uncertainty propagation is bounded at the system level. 
+This graph-structured decomposition enables robustness guarantees that
+scale with the degree of interconnection rather than the total number of subsystems,
+making the approach especially applicable to sparse networks.
 
 A robust distributed model-free controller is constructed in \cite{li2022robust}
 for the domain of volt/VAR regulation over power distribution networks. 
 Each local agent uses robust regression 
 to mitigate bad measurement data
 and iteratively updates its control strategy via a distributed alternating
-direction method of multipliers algorithm enhanced with Nesterov acceleration, enabling scalability. 
+direction method of multipliers algorithm enhanced with Nesterov acceleration, enabling scalability via
+complexity growing approximately linearly with the number of direct connections at each subsystem. 
 Efficient robustness is hence achieved via the model-free, data-driven feedback loop
 which tolerates measurement errors and model mismatch,
-the distributed optimization architecture where only limited peer exchange is required and convergence is accelerated, and
-decentralized local correction at each node which ensures the system stays robust to both local disturbance and coupling uncertainties.
+the distributed optimization architecture where only limited peer exchange is required and
+convergence is accelerated, and decentralized local correction at each node which ensures
+the system stays robust to both local disturbance and coupling uncertainties.
 
+Overall, robust distributed control for large-scale systems departs from classical robust
+design by treating uncertainty as a network-level phenomenon rather
+than simply a collection of independent local disturbances.
+The reviewed methods demonstrate that scalability
+depends on the exploitation of interconnection structure,
+coordinating robustness margins across subsystems.
 
 
 \subsubsection{Safety}
@@ -1574,19 +1583,32 @@ Recent work in distributed hierarchical control
 emphasises certifiable safety through layered protocols
 that ensure safe interaction among agents under
 communication and dynamic coupling.
+
 Khaledi et al.~\cite{khaledi2025data} constrain a direct data-driven distributed controller for multi agent systems
 via Control Barrier Functions incorporating quadratic programming optimisations. 
-The online computational complexity is dominated by the interior-point QP, which is, for \(m_i\) being the control input
+The online computational complexity is dominated by the interior-point quadratic programming problem, which is, for \(m_i\) being the control input
 dimension for agent \(i\), \(\mathcal{O}((\sum_im_i)^3)\) due to the factorization of
-the Karush-Kuhn-Tucker system for dense data~\cite{ye1989extension}, making it suitable for suitable for real-time computation in moderately sized systems.
+the Karush-Kuhn-Tucker system for dense data~\cite{ye1989extension}.
+As a result, this approach is primarily suited to moderately sized networks,
+highlighting a fundamental limitation of CBF-based safety mechanisms
+whose safety constraints are enforced through globally coupled online optimization problems 
+when applied to large-scale systems.
 
-Alternatively, a novel Trajectory-Tube
-Distributed Explicit Reference Governor approach can be formulated, as shown on the example of control of aerial robot swarms~\cite{convens2022safe}.
-The core idea is to predict the future higher-order nonlinear dynamics and
-embed it in a time-varying safety tube, information about which is shared with the neighbours.
-They identified their technique to achieve provably safe constrained control of resource constrained
-UAV swarms, given its low requirements of computational resources and has little communication overhead, 
-scaling well for even large swarms.
+In contrast, the Trajectory-Tube Distributed Explicit Reference Governor proposed in \cite{convens2022safe} explicitly targets scalability by decoupling safety enforcement across agents through predictive safety tubes that account for higher-order nonlinear dynamics and inter-agent coupling.
+Safety information is exchanged only locally among neighboring agents, preventing the
+propagation of global constraints and enabling safety certificates whose complexity
+remains bounded as the swarm size increases. 
+This structural localization of safety guarantees allows the method
+to scale to large, resource-constrained UAV swarms while maintaining 
+constraint satisfaction under limited communication.
+
+While research on safety in distributed data-driven control architectures remains limited,
+the presented 
+methods suggest that safety guarantees in large-scale systems are feasible only
+through spatial localisation. 
+Approaches that prevent the global coupling of safety constraints and bound per-agent computation and communication
+hence seem to be more promising for large-scale system scenarios.
+
 
 %\cite{shaham2024learning} presents a safe distributed certifiably stable neural network controller  for heterogeneous platoon control.
 
