@@ -1579,7 +1579,7 @@ coordinating robustness margins across subsystems.
 %https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10025385&casa_token=qjvIbDAx4-IAAAAA:M_4c8XzQjozwgwnYrNPirBtIXLgr0FI3ZlBIOL4bbFzo0MrfkKRA-L2I-HbvmhhS9Utle5M0ykQ&tag=1
 
 
-Recent work in distributed hierarchical control
+Recent work in distributed control
 emphasises certifiable safety through layered protocols
 that ensure safe interaction among agents under
 communication and dynamic coupling.
@@ -1604,7 +1604,7 @@ constraint satisfaction under limited communication.
 
 While research on safety in distributed data-driven control architectures remains limited,
 the presented 
-methods suggest that safety guarantees in large-scale systems are feasible only
+methods suggest that safety guarantees in large-scale systems are feasible primarily
 through spatial localisation. 
 Approaches that prevent the global coupling of safety constraints and bound per-agent computation and communication
 hence seem to be more promising for large-scale system scenarios.
@@ -1723,31 +1723,11 @@ solution quality, training robustness, and adaptability to large-scale systems.
 
 \subsubsection{Robustness}
 
-Hierarchical control further offers a natural option of mixing different approaches to control.
-This approach is especially popular for constructing robust reinforcement learning based controllers, as
-robustness properties can be inherited from the other controller, while still reaping some of the benefits 
-of RL. [citation needed]
-In \cite{li2020learning}, such a hybrid hierarchical controller for robotic in-hand manipulation is proposed, where the low-level controllers being 
-first-principles based, whereas the higher-level controller uses reinforcement learning, leading to a controller
-robust against noise-affected observations of the object pose 
-and inaccurate kinematic and dynamic models.
-A similar approach is taken by \cite{naveed2021trajectory} for robust trajectory planning of autonomous vehicles, 
-the high-level reinforcement controller guiding low-level PID controllers.
-
-Another approach for robustness in hierarchical architectures 
-is to combine a distributionally-robust supervisory optimizer 
-with certified local controllers: 
-the supervisory layer computes plans under data-driven ambiguity sets
-(Wasserstein/empirical) to protect against
-mis-specified forecast distributions, while the local controllers
-enforce tightened constraints and reject bounded disturbances during tracking.
-Saberi et al.~\cite{saberi2021data} use this approach in a home-energy management context,
-showing that a distributionally-robust hierarchical
-coordinator preserves constraint
-satisfaction and improves out-of-sample reliability
-by explicitly accounting for distributional uncertainty
-at the decision layer and delegating disturbance rejection to
-the local controllers.
+Hierarchical control provides a structured mechanism for achieving robustness in complex systems by separating 
+decision-making across layers with distinct time scales and uncertainty characteristics.
+Rather than enforcing robustness uniformly, hierarchical architectures might confine learning-induced uncertainty and model mismatch to higher layers, 
+while lower layers enforce stability and disturbance rejection, often employing different control methods at each layer.
+This principle is frequently exploited in robust reinforcement learning architectures, where robustness is achieved by restricting learning to supervisory roles~\cite{li2020learning,naveed2021trajectory}.
 
 In the domain of hierarchical control for networked physical systems,
 the work by Nandakumar et al.~\cite{nandakumar2024enhancing} demonstrates a data-driven
@@ -1766,6 +1746,14 @@ adaptive model refinement and time-scale separation,
 the upper layer continuously re-identifying system dynamics,
 while the lower predictive droop layer enforces
 bounded invariance through reachability-based compensation.
+
+
+Overall, the deliberate separation of uncertainty handling across layers emerges as a key mechanism for achieving robustness in hierarchical control architectures. 
+This structural containment seems particularly critical in large-scale networked systems, 
+where it preserves computational scalability by confining expensive optimization and adaptation to
+supervisory layers while allowing local controllers to focus on fast stabilization and disturbance rejection. 
+While existing work on robustness in large-scale hierarchical systems remains limited,
+the presented results indicate that hierarchical separation offers a promising and scalable pathway for robust data-driven control.
 
 \subsubsection{Safety}
 
