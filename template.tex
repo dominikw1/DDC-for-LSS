@@ -390,10 +390,10 @@ Data-driven control offers an alternative by using measured data instead
 of relying on first-principles models.
 This survey reviews data-driven control methods for
 large-scale systems, covering both data-driven modeling techniques and direct model-free approaches.
-The control architectures of decentralized, distributed, and hierarchical control are discussed
-with a focus on enabling scalability to large scale systems.
+The control architectures of decentralised, distributed, and hierarchical control are discussed
+with a focus on enabling scalability to large-scale systems.
 The survey highlights the state of the art in
-applying data-driven approaches to large-scale sytems, including trade-offs and open research challenges.
+applying data-driven approaches to large-scale systems, including trade-offs and open research challenges.
 
 
 \end{abstract}
@@ -421,36 +421,35 @@ applying data-driven approaches to large-scale sytems, including trade-offs and 
 
 Large-scale dynamical systems arise in a wide range of application domains, including power and energy networks, transportation systems, industrial processes, and multi-agent robotic systems~\cite{kordestani2021recent}. 
 Their defining characteristics, including high dimensionality, strong interconnections, and heterogeneous
-dynamics, render classical centralized control approaches difficult to model,
+dynamics, render classical centralised control approaches difficult to model,
 computationally intractable, or insufficiently flexible.
 As system complexity grows, deriving accurate first-principles models 
 designing controllers around them becomes increasingly costly and error-prone~\cite{DDC_Overview}.
 
 Data-driven control has emerged as a promising solution to some of these limitations. 
 Instead of relying on explicit physical modeling, data-driven approaches exploit measured
-system trajectories to infer models or synthesize controllers directly. 
+system trajectories to infer models or synthesise controllers directly. 
 This shift has enabled control designs for systems where traditional modeling is infeasible
 or where operating conditions change over time~\cite{behavioralDataDrivenControl}.
 However, the applicability of data-driven methods to large-scale systems is not solely determined by learning algorithms alone.
 Scalability hinges on how systems are decomposed, how information is exchanged, and how control decisions are coordinated across subsystems~\cite{ma2024efficient}.
 
-While the literature on data-driven control is extensive, its interplay with large-scale sytsem control scenarios has received 
+While the literature on data-driven control is extensive, its interplay with large-scale system control scenarios has received 
 less focus. Conversely, research on large-scale control architectures often assumes access to accurate models and does
 not fully account for model uncertainties and difficulties for obtaining such models in real-world settings~\cite{xia2024predictor, aljohani2024tri, ma2024cloud}.
-This survey aims to provide a structured overview of data-driven control for large-scale systems, emphasizing how modeling choices, control paradigms, 
-and architectural design jointly determine scalability. 
+This survey aims to provide a structured overview of data-driven control for large-scale systems, emphasising how modeling choices, control paradigms and architectural design jointly determine scalability. 
 It highlights trade-offs between indirect and direct data-driven control, 
-centralized and non-centralized architectures, and modeling fidelity versus computational tractability.
+centralised and non-centralised architectures, and modeling fidelity versus computational tractability.
 
-The remainder of the survey is organized as follows. 
+The remainder of the survey is organised as follows. 
 Section \ref{background} provides a brief background on data-driven control, large-scale systems and safety filters, the central
 technique for providing formal guarantees for data-driven controllers.
 Following is an introduction to direct and indirect data-driven control techniques, forming the basis for
 large-scale deployment in non-centralised architectures.
 Section \ref{modeling} reviews data-driven modeling techniques relevant to large-scale systems, enabling system decomposition and dimensionality reduction. 
 Section \ref{modelfree} covers direct, model-free control approaches and their extensions to large-scale and distributed settings. 
-Section \ref{architecture} discusses decentralized, distributed, and hierarchical control architectures, analyzing how architectural choices affect scalability, 
-coordination, and performance. Safety and robustness mechanisms are introduced focusing on aspects necessitated by the system's scale.
+Section \ref{architecture} discusses decentralised, distributed, and hierarchical control architectures, analysing how architectural choices affect scalability, 
+coordination, and performance. Safety and robustness mechanisms are introduced, focusing on aspects necessitated by the system's scale.
 Section \ref{conclusion} concludes with a brief discussion of open challenges and directions for future research.
 
 
@@ -464,7 +463,7 @@ Section \ref{conclusion} concludes with a brief discussion of open challenges an
 Traditional control approaches largely followed the strategy of first deriving a model
 from first principles and afterwards building a controller upon it. 
 %A premier example of such an approach is MPC, model predictive control.
-Such model-based control can become intractible or inaccurate for complex large-scale systems, though~\cite{DDC_Overview}.
+Such model-based control can become intractable or inaccurate for complex large-scale systems, though~\cite{DDC_Overview}.
 %\subsubsection{Classification}
 A fundamental delimination in data-driven control can be made between direct and indirect approaches. 
 In indirect methods, a model is learned from data - a process termed system identification (SI) - and, as in traditional control, a controller built upon it.
@@ -477,8 +476,8 @@ In direct data-driven control, the dynamics of the system are treated as a black
 
 Data-driven approaches provide a range of benefits compared to traditional model-based ones. 
 System identification, the basis for indirect data-driven methods, has
-the key advantage of being generally applicable and to large degrees automated, 
-whereas a model-based technique requires expert-knowledge for deriving the model from first principles,
+the key advantage of being generally applicable and to a large degree automated, 
+whereas a model-based technique requires expert knowledge for deriving the model from first principles,
 the specific result then being domain-specific. SI further provides the practitioner with 
 tools to fine-tune the accuracy required, as complexity tends to rise with more accurate models~\cite{behavioralDataDrivenControl}.
 
@@ -498,10 +497,10 @@ degrade the performance of the resulting controller~\cite{HOU20133}.
 Another drawback is the lack of interpretability and 
 transparency compared to physics-based models. 
 First-principles models typically allow direct 
-insight into the mechanisms driving system behavior, 
+insight into the mechanisms driving system behaviour, 
 black-box controllers derived purely from data can be 
-difficult to analyze or verify~\cite{Brunton_Kutz_2022}. 
-Finally, issues of robustness and generalization remain 
+difficult to analyse or verify~\cite{Brunton_Kutz_2022}. 
+Finally, issues of robustness and generalisation remain 
 open problems, as controllers trained on one operational 
 regime may fail to extrapolate reliably to unseen 
 conditions~\cite{ramadan2025floodgatescontaindeepclimit}.
@@ -511,10 +510,10 @@ conditions~\cite{ramadan2025floodgatescontaindeepclimit}.
 \subsection{Large-Scale Systems}
 
 
-Large-Scale Systems do not have a single clear definition.
+Large-scale systems do not have a single clear definition.
 The term is rather used whenever a system grows unweildly to control with traditional strategies.
 It is further often used synonymously with complex system, a system consisting of multiple interacting units 
-that exhibits emergent collective behavior which is not the simple summation of its parts~\cite{ControllingComplexSystem}.
+that exhibits emergent collective behaviour which is not the simple summation of its parts~\cite{ControllingComplexSystem}.
 % a system is considered as large scale complex whenever it is necessary to partition the given analysis or synthesis problem in order to come up with manageable subproblems
 % https://pdf.sciencedirectassets.com/271897/1-s2.0-S1367578812X00026/1-s2.0-S1367578812000028/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDkaCXVzLWVhc3QtMSJGMEQCIFuyO2%2BOyv4oEbvlBReZXR12ei9IPZCW5zmPtdWgH3yKAiA9tGSvndkFQW4ktFpVnS7Qsqax0atoQRMRT95WTdkIZSq8BQjS%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAUaDDA1OTAwMzU0Njg2NSIMyC1wWjnrzaLee3m0KpAFWle6d2mOWXDum5AbJS67M%2BWWoPU5UwcCWNSgG1A4QurSwIMb4XcK%2FVAoWp%2Fez8tKQYpXc4iOecz8GlSMVK6EwDgAlExE7FEUiwHADa0mCyVxIRqQBuu4Dspt8jo7jGff1lkClIHVULoVR5HLXhw3%2B7wdV9Udtugea3i2Gojl%2FYGhyPoIlG3iKwNDnZKlZ76l06Kf%2BCxxqYbxkEi0%2Fkl%2F2YAtYdIv6cCAcDAQ3%2FM9wfY%2FSlMFnWKMiT5j6%2B3hAYWLn9Mkd5FoKcxQVzgWxwGTHbgXea9rtTbCHMgr5lnI9%2FdwhFOoDkeqaajGEd%2B8IbHRWmrcRUhN%2Bwc9IBNrYjneCmHx2rIMUSK5ErSqVixAWjw3WNdy%2BPQ5MoPCBjUi62BrQrtVAEfXbD%2FSyWfQuPPYXV7lJW9n%2BYGlx3laPojmCvif5VkJR%2BnPSD1ucw9lP70YEpsAgQr44ZoHmjxXp%2FaX0HJhDWERE%2BhYnQ2%2Fif6uDi3oQSl%2BJYHsC4LWxA75k1j2tCA%2B6X%2FTZzwLmIJqLVMdZH13lrIWoKvzBgruvo6haPj2O%2FWggr7YA6jBJNZ8lS5%2FZJL1q%2BgDYEQK%2FDZSin0XI9uNCD%2Bwhsg84qOJTBA2c%2BdKg7bV0S2t44rbrggC04ey8G%2Fg7zstch2h4l1bAmyNyGiwREnYoiZrE%2FKAzYoNNwK0rR9ejPQzu4WZ9hOcBSi98bQnQqbKuDLTR0xLRpqysqr0S6x0TTn2caVpnWATs5Nkc6mg0hwPeEPfTB%2B%2BEoFdu4wzgjP4Y9csvFWjLqgnxNyc3TtJ0y9db8URTV5m1QGII4%2FqUt1uf9MrJOmIj%2FG%2BrZzRx%2FZAwFB2cLDAazzZ0jhqdGmK08eHqxr4guwcfXAwoPOdxwY6sgEmFF1uMvj97RYxU1%2BbQXqJ4PBHdjI7J8%2B0pQSDELzqI4m2uYZ4n6b82bkqzp3aIxqTq8Pgo00jqnQdExaet83PyoVP7GeAxYPSyR4P7qTavpW%2BbF1otVHaGCsiKYwuBQYmqB0DVd4UIIPNgkXfVznTG0xY7cdL0c%2FPwc3xpNJO1Km9HSo615oRUSryJ1cULVsw%2BUpaasuWPwogTUiVP1bIGVDEkM8dI9KlFNGxeltS6%2BjI&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20251009T093726Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYQS55SIAW%2F20251009%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=6a6ac8d15b5cb6434913e9415a4b20dadbcab6e2e795f0a35a4424128e3a6b70&hash=c75fc87a3e3b7ed67b7f7e226f8bec06b27f3feb422145c63f846f91f5658e16&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S1367578812000028&tid=spdf-063f0f87-4e00-43a6-b7ff-10f6f3764c08&sid=029b8ee71b7c5841003ae926bfe04b1834bagxrqa&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&rh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=1e075d5907000a58510c&rr=98bce63c6fd7974a&cc=de
 Application domains of large-scale system control are areas such as power generation and distribution, traffic and water networks, and industrial system processes, such as heating ventilation or supply chain management systems~\cite{kordestani2021recent}.
@@ -534,8 +533,8 @@ communication protocols and interconnects between individual subsystems into the
 
 
 Model Order Reduction methods tackle the problem of reducing the complexity of large-scale systems.
-This technique attempts to generate reduced models reproducing the input-output behavior 
-of large-scale systems accurately enough for the desired use-case.
+This technique attempts to generate reduced models reproducing the input-output behaviour 
+of large-scale systems accurately enough for the desired use case.
 Traditional model reduction methods fall into two categories: Singular Value Decomposition (SVD)-based and moment matching methods.
 SVD-based techniques are related to the eponymous singular value decomposition.
 Their core idea is the computation of controllability and observability 
@@ -547,19 +546,19 @@ Moment matching methods consider the problem of matching the coefficients of pow
 series expansions of the transfer function at selected points, reducing model reduction
 to rational interpolation. They tend to be cheaper to compute than SVD-based methods, 
 but do not provide as strong of theoretical guarantees, the preservation of properties depending on factors such as the choice of expansion points~\cite{ANTOULAS200419}.
-A prominent example are Krylov subspace methods~\cite{freund2003model}.
+A prominent example is Krylov subspace methods~\cite{freund2003model}.
 
 %This distinction does not necessarily apply to the techniques themselves, though, but rather to their
 %implementation. 
 
-The second key approach taken to enable the control of large-scale sytems is the decomposition of the centralised
-control problem into smaller, more manageable control-tasks distributed to sub-controllers.
+The second key approach taken to enable the control of large-scale systems is the decomposition of the centralised
+control problem into smaller, more manageable control tasks distributed to sub-controllers.
 A centralised controller often does not suffice for effectively controlling large 
-scale systems, the necessity of multiple controllers even being part of some definitions of large-scale sytems~\cite{kordestani2021recent}. 
+scale systems, the necessity of multiple controllers even being part of some definitions of large-scale systems~\cite{kordestani2021recent}. 
 Depending on the interaction between the controllers, such approaches can
 be categorised into decentralised, distributed and hierarchical control architectures, in addition to hybrids thereof~\cite{kordestani2021recent}.
 
-Control of large-scale sytems taken can roughly be categorised into three distinct levels: node control, edge control and structural control~\cite{ControllingComplexSystem}.
+Control of large-scale systems can roughly be categorised into three distinct levels: node control, edge control and structural control~\cite{ControllingComplexSystem}.
 Node control concerns itself with the immediate determination of dynamics of a subset of agents at the lowest, microscopic view.
 Edge control works by dynamically adjusting the communication protocol between the individual agents.
 In structural control, the network topology can be reshaped in order to guide behaviour at the macroscopic level.
@@ -571,7 +570,7 @@ While not all layers might be controllable for a specific use-case, such as the 
 %\subsection{Safety \& Certification}
 
 The inherent complexity of large-scale systems not only
-challenges tractability but also exacerbates
+challenges tractability, but also exacerbates
 safety and certification concerns.
 As data-driven controllers replace interpretable physics-based models,
 formal guarantees must often be reintroduced. 
@@ -613,7 +612,7 @@ formulations~\cite{10266799}.
 For a known control affine system \(\dot{x} = f(x)  + g(t)u\), a 
 Control Barrier Function can be defined as follows~\cite{jin2023robust}: 
 a continuously differentiable function \(h: \mathcal{X} \to \mathbb{R}\) 
-is a CBR if there exists an  extended class \(K_\infty\) function \(\alpha\):
+is a CBF if there exists an  extended class \(K_\infty\) function \(\alpha\):
 \begin{equation}
 \sup_{u\in \mathcal{U}} \dot{h}(x,u)\geq -\alpha(h(x))
 \end{equation}
@@ -632,7 +631,7 @@ For safety, this target set can be the set of all unsafe states, the backward re
 While this approach is easily generalisable to many applications, scalability concerns can be a limiting factor~\cite{leeman2023predictive}.
 
 Predictive safety filters 
-enforce safety constraints by solving a constrained optimization problem that minimally corrects the nominal control input.
+enforce safety constraints by solving a constrained optimisation problem that minimally corrects the nominal control input.
 At each time step, the filter predicts the future 
 system evolution over a finite horizon and ensures
 that all reachable states remain within the safety set.
@@ -677,14 +676,14 @@ invariance of the safety set~\cite{milios2024stability}.
 
 To enable indirect data-driven control techniques, a model of the to be controlled system needs to be
 identified. Techniques in this section are also crucial for direct methods, however, as
-the decomposition of the global control problem into the control of sub-systems
+the decomposition of the global control problem into the control of subsystems
 is crucial element in all non-centralised large-scale system controller syntheses
 where this decentralisation can be configured and is not forced by physical reality.
 
 \subsection{System Identification}
 
 As large-scale systems tend to produce system models that are
-unweildly to handle, data-driven model order reduction techniques
+unwieldy to handle, data-driven model order reduction techniques
 receive special attention~\cite{baumann2022data}. Data-driven model order reduction methods rely
 only on measured trajectories, frequency response data, 
 or impulse responses and produce a reduced representation of the system's dynamics.
@@ -692,7 +691,7 @@ or impulse responses and produce a reduced representation of the system's dynami
 
 \subsubsection{Interpolatory approaches}
 
-A widely-used approach is data-driven interpolatory model reduction.
+A widely used approach is data-driven interpolatory model reduction.
 One such method, the Loewner framework, constructs a reduced linear
 model from transfer-function data or sampled impulse responses~\cite{gosea2021datadrivenmodelingcontrollargescale}.
 The main element of the Loewner framework is the Loewner Matrix. For two lists of complex number pairs \(u_i, v_i\) and \(\mu_j, \lambda_j\), it is defined as follows~\cite{lowenerIntro}: 
@@ -733,7 +732,7 @@ Balanced truncation~\cite{balancedtruncationOriginal} is a widely successfully e
 A data-driven reformulation is presented in \cite{gosea2021datadrivenbalancinglineardynamical}.
 The fundamental insight driving this development is that BT does not use the Gramians directly,
 but rather their product, which can be approximated from data. The results of the numerical BT method 
-can get arbitrary close to those of classical BT, depending on how much computational resources are allocated to the numerical quadrature.
+can get arbitrarily close to those of classical BT, depending on how many computational resources are allocated to the numerical quadrature.
 
 
 
@@ -757,7 +756,7 @@ For a dataset \(X = [x_1x_2...x_m], x_i \in \mathbb{R}^n\), proper orthogonal de
 \min_{U_r^TU_r = I_r} ||X-U_rU_r^TX||^2_F
 \end{equation}
 
-This optimization problem is solved by computing the singular value decomposition of the snapshot matrix \(X\). 
+This optimisation problem is solved by computing the singular value decomposition of the snapshot matrix \(X\). 
 The dominant singular vectors define the reduced basis, and the singular values quantify the energy captured by each mode~\cite{eskew2023new}.
 
 
@@ -803,7 +802,7 @@ different interacting subsystems.
 The two primary decomposition methodologies are physical and numerical. 
 In the former, the subsystems are defined by the physical components of the system, such as individual robots in a swarm~\cite{bakule2012decentralized}.
 The latter imposes the structure based on computational reasons,
-an approach more suited for large-scale systems, as obtaining partitions by physical reasoning can become intractible~\cite{ocampo2011partitioning}.
+an approach more suited for large-scale systems, as obtaining partitions by physical reasoning can become intractable~\cite{ocampo2011partitioning}.
 
 A widely adopted approach is the Sparse Identification of Nonlinear Dynamics (SINDy) framework~\cite{sindy}.
 It constructs a library of candidate nonlinear functions \(\Theta(X)\) 
@@ -902,20 +901,20 @@ remain inside this subspace upon application of the Koopman operator, there bein
 \(\mathcal{K}g = \beta_1y_1 + \beta_2 y_2 +  ... + \beta_m y_m\)~\cite{brunton2016koopman}.
 On this subspace, a finite-dimensional linear operator \(K\) can be obtained, restricting the Koopman operator \(\mathcal{K}\)~\cite{shi2024koopman}.
 When applying the Koopman operator to control scenarios, a Koopman-invariant subspace containing the original state variables \(x_i\) is desired.
-This can be an impossible task for some systems, for example a system with multiple
+This can be an impossible task for some systems, for example, a system with multiple
 fixed points, as all finite-dimensional linear systems have a single fixed point~\cite{brunton2016koopman}. 
 
 The data-driven determination of the Koopman operator's spectral properties usually involves approximating the operator with finite dimensions~\cite{meanti2023estimating}.
 DMD~\cite{dmdseminal} is a popular technique, in large part due to its ease of implementation~\cite{dmdImpl}, extensibility and interpretability~\cite{tu2013dynamic}.
 The procedure begins by collecting a time-series of state 
-snapshots and organizing them into two matrices, 
+snapshots and organising them into two matrices, 
 \(X\) and \(Y\), representing paired snapshots of the 
 system's "past" and "future" states, 
 respectively. 
 The core objective is to determine the best-fit linear 
 operator \(A\) such that \(Y \approx A X\). 
 To ensure robustness and manage high-dimensional data, the method 
-utilizes the SVD of the state
+utilises the SVD of the state
 matrix \(X \approx U_r \Sigma_r V_r^*\) to project the 
 dynamics onto a rank-\(r\) subspace~\cite{kutz2016dynamic}. 
 The low-rank approximation of the Koopman operator is then calculated as
@@ -923,9 +922,9 @@ The low-rank approximation of the Koopman operator is then calculated as
 
 
 
-Another wide-spread~\cite{Rowley2009SpectralAO} method for linear functions is tICA~\cite{tICA}.
+Another wide spread~\cite{Rowley2009SpectralAO} method for linear functions is tICA~\cite{tICA}.
 The methods of eDMD~\cite{Williams2014ADA}, VAC~\cite{vacsem}, KernelDMD~\cite{kerneldmd} and kernel tICA~\cite{schwantes2015modeling} extend the function dictionary to non-linear functions~\cite{meanti2023estimating}.
-The latter two kernel techniques resert to being infinite-dimensional, trading off computational efficiency for theoretical guarantees~\cite{koopmanThepry},
+The latter two kernel techniques resort to being infinite-dimensional, trading off computational efficiency for theoretical guarantees~\cite{koopmanThepry},
 though approximate kernel methods are a topic of active research~\cite{baddoo2022kernel, meanti2023estimating, liang2025fourier}.
 
 
@@ -948,14 +947,14 @@ the principles of Model Predictive Control (MPC)
 to a purely data-driven setting.
 It eliminates the need for explicit 
 system identification by leveraging Willems' Fundamental
-Lemma~\cite{willems2005note} from behavioral systems theory, 
+Lemma~\cite{willems2005note} from behavioural systems theory, 
 which states that all trajectories of a
 controllable linear system can be represented
 as linear combinations of a single persistently
 exciting trajectory.
 
 Given a persistently exciting input-output dataset, DeePC constructs Hankel matrices of past inputs and outputs, then formulates
-an optimization problem that directly predicts 
+an optimisation problem that directly predicts 
 future trajectories and computes optimal control actions 
 without identifying a model. As described in \cite{coulson2019data}, the DeePC works as follows:
 Taking as input a reference trajectory \(r\), past input-output data \((u_{ini}, y_{ini})\), constraint sets \(U,Y\) and performance matrices \(Q\) amd \(R\),
@@ -986,8 +985,8 @@ The optimal control sequence is subsequently calculated via \(u^* = U_fg^*\).
 Since its introduction, a variety of extensions have 
 been proposed to enhance the robustness, 
 scalability, and practicality of DeePC.
-To improve noise tolerance and generalization 
-to unseen conditions, regularized DeePC formulations
+To improve noise tolerance and generalisation 
+to unseen conditions, regularised DeePC formulations
 introduce penalties on the trajectory coefficients
 and slack variables, effectively mitigating overfitting
 to specific datasets~\cite{ramadan2025floodgates}.
@@ -995,28 +994,28 @@ Scalability can be improved greatly by adding a dimension reduction step to the 
 technique~\cite{wang2024mechanical}.
 
 
-Its applicabiltiy to large-scale systems is primarily driven through 
+Its applicability to large-scale systems is primarily driven through 
 distributed and hierarchical DeePC
 algorithm formulations, decomposing the 
-global DeePC optimization into coupled
+global DeePC optimisation into coupled
 subproblems solved locally with limited coordination,
 improving scalability and communication efficiency~\cite{YU2024110360,10667672}.
 
 Kernelized DeePC (RoKDeePC)~\cite{huang2023robust} enables the efficient control of nonlinear systems.
 It uses a nonparametric predictor of future outputs over a horizon by embedding data into a reproducing-kernel Hilbert space,
-seeking a function \(f\in \mathcal{H}\) minimizing a regularized least-squares objective of the form
+seeking a function \(f\in \mathcal{H}\) minimizing a regularised least-squares objective of the form
 
 \begin{equation}
 f^* = \argmin_{f\in\mathcal{H}}\sum_{j=1}^N ||y_j-f(z_j)||^2 + \gamma||f||_\mathcal{H}^2
 \end{equation}
 
-where \(z_j\) is a suitably defined past-input/output regressor, \(\gamma\) a regularization parameter
+where \(z_j\) is a suitably defined past-input/output regressor, \(\gamma\) a regularisation parameter
 and \(|| ||_\mathcal{H}\) the reproducing-kernel Hilbert space norm. 
 By the representer theorem~\cite{scholkopf2001generalized}, \(f^*\) can be written as 
 \(f^*(\cdot) = \sum_{j=1}^N \alpha_jk(z_k, \cdot)\) for some coefficients \(\alpha_j\), where \(k\) is the chosen kernel.
 
-Given this predictor, control is then formulated as a robust min-max optimization over disturbance sets on inputs and outputs.
-To efficiently solve this problem generally non-convex in \(u\), customized gradient descent methods tailored to the RoKDeePC structure are proposed.
+Given this predictor, control is then formulated as a robust min-max optimisation over disturbance sets on inputs and outputs.
+To efficiently solve this problem generally non-convex in \(u\), customised gradient descent methods tailored to the RoKDeePC structure are proposed.
 These utilise the separable structure of the decision variables by performing projected gradient steps on the input \(u\)
 while solving the predictor variable exactly via its convex subproblem. If output constraints are inactive,
 a closed-form solution using only linear mappings can be determined,
@@ -1036,14 +1035,14 @@ Recent works further address online computational efficiency through recursive
 and low-rank DeePC updates, allowing adaptive, 
 real-time control under streaming data constraints~\cite{shi2024efficient}.
 The DeePC formulation is transformed into a low-dimensional 
-form via SVD. Then a fast SVD update mechanism is provided
+form via SVD. Then, a fast SVD update mechanism is provided
 to avoid recomputing everything from scratch every time new data arrives.
 This drastically improves online use viability.
 
 
 DeePC-style control can be made robust, as proposed in \cite{huang2023robust}, 
 a computationally tractable reformulation of DeePC's traditional min-max optimisation
-problem via uncertainty sets, providing performance guarantees for the open-loop realized input/output cost.
+problem via uncertainty sets, providing performance guarantees for the open-loop realised input/output cost.
 For partially known systems, hybrid data-enabled predictive control~\cite{watson2025hybrid}
 presents an approach providing improved computational cost and robustness
 via an inclusion of model knowledge into DeePC. 
@@ -1061,7 +1060,7 @@ the system never drifts into unsafe regions,
 even while the data-driven component learns or adapts.
 Another approach for proving safety is using reachability analysis, 
 decoupling the system into error system and nominal system,
-the former prividing data-driven reachability sets 
+the former providing data-driven reachability sets 
 for the enhanced safety constraints
 in the nominal system~\cite{li2024robust}.
 This is directly relevant for large-scale system control, as these approaches 
@@ -1074,7 +1073,7 @@ Reinforcement Learning (RL) has recently become a popular
 method for dealing with the ever-growing complexity of modern systems, 
 providing the benefit of determining optimal control policies without 
 necessitating detailed system models~\cite{9261330}.
-RL-based controllers require no labeled datasets and are instead guided by feedback and learn in a trial-and-error fashion,
+RL-based controllers require no labelled datasets and are instead guided by feedback and learn in a trial-and-error fashion,
 making them well-suited for large-scale systems where 
 explicit system models are missing for reasons such as 
 nonlinear dynamics and multi-timescale operations~\cite{rfAndIntro}.
@@ -1083,10 +1082,10 @@ Another advantage of RL is its statement of the control problem as Markov decisi
 (MDPs), providing great generality. 
 They are applicable to nonlinear
 and stochastic dynamics, nonquadratic reward functions and even
-continous states and actions through numerical
+continuous states and actions through numerical
 function approximation techniques~\cite{BUSONIU20188}.
 Weaknesses include high data requirements and long convergence times~\cite{BARBALHO2022108315},
-hyperparameter sensitivity~\cite{smartGridRL}, potentially high computational costs [cite], and  
+hyperparameter sensitivity~\cite{smartGridRL}, potentially high computational costs, and  
 often missing formal stability guarantees~\cite{BARBALHO2022108315}.
 
 
@@ -1125,7 +1124,7 @@ The learned policy may select actions that are poorly represented
 in the dataset, leading to extrapolation errors in value estimates.
 To mitigate this, a range of regularisation strategies have been proposed.
 
-One range of techniques centers around the 
+One range of technique centres around the 
 idea of Conservative Q-Learning (CQL)~\cite{conservativeQLearning}.
 CQL solves issues off-policy RL algorithms face by learning a conservative estimate of the value function,
 avoiding over-estimation and yielding much better
@@ -1135,7 +1134,7 @@ Mildly Conservative Q-learning
 pseudo target values. 
 
 Offline RL has also been extended to multi-agent and distributed settings. Counterfactual Conservative Q-Learning (CFCQL) proposes a method  
-counterfactually determining conservative regularization
+counterfactually determining conservative regularisation
 for each agent separately and subsequently combining them linearly, leading to an overall conservative estimation~\cite{NEURIPS2023_f3f2ff95}.
 
 To achieve robustness in reinforcement learning, the maximisation problem presented in \cref{eq:reinforcement}.
@@ -1154,8 +1153,8 @@ guarantee safety and robust learning~\cite{chow2018lyapunov}.
 An alternative methodology involves adding control barrier functions, dropping the reward to minus infinity in
 safety violation situations, ensuring the learned optimal control policy respects the safety bounds~\cite{vu2021barrier}.
 These CBFs can further be learned efficiently using neural networks, as demonstrated by \cite{yang2023model},
-improving this method's applicabiltiy to large-scale systems.
-A formal methods based approach presented in \cite{hasanbeig2020cautious} safety constraints 
+improving this method's applicability to large-scale systems.
+A formal-methods-based approach presented in \cite{hasanbeig2020cautious} safety constraints 
 expressed in LTL guide the exploration. A key drawback of this, despite success in the safety dimension, is the necessity of manual 
 formulation of these constraints~\cite{gu2024review}. 
 
@@ -1173,17 +1172,17 @@ The control architecture determines how information
 is shared and decisions are made within a large-scale
 system.
 Large-scale systems pose fundamental challenges for classical control architectures.
-As system dimensions and interconnections grow, centralized strategies become computationally intractable and communication-limited~\cite{ma2024efficient}.
+As system dimensions and interconnections grow, centralised strategies become computationally intractable and communication-limited~\cite{ma2024efficient}.
 
-To address these challenges, the three principal paradigms of decentralized, distributed, and hierarchical control have evolved, each with characteristic trade-offs in scalability, performance, and robustness. 
+To address these challenges, the three principal paradigms of decentralised, distributed, and hierarchical control have evolved, each with characteristic trade-offs in scalability, performance, and robustness. 
 Beyond this tripartite classification, 
 modern work increasingly integrates hybrid architectures, 
 blurring traditional boundaries.
 
 
-\subsection{Decentralized control}
+\subsection{Decentralised control}
 
-In decentralized control, each subsystem maintains 
+In decentralised control, each subsystem maintains 
 an independent controller relying solely on local 
 measurements and actuation. 
 No online communication occurs among controllers, 
@@ -1193,8 +1192,8 @@ This structure yields high robustness to communication
 failures, straightforward scalability
 and is attractive for large-scale systems where global data aggregation is infeasible or 
 undesirable due to privacy, latency, or safety concerns, 
-yet typically sacrifices global optimality, as individual controllers do not have as much information regarding the state or output of the system as a centralized one would~\cite{ge2017distributed}.
-In some definitions of decentralised control information exchange is allowed before and after the decision making process, 
+yet typically sacrifices global optimality, as individual controllers do not have as much information regarding the state or output of the system as a centralised one would~\cite{ge2017distributed}.
+In some definitions of decentralised control, information exchange is allowed before and after the decision-making process, 
 simply restricting the controllers from actively negotiating~\cite{bemporad2010decentralized}. 
 
 % https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10127863&casa_token=Ko36uD2854kAAAAA:ynMRD7IwURNZU4uS1boXJgMnyyIX5uHKjdMOfL0Iw4WQ6snn9hCol0oUsfaFqD-1IQBFxbjnBWaB9A
@@ -1258,9 +1257,9 @@ where \(E\) denotes the disturbance based on the central state \(x_c\), one of i
 
 Chen et al.~\cite{chen2020decentralized} propose a decentralised MPC system for nonlinear processes
 where neural network models are trained for each subsystem and used as prediction models. 
-This approach resulted in improved computational cost compared to the centralised approach, while ensuring ensure
+This approach resulted in improved computational cost compared to the centralised approach, while ensuring 
 closed-loop state boundedness and convergence.
-Decentralised MPC can even work in application domains that tend to favor 
+Decentralised MPC can even work in application domains that tend to favour 
 a different kind of architecture, such as microgrids \cite{karami2019decentralized}.
 
 The more popular approach to predictive control in decentralised architectures is the DeePC one, though.
@@ -1276,7 +1275,7 @@ dDeeP-LCC~\cite{shang2024decentralized}, a decentralised formulation of DeePC, a
 %priors and regularization that implicitly 
 %encode coupling information. 
 %Markovsky et al. [1] demonstrated that 
-%behavioral system identification can yield locally 
+%behavioural system identification can yield locally 
 %data-driven DeePC controllers with guaranteed 
 %feasibility and stability in power networks, without 
 %requiring explicit coupling models. 
@@ -1287,7 +1286,7 @@ dDeeP-LCC~\cite{shang2024decentralized}, a decentralised formulation of DeePC, a
 %coordination from fully local data. In large-scale 
 %energy systems, 
 %Yu et al. [3] combined local identification and 
-%reinforcement-based optimization to enable a
+%reinforcement-based optimisation to enable a
 %daptive voltage and frequency control in 
 %distributed grids.
 
@@ -1310,11 +1309,11 @@ dDeeP-LCC~\cite{shang2024decentralized}, a decentralised formulation of DeePC, a
 
 \subsubsection{Robustness}
 
-Robustness in decentralized data-driven control addresses 
+Robustness in decentralised data-driven control addresses 
 the challenges of uncertainty in subsystem interactions and
 disturbances acting on local dynamics. 
-Unlike centralized architectures, 
-decentralized controllers cannot rely on global state
+Unlike centralised architectures, 
+decentralised controllers cannot rely on global state
 information, making explicit robustness formulations essential
 for guaranteeing stability and constraint satisfaction
 under limited information exchange.
@@ -1327,9 +1326,9 @@ This method has been successfully employed in the context of
 both predictive control~\cite{s22228709,shang2024decentralized} and
 adaptive dynamic programming~\cite{li2023decentralized} in decentralised architectures.
 
-Overall, decentralized robustness mechanisms scale well computationally, 
-with approximately constant online complexity per subsystem, as they avoid global optimization and communication entirely.
-However, this scalability tends to not stem from exploiting the large-scale structure of the system,
+Overall, decentralised robustness mechanisms scale well computationally, 
+with approximately constant online complexity per subsystem, as they avoid global optimisation and communication entirely.
+However, this scalability tends not to stem from exploiting the large-scale structure of the system,
 but is rather a consequence of a naive decomposition of the global robustness goal
 to the subsystem level, yielding limited system-level robustness guarantees under strong coupling conditions.
 
@@ -1337,7 +1336,7 @@ to the subsystem level, yielding limited system-level robustness guarantees unde
 
 %Distributionally robust formulations achieve this by 
 %optimising against ambiguity sets of empirical data,
-%yielding probabilistic guarantees on constraint satisfaction~\cite{coulson2019regularized}.
+%yielding probabilistic guarantees on constraint satisfaction~\cite{coulson2019regularised}.
 %Alternatively, reachable-set or zonotopic constructions
 %can be derived from local data to bound the effect of
 %coupling and noise without explicit model identification~\cite{alanwar2022robust}.
@@ -1354,8 +1353,8 @@ to the subsystem level, yielding limited system-level robustness guarantees unde
 %such a decentralized robust
 %data-driven predictive control scheme, where each subsystem
 %estimates a time-varying disturbance bound from local observations
-%and embeds it into the predictive optimization.
-%The resulting controller achieves smooth and safe closed-loop behavior
+%and embeds it into the predictive optimisation.
+%The resulting controller achieves smooth and safe closed-loop behaviour
 %even under strong coupling uncertainty.
 %Comparable ideas have also been successfully applied in other domains, 
 %such as robust decentralized control for microgrids, 
@@ -1364,7 +1363,7 @@ to the subsystem level, yielding limited system-level robustness guarantees unde
 %grid stability under communication and measurement noise~\cite{s22228709}.
 %
 %
-%Robustness can then be incorporated into the local optimization in several ways.
+%Robustness can then be incorporated into the local optimisation in several ways.
 %The most direct is the min-max formulation, 
 %where each subsystem solves a saddle-point problem ensuring
 %feasibility for all admissible uncertainties within its set. 
@@ -1378,7 +1377,7 @@ to the subsystem level, yielding limited system-level robustness guarantees unde
 %is augmented by a local feedback law or margin
 %that confines the closed-loop trajectory within
 %a robust invariant tube around the nominal prediction,
-%maintaining safety without excessive conservatism~\cite{coulson2019regularized,shang2024decentralized}
+%maintaining safety without excessive conservatism~\cite{coulson2019regularised,shang2024decentralized}
 
 
 
@@ -1402,10 +1401,10 @@ A common method~\cite{zhang2023data,hashemnezhad5371728safe} for achieving such 
 use of neural networks projecting the proposed action onto the nearest safe one, the networks having been
 trained on historical data to estimate the local impact of control actions on system states. 
 
-Ultimately, research on safety for decentralized data-driven control remains limited.
+Ultimately, research on safety for decentralised data-driven control remains limited.
 The lack of communication fundamentally restricts the ability to guarantee global
 safety properties in strongly coupled systems, making
-decentralized safety mechanisms most appropriate
+decentralised safety mechanisms most appropriate
 for settings with inherently local constraints.
 
 \subsection{Distributed control}
@@ -1420,7 +1419,7 @@ Factors that need to be considered in this design are communication delays and r
 
 \subsubsection{Distributed Model Predictive Control (DMPC)}
 
-A familty of techniques having been researched deeply for decades~\cite{SCATTOLINI2009723} is the collection of Distributed Model Predictive Control methods.
+A family of techniques having been researched deeply for decades~\cite{SCATTOLINI2009723} is the collection of Distributed Model Predictive Control methods.
 In a DMPC setting, each subsystem solves a local MPC and exchanges certain pieces of information, which is considered in addition to dynamics, constraints and objectives.
 DMPC systems can be approached from a bottom-up or
 a top-down perspective: 
@@ -1432,19 +1431,19 @@ communication and processing power~\cite{maestre2014distributed}.
 
 In non-iterative approaches, agents 
 coordinate only once per sampling instant to solve
-their optimization problems, providing simple and fast coordination, albeit at the cost of sub-optimal performance~\cite{maestre2015comparison}.
+their optimisation problems, providing simple and fast coordination, albeit at the cost of sub-optimal performance~\cite{maestre2015comparison}.
 Iterative DMPC strategies aim to 
-overcome the sub-optimality of non-Iterative
+overcome the sub-optimality of non-iterative
 methods by repeatedly exchanging information until a
 consensus or near-optimal solution is reached~\cite{wu2024iterative}. 
 To realise this efficiently, decomposition techniques such as the alternating
 direction method of multipliers~\cite{rostami2017admm}, the dual fast gradient method~\cite{wu2024iterative}
-and Nesterov-accelerated-gradient~\cite{8304602} approaches have been used successfully.
+and Nesterov-accelerated gradient~\cite{8304602} approaches have been used successfully.
 
 For computational and operational efficiency reasons, constraining the communication of subsystems to a local neighbourhood
 can be advantageous. DLMPC~\cite{alonso2022distributed} and the corresponding data-driven formulation \(D^3\)LMPC~\cite{alonso2022data}
 use the system level synthesis framework~\cite{anderson2019system} to generate a distributed model-predictive controller, which shares information only locally, the neighbourhood sizes being adjustable.
-The system level synthesis framework parameterizes the entire closed-loop system using two transfer matrices called system responses \(\{\Phi_x, \Phi_u\}\), such that 
+The system level synthesis framework parameterises the entire closed-loop system using two transfer matrices called system responses \(\{\Phi_x, \Phi_u\}\), such that 
 \(\begin{pmatrix}x\\u\end{pmatrix} = \begin{pmatrix}\Phi_x\\\Phi_u\end{pmatrix}w\), \(w\) being the exogenous disturbance.
 The data-driven formulation uses Hankel matrices to replace to closed-form system responses~\cite{xue2021data}.
 DLMPC achieves the restriction of neighbourhood size, the maximum number of hops in the communication graph a subsystem can communicate with, 
@@ -1455,7 +1454,7 @@ The data-driven DLMPC provides the same guarantees as the standard DLMPC, namely
 
 In Multi-Agent RL, each agent controls a subsystem 
 and must learn policies in a partially observable environment while interacting with other agents.
-As in model-based methods, centralised control via RL can grow intractible.
+As in model-based methods, centralised control via RL can grow intractable.
 In a multi-agent network \(\mathcal{G}= (V,\mathcal{E})\)
 each agent \(v_i\in V\) chooses an action \(u_i\in U_i\)
 and communicates with neighbours along the edges \((i,j)\in \mathcal{E}\), 
@@ -1471,12 +1470,12 @@ efficiently control in a centralised fashion~\cite{chu2019multi}.
 %\end{equation}
 
 A central distinction is to be made between 
-centralized training with decentralized execution and decentralized training with
-decentralized execution. 
-In centralized training with decentralized execution, agents can freely communicate during the learning phase, which is performed by a centralised
+centralised training with decentralised execution and decentralised training with
+decentralised execution. 
+In centralised training with decentralised execution, agents can freely communicate during the learning phase, which is performed by a centralised
 algorithm. The policies are, however, executed in a decentralised fashion, agents communicating only via 
 restricted channels~\cite{foerster2016learning}.
-In decentralized training with decentralized execution, independent learners train policies without explicitly modeling other 
+In decentralised training with decentralised execution, independent learners train policies without explicitly modeling other 
 agents, which provides improved scalability~\cite{du2021survey}.
 
 
@@ -1499,7 +1498,7 @@ if a predefined triggering condition,
 typically based on state error or
 performance degradation, is violated~\cite{hirche2020distributed}.
 
-One notable work by Yang et al.~\cite{yang2019adaptive} combined this with a reinforcement learning apprach
+One notable work by Yang et al.~\cite{yang2019adaptive} combined this with a reinforcement learning approach
 developing a distributed
 control scheme tailored to large-scale interconnected nonlinear systems
 under uncertain couplings.
@@ -1509,7 +1508,7 @@ approximate its own optimal control
 policy directly from collected state-input data.
 The authors integrate experience replay, 
 buffering past trajectories to accelerate learning
-and stabilize convergence, 
+and stabilise convergence, 
 and embed event-triggered communication to 
 reduce inter-subsystem data exchange 
 while still guaranteeing closed-loop stability. 
@@ -1518,10 +1517,10 @@ unknown subsystem interconnections by treating them
 as disturbances while enforcing local
 Lyapunov-based dwell and time-trigger
 conditions to preserve global stability despite decentralisation.
-The propsed method is a scalable data-driven algorithm
+The proposed method is a scalable data-driven algorithm
 that yields stabilising controllers for each node
 in the network with bounded communication and minimal
-modelling assumptions.
+modeling assumptions.
 
 
 Event-triggered data-driven distributed control has found application in a variety of areas.
@@ -1532,20 +1531,20 @@ proving convergence via Lyapunov theory.
 Zhu et al.~\cite{10337762} propose a method for connected heterogeneous vehicle platoon control
 considering sensor faults, network resource usage minimised through the effective use of triggering conditions.
 Yu et al.~\cite{yu2023distributed} develop an iterative learning approach for the control of 
-Multiple High-Speed Trains with sitching topologies, proving 
+Multiple High-Speed Trains with switching topologies, proving 
 stability and reduced bandwidth occupancy while retaining
 sufficient performance.
 
 
 \subsubsection{Robustness}
 
-The key advantage distributed architectures have over decentralised ones with regards to robustness is the ability to explicitly
+The key advantage distributed architectures have over decentralised ones with regard to robustness is the ability to explicitly
 communicate among subsystems. While this allows for distributed robust control optimisation, it introduces the need for
 more extensive performance considerations to scale to large-scale systems.  
 
 In \cite{wang2024data}, robustness is achieved by explicitly modeling uncertainty on both subsystem
 dynamics and interconnection terms, and embedding these uncertainty descriptions into a distributed
-robust optimization problem whose constraints are decomposed according to the network graph.
+robust optimisation problem whose constraints are decomposed according to the network graph.
 Rather than enforcing robustness independently at each node, 
 tightened coupling constraints are coordinated across the network so that worst-case
 uncertainty propagation is bounded at the system level. 
@@ -1562,8 +1561,8 @@ direction method of multipliers algorithm enhanced with Nesterov acceleration, e
 complexity growing approximately linearly with the number of direct connections at each subsystem. 
 Efficient robustness is hence achieved via the model-free, data-driven feedback loop
 which tolerates measurement errors and model mismatch,
-the distributed optimization architecture where only limited peer exchange is required and
-convergence is accelerated, and decentralized local correction at each node which ensures
+the distributed optimisation architecture, where only limited peer exchange is required and
+convergence is accelerated, and decentralised local correction at each node which ensures
 the system stays robust to both local disturbance and coupling uncertainties.
 
 Overall, robust distributed control for large-scale systems departs from classical robust
@@ -1584,21 +1583,21 @@ emphasises certifiable safety through layered protocols
 that ensure safe interaction among agents under
 communication and dynamic coupling.
 
-Khaledi et al.~\cite{khaledi2025data} constrain a direct data-driven distributed controller for multi agent systems
+Khaledi et al.~\cite{khaledi2025data} constrain a direct data-driven distributed controller for multi-agent systems
 via Control Barrier Functions incorporating quadratic programming optimisations. 
 The online computational complexity is dominated by the interior-point quadratic programming problem, which is, for \(m_i\) being the control input
 dimension for agent \(i\), \(\mathcal{O}((\sum_im_i)^3)\) due to the factorization of
 the Karush-Kuhn-Tucker system for dense data~\cite{ye1989extension}.
 As a result, this approach is primarily suited to moderately sized networks,
 highlighting a fundamental limitation of CBF-based safety mechanisms
-whose safety constraints are enforced through globally coupled online optimization problems 
+whose safety constraints are enforced through globally coupled online optimisation problems 
 when applied to large-scale systems.
 
 In contrast, the Trajectory-Tube Distributed Explicit Reference Governor proposed in \cite{convens2022safe} explicitly targets scalability by decoupling safety enforcement across agents through predictive safety tubes that account for higher-order nonlinear dynamics and inter-agent coupling.
-Safety information is exchanged only locally among neighboring agents, preventing the
+Safety information is exchanged only locally among neighbouring agents, preventing the
 propagation of global constraints and enabling safety certificates whose complexity
 remains bounded as the swarm size increases. 
-This structural localization of safety guarantees allows the method
+This structural localisation of safety guarantees allows the method
 to scale to large, resource-constrained UAV swarms while maintaining 
 constraint satisfaction under limited communication.
 
@@ -1627,7 +1626,7 @@ This paradigm allows coordination of complex large-scale systems
 by assigning high-level layers to strategic, long-horizon decisions
 and lower-level layers to fast, local actuation.
 The approach mitigates the curse of dimensionality
-inherent in centralized optimization and can improve robustness
+inherent in centralised optimisation and can improve robustness
 and scalability compared to purely distributed schemes~\cite{SCATTOLINI2009723}.
 
 \subsubsection{Architectural principles}
@@ -1635,7 +1634,7 @@ and scalability compared to purely distributed schemes~\cite{SCATTOLINI2009723}.
 A canonical three-layer hierarchy distinguishes between:
 
 \begin{itemize}
-\item Supervisory layer (Level 1): Performs system-wide coordination, optimization, and constraint management. It determines global references or resource allocations for subordinate controllers.
+\item Supervisory layer (Level 1): Performs system-wide coordination, optimisation, and constraint management. It determines global references or resource allocations for subordinate controllers.
 \item Coordination layer (Level 2): Translates supervisory commands into feasible sub-objectives for each subsystem, handling coupling constraints and communication among local controllers.
 \item Local control layer (Level 3): Executes low-level control laws (e.g., MPC, RL, PID) to track references or regulate states under real-time constraints.
 \end{itemize}
@@ -1653,7 +1652,7 @@ improved modularity~\cite{maestre2014distributed}.
 
 \subsubsection{Data-driven hierarchical model predictive control}
 
-Hierarchical Model Predictive Control extends MPC to a multi-level framework, where upper layers solve relaxed or aggregated optimization problems whose 
+Hierarchical Model Predictive Control extends MPC to a multi-level framework, where upper layers solve relaxed or aggregated optimisation problems whose 
 outputs guide lower layers~\cite{SCATTOLINI2009723}. 
 
 Shi et al.~\cite{shi2020data} present an indirect data-driven hierarchical control structure for systems operating under uncertainty.
@@ -1662,7 +1661,7 @@ has the task of dealing with the modeling errors and environment uncertainties.
 
 As for direct data-driven methods, model-free
 formulations such as hierarchical DeePC have emerged~\cite{10667672}, demonstrating
-such a structure for autonomous mobility-on-demand fleets: the upper layer optimizes
+such a structure for autonomous mobility-on-demand fleets: the upper layer optimises
 global vehicle repositioning and the lower layer applies local DeePC to individual agents.
 
 
@@ -1689,12 +1688,12 @@ Y_t^{Q^2} = R_{t+1} + \gamma \max_aQ(s_{t+1}, a| g)
 Applying hierarchical reinforcement learning naively to large-scale systems can lead to computational inefficiency and convergence difficulties due to the inherent challenge of a high-dimensional action space,
 leading to a trend towards combining hierarchical and distributed reinforcement learning, intending to reduce task complexity and accelerate training speeds.
 One such work is \cite{chen2023distributed}, a distributed hierarchical controller using deep reinforcement learning.
-The authors develop a new framework coined hierarchical reduction reinforcement learning (HR2L),
+The authors develop a new framework, coined hierarchical reduction reinforcement learning,
 addressing the critical challenge of computational inefficiency in deep reinforcement learning for large-scale power grid emergency control.
-HR2L is based on a two-layer hierarchical decomposition that achieves efficient and accurate action space reduction via a self-supervised learning algorithm. 
+Hierarchical reduction reinforcement learning is based on a two-layer hierarchical decomposition that achieves efficient and accurate action space reduction via a self-supervised learning algorithm. 
 By training a top layer to identify a small effective action space,
 it significantly reduces the control complexity for the bottom layer.
-Furthermore, an experiences sharing-based distributed architecture is integrated
+Furthermore, an experiences-sharing-based distributed architecture is integrated
 to enable parallel training and enhance scalability. 
 This approach substantially improves upon prior art in convergence speed,
 solution quality, training robustness, and adaptability to large-scale systems.
@@ -1740,7 +1739,7 @@ while the droop control at the lower level tracks those
 references and compensates disturbances. 
 Reachability analysis is employed to bound worst-case deviations, 
 thereby contributing robustness guarantees
-under modelling uncertainty and disturbance.
+under modeling uncertainty and disturbance.
 Robustness is achieved through 
 adaptive model refinement and time-scale separation, 
 the upper layer continuously re-identifying system dynamics,
@@ -1750,7 +1749,7 @@ bounded invariance through reachability-based compensation.
 
 Overall, the deliberate separation of uncertainty handling across layers emerges as a key mechanism for achieving robustness in hierarchical control architectures. 
 This structural containment seems particularly critical in large-scale networked systems, 
-where it preserves computational scalability by confining expensive optimization and adaptation to
+where it preserves computational scalability by confining expensive optimisation and adaptation to
 supervisory layers while allowing local controllers to focus on fast stabilization and disturbance rejection. 
 While existing work on robustness in large-scale hierarchical systems remains limited,
 the presented results indicate that hierarchical separation offers a promising and scalable pathway for robust data-driven control.
@@ -1761,9 +1760,9 @@ Hierarchical control architectures offer a natural mechanism for enforcing safet
 
 A representative example is presented by Ahmad et al.~\cite{ahmad2025hierarchical}, addressing
 scalability for safe multi-agent reinforcement learning by decoupling coordination from safety enforcement.
-A high-level policy learns joint cooperative behavior, while low-level controllers enforce individual safety via control barrier functions.
+A high-level policy learns joint cooperative behaviour, while low-level controllers enforce individual safety via control barrier functions.
 Safety-critical quadratic programs are solved only at the agent level and depend solely on local state
-and interaction neighborhoods, keeping per-agent
+and interaction neighbourhoods, keeping per-agent
 computational complexity independent of the total number of agents.
 This approach achieves near-perfect safety rates in dense, conflicting road networks.
 
@@ -1783,7 +1782,7 @@ providing scalability to a large number of subsystems.
 %can provide leverage for scalability and robustness. 
 %Specifically, edge control and structural control 
 %have emerged as two promising approaches to orchestrating 
-%collective behavior in complex systems~\cite{ControllingComplexSystem}. 
+%collective behaviour in complex systems~\cite{ControllingComplexSystem}. 
 %These approaches shift attention from 
 %direct state manipulation of individual nodes to 
 %the design of interactions and the adaptation 
@@ -1791,7 +1790,7 @@ providing scalability to a large number of subsystems.
 %on global dynamics.
 
 
-%\subsubsection{Consensus/synchronization controllers and distributed optimization}
+%\subsubsection{Consensus/synchronization controllers and distributed optimisation}
 
 %\subsubsection{Event-triggered and sampled/quantized coordination}
 
@@ -1993,13 +1992,13 @@ direct model-free control, and the architectural choices required to deploy such
 A recurring theme across the literature is that scalability is
 rarely achieved by a single algorithmic idea. 
 Instead, practical large-scale control solutions combine dimensionality
-reduction, structural decomposition, and appropriate control architectures such as decentralized, distributed, or hierarchical schemes. 
+reduction, structural decomposition, and appropriate control architectures such as decentralised, distributed, or hierarchical schemes. 
 While data-driven methods can significantly reduce modeling effort and
 improve flexibility, they introduce new challenges related to data quality, computational complexity, and performance guarantees.
 
 Despite substantial progress, several open problems remain.
-These primarily include the exploitation of large-scale structure for robust and safety controllers in networked systems.
-Research in all presented control architectures remains limited and commonly tends to employ standard safety
+These primarily include the exploitation of large-scale structure for robust and safe controllers in networked systems.
+Research in all presented control architectures remains limited and commonly tends to employ standard
 mechanisms in subsystems. Novel safety approaches leveraging structure to provide guarantees not easily decomposable scaling to large systems
 could be the topic of future investigation.
 Further, security aspects, such as malicious agents or subsystems, or the tampering with the learned-from data, are seldom considered.
