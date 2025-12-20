@@ -1757,24 +1757,21 @@ the presented results indicate that hierarchical separation offers a promising a
 
 \subsubsection{Safety}
 
+Hierarchical control architectures offer a natural mechanism for enforcing safety in large-scale systems by exploiting abstraction and time-scale separation, thereby distributing safety responsibilities across layers with bounded complexity and dimensionality. Crucially, safety constraints are enforced on low-dimensional abstractions at higher layers and on local state variables at lower layers, avoiding globally coupled safety verification.
 
-Hierarchical Multi-Agent Reinforcement Learning 
-can be made to provide near-perfect safety guarantees
-using Control Barrier functions,
-addressing the control problem at the level of learning joint cooperative behavior
-and of learning safe individual behavior~\cite{ahmad2025hierarchical}.
+A representative example is presented by Ahmad et al.~\cite{ahmad2025hierarchical}, addressing
+scalability for safe multi-agent reinforcement learning by decoupling coordination from safety enforcement.
+A high-level policy learns joint cooperative behavior, while low-level controllers enforce individual safety via control barrier functions.
+Safety-critical quadratic programs are solved only at the agent level and depend solely on local state
+and interaction neighborhoods, keeping per-agent
+computational complexity independent of the total number of agents.
+This approach achieves near-perfect safety rates in dense, conflicting road networks.
 
-
-As for an MPC approach, Vallon et al.~\cite{vallon2022data} propose a hierarchical, data-driven predictive control architecture for unknown operational environments, where previous task-trajectories are mined offline to generate target regions and input constraints that become terminal sets for a lower-level model predictive controller.
-This target-set construction ensures that the tracking controller always steers the system into a region known safe 
-(via prior data) before executing new environment-specific maneuvers.
-In hierarchical terms this corresponds to the supervisory layer computing 
-safe-set so-called waypoints or regions informed by data-driven transfer of
-experience and the local layer running an MPC whose terminal set is
-the safe region, thereby guaranteeing closed-loop feasibility and safety.
-The safety guarantees thus stem from embedding experience-derived safe sets as terminal constraints in the hierarchical control scheme.
-
-
+In a predictive control setting, Vallon et al.~\cite{vallon2022data} propose a hierarchical, data-driven architecture for unknown operational environments.
+Offline trajectory data is mined to construct a library of recursively feasible terminal sets and safe equilibria. The supervisory layer selects target states from this library, effectively decomposing the global environment into a sequence of locally reachable, data-validated safe regions.
+The local MPC problems can then handle the local constraints in parallel, 
+while the high-level hierarchy manages the global topology through a sparse set of historical safe states,
+providing scalability to a large number of subsystems.
 
 %\subsection{Higher Level Control}
 %
