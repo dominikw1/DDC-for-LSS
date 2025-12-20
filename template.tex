@@ -1328,7 +1328,7 @@ both predictive control~\cite{s22228709,shang2024decentralized} and
 adaptive dynamic programming~\cite{li2023decentralized} in decentralised architectures.
 
 Overall, decentralized robustness mechanisms scale well computationally, 
-usually linearly with the number of subsystems, as they avoid global optimization and communication entirely.
+with approximately constant online complexity per subsystem, as they avoid global optimization and communication entirely.
 However, this scalability tends to not stem from exploiting the large-scale structure of the system,
 but is rather a consequence of a naive decomposition of the global robustness goal
 to the subsystem level, yielding limited system-level robustness guarantees under strong coupling conditions.
@@ -1396,7 +1396,7 @@ The decentralised control of large-scale systems poses a special challenge
 for safety guarantees, as the local subsystem controllers have to ensure constraint satisfaction
 despite only implicitly gaining information from the other subcontrollers, 
 no direct communication channel being available, safety hence having to be enforced locally and independently.
-While this tends to ensure a complexity linear in the number of subsystems, safety guarantees
+While this tends to ensure a constant per-subsystem complexity, safety guarantees
 extending beyond those decomposing into local requirements can only be met under restrictive assumptions. 
 A common method~\cite{zhang2023data,hashemnezhad5371728safe} for achieving such guarantees is the 
 use of neural networks projecting the proposed action onto the nearest safe one, the networks having been
@@ -1998,7 +1998,11 @@ While data-driven methods can significantly reduce modeling effort and
 improve flexibility, they introduce new challenges related to data quality, computational complexity, and performance guarantees.
 
 Despite substantial progress, several open problems remain.
-These include XXXXXX.
+These primarily include the exploitation of large-scale structure for robust and safety controllers in networked systems.
+Research in all presented control architectures remains limited and commonly tends to employ standard safety
+mechanisms in subsystems. Novel safety approaches leveraging structure to provide guarantees not easily decomposable scaling to large systems
+could be the topic of future investigation.
+Further, security aspects, such as malicious agents or subsystems, or the tampering with the learned-from data, are seldom considered.
 Addressing these challenges will be critical for moving data-driven control toward broadly applicable, reliable solutions for real-world large-scale systems.
 
 % conference papers do not normally have an appendix
