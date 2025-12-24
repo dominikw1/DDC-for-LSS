@@ -738,7 +738,11 @@ The fundamental insight driving this development is that BT does not use the Gra
 but rather their product, which can be approximated from data. The results of the numerical BT method 
 can get arbitrarily close to those of classical BT, depending on how many computational resources are allocated to the numerical quadrature.
 
-
+As in the Lowener framework, the SVD involved grows computationally infeasible for matrices common in large-scale systems. Using extended Krylov subspace methods, 
+a low-rank approximation to the corresponding Sylvester equations can be generated, greatly improving efficiency~\cite{wang2025data}. 
+Another approach is to utilise the idea of the low-rank Alternating Direction Implicit method~\cite{benner2013efficient},
+a popular method for handling the computational complexity in traditional BT settings~\cite{zulfiqar2025data}, and reformulate it for
+data-driven BT, reducing the model using transfer function samples from the right half of the s-plane~\cite{zulfiqar2025compression}.
 
 % some more, see below
 %\subsubsection{Optimality-based approaches}
