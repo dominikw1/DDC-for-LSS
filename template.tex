@@ -789,7 +789,12 @@ One can then reconstruct \(A_r = U_rS^+V_r\Sigma_r^{-1}\).
 Using the cheap eigen-decomposition \(A_rW = \Lambda W\), one can compute the DMD modes \(\Psi = U_rW\), which 
 contain the essential information about the system's evolution and can be used to approximately predict the system's state at any point in time~\cite{HUHN2023111852}.
 
-
+A drawback of DMD is its sensitivity to sensor noise, which stems from its nature as effectively a least-squares algorithm, resting on the assumption that the independent variable is noise-free~\cite{dawson2016characterizing}.
+Making DMD explicitly aware of noise, e.g. using a Kalman filter~\cite{nonomura2019extended} or a total least-squares approach~\cite{hemati2017biasing}, 
+solves this problem to some degree~\cite{takeishi2017subspace}, though potentially at the cost of computational stability~\cite{ohmichi2022stable}.
+The scalability of DMD, dominated by the SVD, can be improved via approaches such as working on compressed data~\cite{brunton2015compressed}, 
+exploiting multi-scale dynamics via explicit introduction of multi-resolution DMD~\cite{kutz2016multiresolution}, or embedding DMD into a probabilistic framework to
+get a randomised DMD algorithm~\cite{erichson2019randomized}. 
 
 \subsection{Topology Identification and Decomposition}
 
@@ -928,13 +933,22 @@ dynamics onto a rank-\(r\) subspace~\cite{kutz2016dynamic}.
 The low-rank approximation of the Koopman operator is then calculated as
 \(\tilde{A} = U_r^* YV_r\Sigma_r^{-1}\)~\cite{schmid2010dynamic}.
 
-
-
 Another wide spread~\cite{Rowley2009SpectralAO} method for linear functions is tICA~\cite{tICA}.
 The methods of eDMD~\cite{Williams2014ADA}, VAC~\cite{vacsem}, KernelDMD~\cite{kerneldmd} and kernel tICA~\cite{schwantes2015modeling} extend the function dictionary to non-linear functions~\cite{meanti2023estimating}.
 The latter two kernel techniques resort to being infinite-dimensional, trading off computational efficiency for theoretical guarantees~\cite{koopmanThepry},
 though approximate kernel methods are a topic of active research~\cite{baddoo2022kernel, meanti2023estimating, liang2025fourier}.
 
+
+Despite their theoretical appeal, Koopman-based approaches face well-documented limitations in large-scale settings. 
+First, finite-dimensional Koopman-invariant subspaces rarely exist for nonlinear systems of practical interest, 
+causing lifted linear models to incur rapidly growing approximation errors~\cite{brunton2016koopman}.
+Second, the observable dictionaries required for expressive embeddings scale combinatorially with system complexity, 
+making both eDMD-type methods and dictionary learning computationally prohibitive at large scale~\cite{mauroy2020koopman}. 
+Kernelised variants partially avoid explicit feature construction but introduce \(\mathcal{O}(N^2)\) to \(\mathcal{O}(N^3)\) computational cost
+in the number of snapshots, which quickly becomes intractable without sketching or other aggressive approximations~\cite{meanti2023estimating}. 
+As a consequence, while the application of Koopman theory to ever-larger systems is currently a vibrant field of research, 
+Koopman lifting remains viable only for moderate-size subsystems with coherent low-dimensional
+structure rather than arbitrary full large-scale networks.
 
 
 \section{Model-Free Control}\label{modelfree}
