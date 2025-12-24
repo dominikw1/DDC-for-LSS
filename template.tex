@@ -1001,7 +1001,7 @@ global DeePC optimisation into coupled
 subproblems solved locally with limited coordination,
 improving scalability and communication efficiency~\cite{YU2024110360,10667672}.
 
-Kernelized DeePC (RoKDeePC)~\cite{huang2023robust} enables the efficient control of nonlinear systems.
+Kernelized DeePC~\cite{huang2023robust} enables the efficient control of nonlinear systems.
 It uses a nonparametric predictor of future outputs over a horizon by embedding data into a reproducing-kernel Hilbert space,
 seeking a function \(f\in \mathcal{H}\) minimizing a regularised least-squares objective of the form
 
@@ -1125,15 +1125,14 @@ in the dataset, leading to extrapolation errors in value estimates.
 To mitigate this, a range of regularisation strategies have been proposed.
 
 One range of technique centres around the 
-idea of Conservative Q-Learning (CQL)~\cite{conservativeQLearning}.
-CQL solves issues off-policy RL algorithms face by learning a conservative estimate of the value function,
+idea of Conservative Q-Learning~\cite{conservativeQLearning}.
+Conservative Q-Learning solves issues off-policy RL algorithms face by learning a conservative estimate of the value function,
 avoiding over-estimation and yielding much better
 performance. A tighter lower bound is achieved by 
-Mildly Conservative Q-learning
-(MCQ)~\cite{mildlyconservativee}, actively training out-of-distribution actions by constructing them proper
+Mildly Conservative Q-learning~\cite{mildlyconservativee}, actively training out-of-distribution actions by constructing them proper
 pseudo target values. 
 
-Offline RL has also been extended to multi-agent and distributed settings. Counterfactual Conservative Q-Learning (CFCQL) proposes a method  
+Offline RL has also been extended to multi-agent and distributed settings. Counterfactual Conservative Q-Learning proposes a method  
 counterfactually determining conservative regularisation
 for each agent separately and subsequently combining them linearly, leading to an overall conservative estimation~\cite{NEURIPS2023_f3f2ff95}.
 
@@ -1173,6 +1172,7 @@ is shared and decisions are made within a large-scale
 system.
 Large-scale systems pose fundamental challenges for classical control architectures.
 As system dimensions and interconnections grow, centralised strategies become computationally intractable and communication-limited~\cite{ma2024efficient}.
+
 
 To address these challenges, the three principal paradigms of decentralised, distributed, and hierarchical control have evolved, each with characteristic trade-offs in scalability, performance, and robustness. 
 Beyond this tripartite classification, 
@@ -1414,7 +1414,19 @@ for settings with inherently local constraints.
 
 As opposed to decentralised control, subsystems in distributed architectures share information among system components.
 This enhances the coordination capabilities of the agents, incurring improved scalability and robustness~\cite{ge2017distributed}. 
-Factors that need to be considered in this design are communication delays and reliability. 
+Factors that need to be considered in this design are communication delays and reliability. A general formulation of distributed control 
+for a controller \(i\) would look as follows, where each controller uses its own state and state information shared by immediate
+neighbours \(\mathcal{N}_i\), potentially transformed through a function \(\xi\):
+
+\begin{equation}
+u_i = \kappa_i(x_i, \{\xi(x_j): j \in \mathcal{N}_i\})
+\end{equation}
+
+For linear settings and direct state propagation, this would reduce to
+
+\begin{equation}
+u_i = K_{ii}x_i + \sum_{j\in\mathcal{N}_i}K_{ij}x_j
+\end{equation}
 
 
 \subsubsection{Distributed Model Predictive Control (DMPC)}
@@ -1444,7 +1456,13 @@ For computational and operational efficiency reasons, constraining the communica
 can be advantageous. DLMPC~\cite{alonso2022distributed} and the corresponding data-driven formulation \(D^3\)LMPC~\cite{alonso2022data}
 use the system level synthesis framework~\cite{anderson2019system} to generate a distributed model-predictive controller, which shares information only locally, the neighbourhood sizes being adjustable.
 The system level synthesis framework parameterises the entire closed-loop system using two transfer matrices called system responses \(\{\Phi_x, \Phi_u\}\), such that 
-\(\begin{pmatrix}x\\u\end{pmatrix} = \begin{pmatrix}\Phi_x\\\Phi_u\end{pmatrix}w\), \(w\) being the exogenous disturbance.
+
+\begin{equation}
+\begin{pmatrix}x\\u\end{pmatrix} = \begin{pmatrix}\Phi_x\\\Phi_u\end{pmatrix}w
+\end{equation}
+
+\(w\) being the exogenous disturbance.
+
 The data-driven formulation uses Hankel matrices to replace to closed-form system responses~\cite{xue2021data}.
 DLMPC achieves the restriction of neighbourhood size, the maximum number of hops in the communication graph a subsystem can communicate with, 
 through a locality constraint on the system response.
