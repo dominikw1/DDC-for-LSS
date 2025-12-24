@@ -717,6 +717,10 @@ one can capture the most important dynamics of the original system.
 The reduced-order model's state-space matrices
 are then directly computed from the projected Loewner matrices 
 and the data vectors~\cite{lowenerIntro}. % double chekck
+While the Loewner framework has been successfully employed in large-scale system scenarios~\cite{gosea2022data},
+the \(\mathcal{O}(n^3)\) complexity of SVD and its sensitivity to noise~\cite{kergus2018data} necessitates
+the usage of advanced implementation techniques, such as using a sequence of 1-demensional Loewner matrices for the computation of the null-space of an \(n\)-dimensional one, as proposed in \cite{antoulas2024loewner},
+reducing the time complexity to about \(\mathcal{O}(n^{1.4})\).
 
 
 Another interpolatory model order reduction technique is the AAA algorithm~\cite{nakatsukasa2018aaa}, which builds rational
@@ -1414,15 +1418,17 @@ for settings with inherently local constraints.
 
 As opposed to decentralised control, subsystems in distributed architectures share information among system components.
 This enhances the coordination capabilities of the agents, incurring improved scalability and robustness~\cite{ge2017distributed}. 
-Factors that need to be considered in this design are communication delays and reliability. A general formulation of distributed control 
+Factors that need to be considered in this design are communication delays and reliability. 
+
+A general formulation of distributed control 
 for a controller \(i\) would look as follows, where each controller uses its own state and state information shared by immediate
 neighbours \(\mathcal{N}_i\), potentially transformed through a function \(\xi\):
 
 \begin{equation}
-u_i = \kappa_i(x_i, \{\xi(x_j): j \in \mathcal{N}_i\})
+u_i = \kappa_i(x_i, \{\xi(x_j) \mid j \in \mathcal{N}_i\})
 \end{equation}
 
-For linear settings and direct state propagation, this would reduce to
+For linear settings and direct state propagation, this would reduce to:
 
 \begin{equation}
 u_i = K_{ii}x_i + \sum_{j\in\mathcal{N}_i}K_{ij}x_j
