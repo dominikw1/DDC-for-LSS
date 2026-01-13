@@ -511,7 +511,7 @@ conditions~\cite{ramadan2025floodgatescontaindeepclimit}.
 
 
 Large-scale systems do not have a single clear definition.
-The term is rather used whenever a system grows unweildly to control with traditional strategies.
+The term is rather used whenever a system grows unwieldy to control with traditional strategies.
 It is further often used synonymously with complex system, a system consisting of multiple interacting units 
 that exhibits emergent collective behaviour which is not the simple summation of its parts~\cite{ControllingComplexSystem}.
 % a system is considered as large scale complex whenever it is necessary to partition the given analysis or synthesis problem in order to come up with manageable subproblems
@@ -719,7 +719,7 @@ are then directly computed from the projected Loewner matrices
 and the data vectors~\cite{lowenerIntro}. % double chekck
 While the Loewner framework has been successfully employed in large-scale system scenarios~\cite{gosea2022data},
 the \(\mathcal{O}(n^3)\) complexity of SVD and its sensitivity to noise~\cite{kergus2018data} necessitates
-the usage of advanced implementation techniques, such as using a sequence of 1-demensional Loewner matrices for the computation of the null-space of an \(n\)-dimensional one, as proposed in \cite{antoulas2024loewner},
+the usage of advanced implementation techniques, such as using a sequence of 1-dimensional Loewner matrices for the computation of the null-space of an \(n\)-dimensional one, as proposed in \cite{antoulas2024loewner},
 reducing the time complexity to about \(\mathcal{O}(n^{1.4})\).
 
 
@@ -922,8 +922,8 @@ DMD~\cite{dmdseminal} is a popular technique, in large part due to its ease of i
 The procedure begins by collecting a time-series of state 
 snapshots and organising them into two matrices, 
 \(X\) and \(Y\), representing paired snapshots of the 
-system's "past" and "future" states, 
-respectively. 
+system's past and future states, 
+respectively.
 The core objective is to determine the best-fit linear 
 operator \(A\) such that \(Y \approx A X\). 
 To ensure robustness and manage high-dimensional data, the method 
@@ -983,12 +983,14 @@ Taking as input a reference trajectory \(r\), past input-output data \((u_{ini},
 the first step is to solve for \(g^*\):
 
 \begin{equation}
+\label{deepc1}
 \min_{g,u,y} \sum_{k=0}^{N-1}||y_k-r_{t+k}||_Q^2 + ||u_k||_R^2
 \end{equation}
 
 subject to
 
 \begin{equation}
+\label{deepc2}
 \begin{bmatrix}
 U_p\\
 Y_p \\
@@ -1224,49 +1226,34 @@ simply restricting the controllers from actively negotiating~\cite{bemporad2010d
 
 
 A natural approach to decentralised control is the extension of the popular MPC to this setting. 
-In general, data-driven MPC can be formulated as presented in \cite{berberich2024overview} for noise-free data:
-Given input-output data \(\{u_k^d, y_k^d\}_{k=0}^{N-1}\) and the goal 
-of tracking a setpoint \((u^s, y^s)\) under the constraints \(u_k\in \mathbf{U}, y_k\in \mathbf{Y} \forall k\in \mathbf{I}_{\geq 0}\),
-following optimal control problem must be solved:
+In general, data-driven MPC can be formulated as presented in \cite{10535441}.
+Given input-output data for the last \(\rho\) timesteps \(\mathbf{z}_t = [u_{t-\rho}^T ... u_{t-1}^T y_{t-\rho}^T ... y_{t-1}^T]^T\) and 
+denoting the \(T\) future inputs and predicted outputs as \(\mathbf{u}_t = [u_t^T ... u_{t+T-1}^T]^T\) and \(\mathbf{\hat{y}}_t = [\hat{y}_t^T ... \hat{y}_{t+T-1}^T]^T\), respectively, 
+the goal is to minimise some some finite-horizon criterion \(J(\mathbf{u}_t, \mathbf{y}_t)\). With reference trajectory \((\bar{\mathbf{y}}_t, \bar{\mathbf{u}}_t)\), this could take the form of the quadratic criterion
 
 \begin{equation}
-\min_{\alpha(t), \bar{u}(t), \bar{y}(t)}\sum_{k=0}^{L-1}||\bar{u}_k(t)-u^s||_R^2+||\bar{y}_k(t)-y^s||_Q^2
+J(\mathbf{u}_t, \mathbf{y}_t) = ||\mathbf{y}_t - \bar{\mathbf{y}}_t||^2_Q+ ||\mathbf{u}_t - \bar{\mathbf{u}}_t ||^2_R
 \end{equation}
 
-such that 
+The finite-horizon predictive control problem is then given by the equations, provided constraint sets \(\mathcal{U}\) and \(\mathcal{Y}\):
 
 \begin{equation}
-\begin{bmatrix}
-\bar{u}(t) \\
-\bar{y}(t) 
-\end{bmatrix}	
-= 
-\begin{bmatrix}
-H_{L+n}(u^d) \\
-H_{L+n}(y^d)
-\end{bmatrix}	
-\alpha(t)
+\min_{\mathbf{u}} J(\mathbf{u}, \mathbf{\hat{y}})
 \end{equation}
 
 \begin{equation}
-\begin{bmatrix}
-\bar{u}_{[-n,-1]}(t) \\
-\bar{y}_{[-n,-1]}(t) 
-\end{bmatrix}	
-= 
-\begin{bmatrix}
-u_{[t-n,t-1]} \\
-y_{[t-n,t-1]}
-\end{bmatrix}
+\mathbf{\hat{y}} = \text{Prediction}(\mathbf{z}, \mathbf{u}), \mathbf{u} \in \mathcal{U}, \mathbf{\hat{y}}\in \mathcal{Y}
 \end{equation}
 
-\begin{equation}
-\bar{u}_k(t)\in \mathbf{U}, \bar{y}_k(t)\in \mathbf{Y},k\in \mathbf{I}_{[0,L-1]}
-\end{equation}
+For each timestep, the optimisation problem can be solved and the first optimal input component
+applied to the system, repeating until convergence~\cite{berberich2024overview}.
 
-Running the algorithm requires first choosing an upper bound on system order \(n\), prediction horizon \(L\), positive definite
-cost matrices \(Q\) and \(R\), constraint sets \(\mathbf{U}\) and \(\mathbf{Y}\), and setpoint \((u^s, y^s)\). Then 
-for each timestep, the optimisation problem can be solved and the first optimal input component applied to the system, repeating until convergence~\cite{berberich2024overview}.
+The predictor can be either model-based or computed directly from the training data.
+As a simple illustration, a linear model for predicting the measurements is given by \(\hat{\mathbf{y}}= \hat{\Theta}\phi(\mathbf{z},\mathbf{u})\),
+\(\phi(\mathbf{z}, \mathbf{u})\) being a regression vector and \(\hat{\Theta}\) the vector of estimated parameters.
+A direct instantiation of data-driven MPC is the DeePC method presented in \cref{deepc1} and \cref{deepc2}.
+Mattson et al.~\cite{10535441} showed that a range of direct methods is equivalent to an indirect method with a slack
+variable in the predictor.
 
 To illustrate the changes in a decentralised MPC method,
 the linear dynamics of the the \(i\)th subsystem controller in a model-based view could be described as~\cite{kofler2022agent}
@@ -2099,3 +2086,8 @@ Addressing these challenges will be critical for moving data-driven control towa
 \end{document}
 
 
+
+
+
+% Hankel matrix, Willem's lemma
+% notation wise: explicitly show same
