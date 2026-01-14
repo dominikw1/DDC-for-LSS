@@ -770,7 +770,7 @@ or impulse responses and produce a reduced representation of the system's dynami
 
 A widely used approach is data-driven interpolatory model reduction.
 One such method, the Loewner framework, constructs a reduced linear
-model from transfer-function data or sampled impulse responses~\cite{gosea2021datadrivenmodelingcontrollargescale}.
+model from transfer-function data or sampled impulse responses~\cite{gosea2022data}.
 The main element of the Loewner framework is the Loewner Matrix. For two lists of complex number pairs \(u_i, v_i\) and \(\mu_j, \lambda_j\), it is defined as follows~\cite{lowenerIntro}: 
 
 $$\begin{pmatrix}
@@ -930,7 +930,7 @@ This step is essential for scalability,
 as it limits the dimensionality of each identification and 
 control problem. Practical strategies include clustering based on 
 finding highly connected subgraphs
-with balanced number of internal and external connections~\cite{OCAMPOMARTINEZ2011775}
+with balanced number of internal and external connections~\cite{ocampo2011partitioning}
 and spectral clustering on dynamic interaction graphs~\cite{TANG20187}.
 
 %Despite being dissimilar in details, most graph decomposition
@@ -995,7 +995,7 @@ This can be an impossible task for some systems, for example, a system with mult
 fixed points, as all finite-dimensional linear systems have a single fixed point~\cite{brunton2016koopman}. 
 
 The data-driven determination of the Koopman operator's spectral properties usually involves approximating the operator with finite dimensions~\cite{meanti2023estimating}.
-DMD~\cite{dmdseminal} is a popular technique, in large part due to its ease of implementation~\cite{dmdImpl}, extensibility and interpretability~\cite{tu2013dynamic}.
+DMD~\cite{schmid2010dynamic} is a popular technique, in large part due to its ease of implementation~\cite{dmdImpl}, extensibility and interpretability~\cite{tu2013dynamic}.
 The procedure begins by collecting a time-series of state 
 snapshots and organising them into two matrices, 
 \(X\) and \(Y\), representing paired snapshots of the 
@@ -1090,7 +1090,7 @@ To improve noise tolerance and generalisation
 to unseen conditions, regularised DeePC formulations
 introduce penalties on the trajectory coefficients
 and slack variables, effectively mitigating overfitting
-to specific datasets~\cite{ramadan2025floodgates}.
+to specific datasets~\cite{ramadan2025floodgatescontaindeepclimit}.
 Scalability can be improved greatly by adding a dimension reduction step to the traditional DeePC 
 technique~\cite{wang2024mechanical}.
 
