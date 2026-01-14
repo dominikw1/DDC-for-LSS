@@ -505,6 +505,83 @@ open problems, as controllers trained on one operational
 regime may fail to extrapolate reliably to unseen 
 conditions~\cite{ramadan2025floodgatescontaindeepclimit}.
 
+Following is a brief overview of a selection of the most fundamental definitions and theorems in data-driven control,
+which lay the basis for many of the concepts discussed in this survey. As a comprehensive treatment of
+all mentioned terms is beyond the scope of this survey, the reader is instead referred to the corresponding cited literature.
+
+A \textit{Hankel matrix} \(\mathcal{H}_{[N,T]}^i(x)\) derived from a dataset \(x\) with depth \(N\) and length \(T\) is defined as~\cite{VERHEIJEN2023100914}:
+
+\begin{equation}
+\begin{pmatrix}
+x(i) & x(i+1) & ... & x(i+T-1) \\
+x(i+1) & x(i+2) & ...  & x(i+T) \\
+\vdots & \vdots & \vdots & \vdots \\
+x(i+N-1) & x(i+N) & ...  & x(i+T+N-2) 
+\end{pmatrix}
+\end{equation}
+
+A signal \(u = [u_1,\dots,u_T]\) is said to be \textit{persistently exciting of order \(L\)} if the 
+Hankel matrix \(\mathcal{H}_{[L,T]}(u)\) has full row rank~\cite{coulson2019data}.
+Based on this notion, \textit{Willems' Fundamental Lemma}~\cite{willems2005note} is built.
+As presented in \cite{9062331} for the linear time invariant system 
+
+\begin{equation}
+  \label{willemssys}
+\begin{aligned}
+  x(t+1) &= Ax(t)+ Bu(t)\\
+  y(t) &= Cx(t) + Du(t)
+\end{aligned}
+\end{equation}
+
+with \((A,B)\) controllable, the input/state/output trajectory \(\left(u_{[0,T-1]},x_{[0,T-1]},y_{[0,T-1]}\right)\) with the stacked Hankel matrices 
+
+\begin{equation}
+\begin{pmatrix}
+\mathcal{H}_{[L,T]} \left(u_{[0,T-1]}\right)\\
+\mathcal{H}_{[L,T]} \left(y_{[0,T-1]}\right)
+\end{pmatrix} = 
+\begin{pmatrix}
+u(0) & \dots & u(T-L)\\
+\vdots & \vdots & \vdots \\
+u(L-1) & \dots & u(T-1)\\
+y(0) & \dots &y (T-L)\\
+\vdots & \vdots & \vdots \\
+y(L-1) & \dots & y(T-1)\\
+\end{pmatrix}
+\end{equation}
+
+assuming the input \(u_{[0,T-1]}\) is persistently exciting of order \(n+L\), the following two statements hold:
+Firstly, any input/output trajectory \(\left(\bar{u}_{[0,L-1]}, \bar{y}_{[0,L-1]}\right)\) is a trajectory of the system in \cref{willemssys} if and only if, for some real vector \(g\),
+
+\begin{equation}
+\begin{pmatrix}
+\bar{u}_{[0,L-1]}\\
+\bar{y}_{[0,L-1]}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\mathcal{H}_{[L,T]} \left(u_{[0,T-1]}\right)\\
+\mathcal{H}_{[L,T]} \left(y_{[0,T-1]}\right)
+\end{pmatrix} g
+\end{equation}
+
+\noindent Secondly, the following matrix has full row rank: 
+
+\begin{equation}
+\begin{pmatrix}
+\mathcal{H}_{[1,T]} (x_{[0,T-L]})\\ 
+\mathcal{H}_{[L,T]} (u_{[0,T-1]})
+\end{pmatrix}
+= \begin{pmatrix}
+  x(0) & \dots & x(T-L)\\
+  u(0) & \dots & u(T-L)\\
+  \vdots & \vdots & \vdots \\
+  u(L-1) & \dots & u(T-1)
+\end{pmatrix}
+\end{equation} 
+
+
+
 %For large and complex systems, automatic system identification hence   
 
 \subsection{Large-Scale Systems}
