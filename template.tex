@@ -561,7 +561,7 @@ Firstly, any input/output trajectory \(\left(\bar{u}_{[0,L-1]}, \bar{y}_{[0,L-1]
 
 
 Large-scale systems do not have a single clear definition.
-The term is rather used whenever a system grows unwieldy to control with traditional strategies.
+The term is rather used whenever a system grows intractable to control with traditional strategies.
 It is further often used synonymously with complex system, a system consisting of multiple interacting units 
 that exhibits emergent collective behaviour which is not the simple summation of its parts~\cite{ControllingComplexSystem}.
 % a system is considered as large scale complex whenever it is necessary to partition the given analysis or synthesis problem in order to come up with manageable subproblems
@@ -591,7 +591,7 @@ Their core idea is the computation of controllability and observability
 Gramians, eliminating hard-to-reach and -observe states~\cite{lowenerIntro}. 
 Their advantages include the preservation of stability and a computable error bound. 
 While work is being done to make them more efficient using approximations \cite{numSolutionLargeScale, prajapati2022model}, their resource requirements
-remain their main drawback~\cite{lowenerIntro}. A popular method in this class of model order reduction techniques is Balanced truncation (BT)~\cite{balancedtruncationOriginal}.
+remain their main drawback~\cite{lowenerIntro}. A popular method in this class of model order reduction techniques is Balanced Truncation (BT)~\cite{balancedtruncationOriginal}.
 Moment matching methods consider the problem of matching the coefficients of power
 series expansions of the transfer function at selected points, reducing model reduction
 to rational interpolation. They tend to be cheaper to compute than SVD-based methods, 
@@ -652,9 +652,9 @@ such that safety constraints are respected, and the modification is minimal, i.e
 \end{equation}
 
 Among these, three major methodological families 
-dominate current research: Control Barrier Function (CBF) 
+dominate current research~\cite{10266799}: Control Barrier Function (CBF) 
 approaches, Hamilton-Jacobi reachability-based methods, and Predictive control 
-formulations~\cite{10266799}.
+formulations.
 
 %\subsubsection{Control barrier function (CBF) approaches}
 
@@ -1223,7 +1223,7 @@ that can violate safety constraints and lead to unacceptable system behaviour, n
 cannot be applied to many safety critical areas~\cite{yu2024safe}.
 One approach to safe RL is to utilise Lyapunov functions determined through linear programming to
 guarantee safety and robust learning~\cite{chow2018lyapunov}.
-An alternative methodology involves adding control barrier functions, dropping the reward to minus infinity in
+An alternative methodology involves adding CBFs, dropping the reward to minus infinity in
 safety violation situations, ensuring the learned optimal control policy respects the safety bounds~\cite{vu2021barrier}.
 These CBFs can further be learned efficiently using neural networks, as demonstrated by \cite{yang2023model},
 improving this method's applicability to large-scale systems.
@@ -1248,7 +1248,8 @@ Large-scale systems pose fundamental challenges for classical control architectu
 As system dimensions and interconnections grow, centralised strategies become computationally intractable and communication-limited~\cite{ma2024efficient}.
 
 
-To address these challenges, the three principal paradigms of decentralised, distributed, and hierarchical control have evolved, each with characteristic trade-offs in scalability, performance, and robustness. 
+To address these challenges, the three principal paradigms of decentralised, distributed, and hierarchical control have evolved, each with characteristic trade-offs 
+in scalability, performance, and robustness. 
 Beyond this tripartite classification, 
 modern work increasingly integrates hybrid architectures, 
 blurring traditional boundaries.
@@ -1663,7 +1664,7 @@ that ensure safe interaction among agents under
 communication and dynamic coupling.
 
 Khaledi et al.~\cite{khaledi2025data} constrain a direct data-driven distributed controller for multi-agent systems
-via Control Barrier Functions incorporating quadratic programming optimisations. 
+via CBFs incorporating quadratic programming optimisations. 
 The online computational complexity is dominated by the interior-point quadratic programming problem, which is, for \(m_i\) being the control input
 dimension for agent \(i\), \(\mathcal{O}((\sum_im_i)^3)\) due to the factorization of
 the Karush-Kuhn-Tucker system for dense data~\cite{ye1989extension}.
@@ -1839,7 +1840,7 @@ Hierarchical control architectures offer a natural mechanism for enforcing safet
 
 A representative example is presented by Ahmad et al.~\cite{ahmad2025hierarchical}, addressing
 scalability for safe multi-agent reinforcement learning by decoupling coordination from safety enforcement.
-A high-level policy learns joint cooperative behaviour, while low-level controllers enforce individual safety via control barrier functions.
+A high-level policy learns joint cooperative behaviour, while low-level controllers enforce individual safety via CBFs.
 Safety-critical quadratic programs are solved only at the agent level and depend solely on local state
 and interaction neighbourhoods, keeping per-agent
 computational complexity independent of the total number of agents.
