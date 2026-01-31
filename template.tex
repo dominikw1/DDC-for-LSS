@@ -976,7 +976,8 @@ When applying the Koopman operator to control scenarios, a Koopman-invariant sub
 This can be an impossible task for some systems, for example, a system with multiple
 fixed points, as all finite-dimensional linear systems have a single fixed point~\cite{brunton2016koopman}. 
 
-The data-driven determination of the Koopman operator's spectral properties usually involves approximating the operator with finite dimensions~\cite{meanti2023estimating}.
+The data-driven determination of the Koopman operator's spectral properties usually involves projecting the infinite-dimensional operator onto a finite-dimensional subspace of observables~\cite{meanti2023estimating}.
+This finite-dimensional approximation is obtained directly from data, hence no intermediate high-dimensional system to be reduced afterwards is identified.
 DMD~\cite{schmid2010dynamic} is a popular technique, in large part due to its ease of implementation~\cite{dmdImpl}, extensibility and interpretability~\cite{tu2013dynamic}.
 The procedure begins by collecting a time-series of state 
 snapshots and organising them into two matrices, 
@@ -996,7 +997,6 @@ Another widespread~\cite{Rowley2009SpectralAO} method for linear functions is tI
 The methods of eDMD~\cite{Williams2014ADA}, VAC~\cite{vacsem}, KernelDMD~\cite{kerneldmd} and kernel tICA~\cite{schwantes2015modeling} extend the function dictionary to non-linear functions~\cite{meanti2023estimating}.
 The latter two kernel techniques resort to being infinite-dimensional, trading off computational efficiency for theoretical guarantees~\cite{koopmanThepry},
 though approximate kernel methods are a topic of active research~\cite{baddoo2022kernel, meanti2023estimating, liang2025fourier}.
-
 
 Despite their theoretical appeal, Koopman-based approaches face well-documented limitations in large-scale settings. 
 First, finite-dimensional Koopman-invariant subspaces rarely exist for nonlinear systems of practical interest, 
