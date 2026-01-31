@@ -725,10 +725,11 @@ invariance of the safety set~\cite{milios2024stability}.
 \section{Data-Driven Modeling}\label{modeling}
 
 To enable indirect data-driven control techniques, a model of the to be controlled system needs to be
-identified. Techniques in this section are also crucial for direct methods, however, as
-the decomposition of the global control problem into the control of subsystems
-is crucial element in all non-centralised large-scale system controller syntheses
-where this decentralisation can be configured and is not forced by physical reality.
+identified. This section outlines data-driven modeling techniques suitable for large-scale systems,
+beginning with system identification, where collected data is used to construct a model of the system's underlying dynamics.
+Given the scale and structural complexity of modern interconnected systems, 
+topology identification and decomposition is subsequently addressed, revealing the system's interaction structure and partitioning it into manageable subsystems.
+Finally, for components exhibiting significant nonlinear behavior, Koopman-based lifting techniques are discussed, enabling the approximation of nonlinear dynamics through finite-dimensional linear operators.
 
 \subsection{System Identification}
 
