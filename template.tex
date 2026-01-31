@@ -1085,35 +1085,11 @@ global DeePC optimisation into coupled
 subproblems solved locally with limited coordination,
 improving scalability and communication efficiency~\cite{YU2024110360,10667672}.
 
-Kernelized DeePC~\cite{huang2023robust} enables the efficient control of nonlinear systems.
-It uses a nonparametric predictor of future outputs over a horizon by embedding data into a reproducing-kernel Hilbert space,
-seeking a function \(f\in \mathcal{H}\) minimizing a regularised least-squares objective of the form
-
-\begin{equation}
-f^* = \argmin_{f\in\mathcal{H}}\sum_{j=1}^N ||y_j-f(z_j)||^2 + \gamma||f||_\mathcal{H}^2
-\end{equation}
-
-where \(z_j\) is a suitably defined past-input/output regressor, \(\gamma\) a regularisation parameter
-and \(|| ||_\mathcal{H}\) the reproducing-kernel Hilbert space norm. 
-By the representer theorem~\cite{scholkopf2001generalized}, \(f^*\) can be written as 
-\(f^*(\cdot) = \sum_{j=1}^N \alpha_jk(z_k, \cdot)\) for some coefficients \(\alpha_j\), where \(k\) is the chosen kernel.
-
-Given this predictor, control is then formulated as a robust min-max optimisation over disturbance sets on inputs and outputs.
-To efficiently solve this problem generally non-convex in \(u\), customised gradient descent methods tailored to the RoKDeePC structure are proposed.
-These utilise the separable structure of the decision variables by performing projected gradient steps on the input \(u\)
-while solving the predictor variable exactly via its convex subproblem. If output constraints are inactive,
-a closed-form solution using only linear mappings can be determined,
-greatly enhancing computational efficiency~\cite{huang2023robust}.
-
-
-Another recent work also using kernel functions considers an operator-based DeePC formulation, KerODeePC~\cite{de2025kernelized}.
-Jong et al. propose using a product reproducing-kernel Hilbert space
-representation of the nonlinear operator that maps
-input and initial state to the output trajectory. The goal is to learn the
-operator \(G\), such that \(y=G(u)(x)\), where \(G(u)(x) =\Theta^*k_\otimes(u,x)\),
-\(k_\otimes\) being the product kernel function and \(\Theta^*\) being the value to optimise over.
-Based on this, a DeePC-style optimisation problem formulation can be stated, yielding 
-a computationally efficient approach to the control of non-linear systems.
+The extension of DeePC to the control of nonlinear systems has been a focus of recent reserach, 
+primarily through the usage of kernel functions~\cite{huang2023robust,de2025kernelized}.
+While these works have considered computational efficiency,
+real-time applicability remains limited, \cite{huang2023robust} incurring a slowdown by a factor of almost ten over the original DeePC implementation.
+In the context of large-scale systems, these methods should hence be reserved for the control of strongly nonlinear subsystems.
 
 Recent works further address online computational efficiency through recursive
 and low-rank DeePC updates, allowing adaptive, 
