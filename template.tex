@@ -873,7 +873,6 @@ components to remain within one subsystem, the motivation being that such
 modular partitioning tends to improve performance
 by minimizing inter-subsystem interaction~\cite{riccardi2025general}.
 
-
 A widely adopted approach is the Sparse Identification of Nonlinear Dynamics (SINDy) framework~\cite{sindy}.
 It constructs a library of candidate nonlinear functions \(\Theta(X)\) 
 and identifies governing interactions via sparse regression based on the time-series data \(X = [x_1, ...,x_n]\): 
@@ -948,11 +947,12 @@ and spectral clustering on dynamic interaction graphs~\cite{TANG20187}.
 
 \subsection{Koopman lifting for Nonlinear Subsystems}
 
-Most system and topology identification methods operate within
-the original state space, limiting expressiveness when dynamics
-are strongly nonlinear. Koopman lifting overcomes this by embedding
-the nonlinear system into a higher-dimensional, approximately linear space,
-allowing the reuse of linear data-driven tools within nonlinear regimes.
+% TODO: look at this again
+For subsystems with strongly nonlinear dynamics, linear models identified via traditional system identification techniques are often inadequate~\cite{abbas2024survey}.
+A recent trend in control of nonlinear systems is the usage of methods based on the Koopman operator~\cite{abtahi2025efficient, zhang2025deep, lin2025estimating, bakker2025time}.
+Koopman-based methods lift the state to a space of observables where the nonlinear evolution can be captured exactly or closely approximated by a linear operator. 
+This enables the use of linear control and estimation tools on inherently nonlinear subsystems while retaining the structure and couplings of the full system.
+For large-scale systems, this approach allows scalable controller design, bridging the gap between nonlinear subsystem behavior and the computational advantages of linear control.
 
 Formally, the Koopman operator \(\mathcal{K}_f: \mathcal{F} \to \mathcal{F}\) associated with the state transition map \(f: X\to X\) 
 and the Banach space \(\mathcal{F}\) of observables \(g: X \to \mathbf{C}\) is defined through the composition 
@@ -991,7 +991,7 @@ dynamics onto a rank-\(r\) subspace~\cite{kutz2016dynamic}.
 The low-rank approximation of the Koopman operator is then calculated as
 \(\tilde{A} = U_r^* YV_r\Sigma_r^{-1}\)~\cite{schmid2010dynamic}.
 
-Another wide spread~\cite{Rowley2009SpectralAO} method for linear functions is tICA~\cite{tICA}.
+Another widespread~\cite{Rowley2009SpectralAO} method for linear functions is tICA~\cite{tICA}.
 The methods of eDMD~\cite{Williams2014ADA}, VAC~\cite{vacsem}, KernelDMD~\cite{kerneldmd} and kernel tICA~\cite{schwantes2015modeling} extend the function dictionary to non-linear functions~\cite{meanti2023estimating}.
 The latter two kernel techniques resort to being infinite-dimensional, trading off computational efficiency for theoretical guarantees~\cite{koopmanThepry},
 though approximate kernel methods are a topic of active research~\cite{baddoo2022kernel, meanti2023estimating, liang2025fourier}.
