@@ -1074,8 +1074,9 @@ introduce penalties on the trajectory coefficients
 and slack variables, effectively mitigating overfitting
 to specific datasets~\cite{ramadan2025floodgatescontaindeepclimit}.
 Scalability can be improved greatly by adding a dimension reduction step to the traditional DeePC 
-technique~\cite{wang2024mechanical}.
-
+technique. This involves performing a low-rank approximation of the trajectory matrices via SVD, which reduces the number of decision
+variables in the underlying optimization problem while
+maintaining the dominant system dynamics~\cite{wang2024mechanical}.
 
 Its applicability to large-scale systems is primarily driven through 
 distributed and hierarchical DeePC
