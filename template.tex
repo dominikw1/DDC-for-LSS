@@ -436,11 +436,11 @@ However, the applicability of data-driven methods to large-scale systems is not 
 Instead, maintaining computational tractability as system size increases hinges on how systems are decomposed, how information is exchanged, and how control decisions are coordinated across subsystems~\cite{ma2024efficient}.
 
 While the literature on data-driven control is extensive, its interplay with large-scale system control scenarios has received 
-less focus. Conversely, research on large-scale control architectures often assumes access to accurate models and does
+less focus. Research on large-scale control architectures often assumes access to accurate models and does
 not fully account for model uncertainties and difficulties for obtaining such models in real-world settings~\cite{xia2024predictor, aljohani2024tri, ma2024cloud}.
-This survey aims to provide a structured overview of data-driven control for large-scale systems, emphasising how modeling choices, control paradigms and architectural design jointly determine scalability. 
-It highlights trade-offs between indirect and direct data-driven control, 
-centralised and non-centralised architectures, and modeling fidelity versus computational tractability.
+This survey aims to provide a structured overview of data-driven control for large-scale systems, emphasising how modeling choices, 
+control paradigms and architectural design jointly determine scalability. 
+It highlights scalable methods of both indirect and direct data-driven control and discusses centralised and non-centralised architectures.
 
 The remainder of the survey is organised as follows. 
 Section \ref{background} provides a brief background on data-driven control, large-scale systems and safety filters, the central
@@ -460,11 +460,6 @@ Section \ref{conclusion} concludes with a brief discussion of open challenges an
 \subsection{Data-Driven Control}
 
 
-
-Traditional control approaches largely followed the strategy of first deriving a model
-from first principles and afterwards building a controller upon it. 
-%A premier example of such an approach is MPC, model predictive control.
-Such model-based control can become intractable or inaccurate for complex large-scale systems, though~\cite{DDC_Overview}.
 %\subsubsection{Classification}
 A fundamental delimination in data-driven control can be made between direct and indirect approaches. 
 In indirect methods, a model is learned from data - a process termed system identification (SI) - and, as in traditional control, a controller built upon it.
@@ -482,29 +477,6 @@ whereas a model-based technique requires expert knowledge for deriving the model
 the specific result then being domain-specific. SI further provides the practitioner with 
 tools to fine-tune the accuracy required, as complexity tends to rise with more accurate models~\cite{behavioralDataDrivenControl}.
 
-
-%\subsubsection{Disadvantages}
-
-Despite their benefits, data-driven control methods 
-face several limitations. 
-A central challenge is the heavy reliance on the 
-quality and quantity of available data, insufficient or 
-noisy datasets having the potential to significantly 
-degrade the performance of the resulting controller~\cite{HOU20133}.
-%Further, data-driven methods often come with high computational 
-%demands, both in terms of learning and real-time operation, 
-%which limits their deployment in safety-critical 
-%or resource-constrained systems [6]. 
-Another drawback is the lack of interpretability and 
-transparency compared to physics-based models. 
-First-principles models typically allow direct 
-insight into the mechanisms driving system behaviour, 
-black-box controllers derived purely from data can be 
-difficult to analyse or verify~\cite{Brunton_Kutz_2022}. 
-Finally, issues of robustness and generalisation remain 
-open problems, as controllers trained on one operational 
-regime may fail to extrapolate reliably to unseen 
-conditions~\cite{ramadan2025floodgatescontaindeepclimit}.
 
 Following is a brief overview of a selection of the most fundamental definitions and theorems in data-driven control,
 which lay the basis for many of the concepts discussed in this survey. As a comprehensive treatment of
