@@ -1276,6 +1276,7 @@ formulation of these constraints~\cite{gu2024review}.
   }
 
   \begin{figure*}
+    \label{control_archs_dig}
   % LEGEND START
   \begin{center}
     \begin{tikzpicture}[font=\small]
@@ -1400,7 +1401,8 @@ and is attractive for large-scale systems where global data aggregation is infea
 undesirable due to privacy, latency, or safety concerns, 
 yet typically sacrifices global optimality, as individual controllers do not have as much information regarding the state or output of the system as a centralised one would~\cite{ge2017distributed}.
 In some definitions of decentralised control, information exchange is allowed before and after the decision-making process, 
-simply restricting the controllers from actively negotiating~\cite{bemporad2010decentralized}. 
+simply restricting the controllers from actively negotiating~\cite{bemporad2010decentralized}.
+In this survey, in line with existing literature~\cite{kordestani2021recent}, decentralised control is understood to not allow for explicit communication between subsystems, whereas distributed control does, as illustrated in \cref{control_archs_dig}.
 
 % https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10127863&casa_token=Ko36uD2854kAAAAA:ynMRD7IwURNZU4uS1boXJgMnyyIX5uHKjdMOfL0Iw4WQ6snn9hCol0oUsfaFqD-1IQBFxbjnBWaB9A
 % https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10053641&casa_token=omf8nd2_9yAAAAAA:A8q6bRC4elyGWE9BYTfH8e01ilCE7Hmjpn_huSnY8rP8ZyhpDaHSAx2UrLYWgXHLCidFqDq9gIRuFw
@@ -1507,7 +1509,7 @@ Unlike centralised architectures,
 decentralised controllers cannot rely on global state
 information, making explicit robustness formulations essential
 for guaranteeing stability and constraint satisfaction
-under limited information exchange.
+despite the limited information exchange between subsystems.
 
 A central approach to robust decentralised predictive control 
 introduces bounded uncertainty sets for each subsystem.
@@ -1517,7 +1519,7 @@ This method has been successfully employed in the context of
 both predictive control~\cite{s22228709,shang2024decentralized} and
 adaptive dynamic programming~\cite{li2023decentralized} in decentralised architectures.
 
-Overall, decentralised robustness mechanisms scale well computationally, 
+Overall, decentralised robustness mechanisms scale well computationally with respect to number of subsystems, 
 with approximately constant online complexity per subsystem, as they avoid global optimisation and communication entirely.
 However, this scalability tends not to stem from exploiting the large-scale structure of the system,
 but is rather a consequence of a naive decomposition of the global robustness goal
@@ -1603,9 +1605,9 @@ for settings with inherently local constraints.
 %https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11108244&casa_token=VehPJM9m_hEAAAAA:3Bupc1FUPTPLgj8_M5IRi0bldulWFqXMWGRFIL9m9QTyk5ZJUKmMSrGcIH4sxvDlW5FZOeJIgs-2Ow
 
 
-As opposed to decentralised control, subsystems in distributed architectures share information among system components.
+As opposed to decentralised control, subsystems in distributed architectures explicitly share information among system components.
 This enhances the coordination capabilities of the agents, incurring improved scalability and robustness~\cite{ge2017distributed}. 
-Factors that need to be considered in this design are communication delays and reliability. 
+Factors that need to be considered in this design are communication delays and reliability.
 
 A general formulation of distributed control 
 for a controller \(i\) would look as follows, where each controller uses its own state and state information shared by immediate
