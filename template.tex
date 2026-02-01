@@ -2,6 +2,7 @@
 %% V1.4
 %% 2012/12/27
 %% by Michael Shell
+
 %% See:
 %% http://www.michaelshell.org/
 %% for current contact information.
@@ -110,7 +111,6 @@
 
 
 
-
 % *** CITATION PACKAGES ***
 %
 %\usepackage{cite}
@@ -134,13 +134,14 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathtools}
+\usepackage{tikz}
 
 
 
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
-  \usepackage[pdftex]{graphicx}
+  \usepackage[]{graphicx}
   % declare the path(s) where your graphic files are
   % \graphicspath{{../pdf/}{../jpeg/}}
   % and their extensions so you won't have to specify these with
@@ -341,6 +342,8 @@
 \usepackage{color}
 \definecolor{tumblue}{rgb}{0, 0.4, 0.74}
 
+\usetikzlibrary{positioning,arrows.meta}
+
 \usepackage[backend=biber,  style=ieee, url=false,doi=false, isbn=false, citestyle=numeric-comp]{biblatex}
 \addbibresource{references.bib}
 
@@ -467,6 +470,55 @@ In indirect methods, a model is learned from data - a process termed system iden
 In direct data-driven control, the dynamics of the system are treated as a black box and the controller is directly built from the data~\cite{DDC_Overview}.
 
 
+\tikzset{
+    block/.style={rectangle, draw, minimum width=3cm, minimum height=1cm, align=center},
+    data/.style={rectangle, draw, dashed, minimum width=3cm, minimum height=0.8cm, align=center, fill=gray!10},
+    arrow/.style={-{Stealth[length=2mm]}, thick},
+    direct/.style={arrow, red!70!black},
+    indirect/.style={arrow, blue!70!black}
+}
+
+\begin{figure*}
+
+\begin{tikzpicture}[auto, node distance=3cm]
+
+% --- Nodes ---
+\node[data] (data) {Recorded Input-Output Data};
+\node[block, right=5cm of data] (K) {Controller $K$};
+\node[block, right=1cm of K] (G) {Plant $G$};
+\node[block, above left=1cm and 1.5cm of K] (ID) {Model $x' = f(x,u)$};
+
+% --- Direct path ---
+\draw[direct] (data.south) -- ++(0,-0.6) -| (K.south) node[pos=0.25, above] {\large Direct Synthesis};
+\draw[arrow] (6,0) -- node[above] {$x$} (K);
+\draw[arrow] (K) -- node[above] {$u$} (G);
+\draw[arrow] (G.east) -- ++(1,0) -- ++(0,-1)node[midway, left] {$y$} -| ([xshift=0.5cm]K.south);
+
+% --- Indirect path ---
+\draw[indirect] (data.north) -- ++(0,1) |- (ID.west) node[yshift=-0.35cm, pos=0, right] {\large System Identification};
+\draw[indirect] (ID.east) --  ++(1,0) -| node[yshift=-0.07cm, pos=0.8, left] {\large Model-based Synthesis} (K.north);
+%\draw[indirect] (K) -- ++(0,-1.5) node[near end, left] {$u$} (G.west);
+%\draw[indirect] (G.east) -- ++(2,0) node[right] {$y$} |- (K.south);
+
+% --- Labels ---
+%\node[above=0.1cm of K] {Common Controller $K$};
+%\node[above=0.1cm of ID] {Indirect Path (Blue)};
+%\node[below=0.1cm of K] {Direct Path (Red)};
+ \matrix [
+            % "draw" removed from here to hide the border
+            fill=white, 
+            above right=0.5cm and 1.8cm of K,
+            ampersand replacement=\&,
+          row sep=0.3cm,   % <--- Adjust this value for more/less space
+            column sep=0.1cm %
+            ] {
+              \draw [red!90!black!50, dashed, thick] (0,0) -- (0.6,0);   \& \node[anchor=west] {\large Indirect DDC}; \\
+              \draw [blue!70!black, dashed, thick] (0,0) -- (0.6,0); \& \node[anchor=west] {\large Direct DDC}; \\
+        };
+
+\end{tikzpicture}
+\caption{Direct vs. indirect data-driven control}
+\end{figure*}
 
 %\subsubsection{Advantages}
 
@@ -1215,6 +1267,106 @@ formulation of these constraints~\cite{gu2024review}.
 
 % https://pdf.sciencedirectassets.com/777797/1-s2.0-S2666792424X00025/1-s2.0-S2666792424000155/main.pdf?X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGkaCXVzLWVhc3QtMSJGMEQCIAegW7oXZKt3V9iBiEi2msqM%2BAY9A%2BPnHt18CO8%2BJYaCAiBoGcwAz5MjgiQ%2B4cRBI8XgsRtqQCxLZFfd4fvDJoqWRSqyBQgxEAUaDDA1OTAwMzU0Njg2NSIMMYuZTXbWxxUOh%2FfyKo8Fye1UeN2ILOpLtc%2FIb2pNV5TpvXUMeJG9ty9tlHXnkecB3WvX2h9g%2FH0P8NpDY6ufHHbh5cpFPlre%2FdfskqzV6o%2FblkED1IVm2WmMlZcSjkMZmht0AoQvX2oRH%2BuLGlSYpZlJAYUps1c%2BsgAnXlyXTOIYjBuzacVG6NB7rpVKsvgdzW2gnkxqjLz%2BnsS3CgAUPivEIVnN%2BG%2BAaQjLhSpKw%2Ba80Lp6alALVrJVc%2FVhfYZm4%2FJsgBuscEXsc5CJjLUUlY4Nus%2FFuSf7BIdTHTsI89VhQr5zPnKIpctRYlrxYMq8dHCKQMXJvZReLhUGUgLDhZMRqxm%2Fnn8OlN9ST%2FfSuN%2BKp4yVQI19TjGDLYHVegb032PEwh3twWlj8IVxNypcBq0r%2BW0Z2eeO%2F3PsfL1LOZJIEZrh2k9WGr%2Bv%2BERbOexA6KLvTGp2v4PVhFjD9m3GTaZmKuCUNI7qhbrGHAr26g2wFuWWGNahHxekZKxz6UijxHnMRuM5%2BnBkLB40NT2ewjbT4RdIjXJC4k4Y2uOFe9Xg8ySbHDpq1%2FbtwiiKqD75807SeBlKjkNbYmXj1decWIJuzDzEh1SqkPr6qb%2B4DbKtbok2txp5aSSBmTNjA%2FB8CsPGFh3LKIM5q5nVAFHTifdCcAPF0mR%2BeIjya0UL%2BRiW84hqopNC0upT2vN0gXHJ%2B9lV5Hw2n3HNnyughWW0A8cZVKyrxM%2BLh1giUBGUJ4gVfJeK7gTnT4HRSTETrW0%2BOT%2Bbv4yTc1CHrd9kacMp1S%2FlxJOcaT%2F5nUHbeX8qXOscXPlW5LN7hAuNS4MStaa1sSxcTQ29UEVL%2FQZ2%2BM%2BRziaJAzeR2V5DzJOAchRh5rc5w3VEgQu78PntDJ%2BQjjCA4PnJBjqyAaYDkrd09y6EdJPfV%2B1ANuT%2FlIKHvBfvvEXvUML6COsvmNPtlpliOUUuULrXC41pdkrcnPWKqgKyyDa%2B8zmlg2xdDJUMpW1Myf96IMiFjwiEs29tIjR29L5qvd83Tw8l9ogGK0I4MCtuK06bTav5TccoqYdDuVm1ckAT20DqiGIDWSRPqoQjHitHLnfVSAkk4%2FgPka0WFemDutl%2B3Y4P1BIwjw%2Byx81lKKhLoWRKQRDt%2BGY%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20251214T091122Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIAQ3PHCVTYT2S7FDUI%2F20251214%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=5d489fcf529487e486b06c5ecba3a76628a5ea534a8b7bf1bee25a8726ad7f33&hash=bed937f3c0baeabfb6c35e812db2d332048e195209781c435cf7e2ec4583b357&host=68042c943591013ac2b2430a89b270f6af2c76d8dfd086a07176afe7c76c2c61&pii=S2666792424000155&tid=spdf-884412dc-733d-4aba-a099-204207f7dde7&sid=74e7365b827934490d489a73f00ba09a78eegxrqb&type=client&tsoh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&rh=d3d3LnNjaWVuY2VkaXJlY3QuY29t&ua=1b125f05060059540700&rr=9adc92ceadbb8f2b&cc=at
 
+\tikzset{
+      block/.style={rectangle, draw, rounded corners, fill=blue!10, text centered, minimum height=0.7cm, minimum width=2cm, font=\small},
+      block2/.style={rectangle, draw, rounded corners, fill=green!10, text centered, minimum height=0.7cm, minimum width=2cm, font=\small},
+      block3/.style={rectangle, draw, rounded corners, fill=red!10, text centered, minimum height=0.7cm, minimum width=2cm, font=\small},
+      node distance = 2.2cm,
+      inner sep=6pt,
+  }
+
+  \begin{figure*}
+  % LEGEND START
+  \begin{center}
+    \begin{tikzpicture}[font=\small]
+        \draw [->, dashed, thick] (0,0) -- (0.6,0) node[right] {\; Physical Influence};
+        \draw [->, thick] (4,0) -- (4.6,0) node[right](ex) {\; Explicit Communication};
+        
+        \node[block, scale=0.6, right of=ex, xshift=2cm] (sub) {Subsystem};
+        \node[block2, scale=0.6, right of=sub, node distance=2.8cm] (mid) {Level 2 Controller};
+        \node[block3, scale=0.6, right of=mid, node distance=2.8cm, xshift= 0.3cm] (high) {Level 1 Controller};
+        
+        % Descriptive text for nodes
+%        \node[below of=mid, node distance=0.6cm, font=\itshape\footnotesize] {Nodes represent various control entities};
+
+      \end{tikzpicture}
+  \end{center}
+  \vspace{0cm}
+  % LEGEND END
+  % Column 1: Decentralised
+  \begin{minipage}[t]{0.32\linewidth}
+      \centering
+      \begin{tikzpicture}[scale=0.5, transform shape]
+          \node[block](A) {A};
+          \node[block, right of=A, node distance=3.5cm](B) {B};
+          \node[block, below of=B](D) {D};
+          \node[block, below of=A](C) {C};
+          \draw [->, dashed, looseness=0.5] (A) to [bend right=60] (C);
+          \draw [->, dashed, looseness=0.5] (A) to [bend right=20] (D);
+          \draw [->, dashed, looseness=0.5] (D) to [bend right=20] (B);
+          \draw [->, dashed, looseness=0.5] (C) to [bend right=20] (D);
+      \end{tikzpicture}
+      
+      \vspace{0.2cm}
+      \textbf{Decentralised Control}\\
+      \small Subsystems influence each other, but no explicit communication is taking place.
+  \end{minipage}\hfill
+  % Column 2: Distributed
+  \begin{minipage}[t]{0.32\linewidth}
+      \centering
+      \begin{tikzpicture}[scale=0.5, transform shape]
+          \node[block](A) {A};
+          \node[block, right of=A, node distance=3.5cm](B) {B};
+          \node[block, below of=B](D) {D};
+          \node[block, below of=A](C) {C};
+          \draw [->, dashed, looseness=0.5] (A) to [bend right=60] (C);
+          \draw [->, dashed, looseness=0.5] (A) to [bend right=20] (D);
+          \draw [->, dashed, looseness=0.5] (D) to [bend right=60] (B);
+          \draw [->, dashed, looseness=0.5] (C) to [bend right=20] (D);
+          %\draw [->] (A) -- (B);
+          %\draw [->] (A) -- (D);
+          \draw [<->] (B.south) -- (D.north);
+          \draw [<->] (A.south) -- (C.north);
+          \draw [<->] (A.east) -- (B.west);
+          \draw [<->] (C.east) -- (D.west);
+          \draw [<->] ([xshift=0.2cm]C.north) -- ([xshift=-0.3cm]B.south);
+          \draw [<->] ([xshift=0.2cm]A.south) -- ([xshift=-0.3cm]D.north);
+      \end{tikzpicture}
+
+      \vspace{0.2cm}
+      \textbf{Distributed Control}\\
+      \small Subsystems influence and can communicate with each other, though potentially with delays.
+  \end{minipage}\hfill
+  % Column 3: Hierarchical
+  \begin{minipage}[t]{0.32\linewidth}
+      \centering
+      \begin{tikzpicture}[scale=0.5, transform shape]
+          \node[block](A) {A};
+          \node[block, right of=A, node distance=3.5cm](B) {B};
+          \node[block, below of=B](D) {D};
+          \node[block, below of=A](C) {C};
+          \node[block2, below of=A, node distance=1.1cm, xshift=-2cm](alpha) {$\alpha$};
+          \node[block2, below of=B, node distance=1.1cm, xshift=2cm](beta) {$\beta$};
+          \node[block3, above of=A, xshift=1.75cm, yshift=-0.7cm](xi) {$\xi$};
+          
+          \draw [<->, dashed, looseness=0.5] (A) to [bend right=60] (C);
+          \draw [<->, dashed, looseness=0.5] (A) to [bend right=20] (D);
+          \draw [<->, dashed, looseness=0.5] (D) to [bend right=20] (B);
+          \draw [<->, dashed, looseness=0.5] (C) to [bend right=20] (D);
+          \draw [<->] (A.west) to [bend right=20] (alpha.north);
+          \draw [<->] (C.west) to [bend left=20] (alpha.south);
+          \draw [<->] (B.east) to [bend left=20] (beta.north);
+          \draw [<->] (D.east) to [bend right=20] (beta.south);
+          \draw [<->, looseness=0.5] (alpha) to [bend left=50] (xi.west);
+          \draw [<->, looseness=0.5] (beta) to [bend right=50] (xi.east);
+      \end{tikzpicture}
+
+      \vspace{0.2cm}
+      \textbf{Hierarchical Control}\\
+      \small Communication happens primarily with entities directly above and below them in the hierarchy.
+  \end{minipage}
+   \caption{An overview of non-centralised control architectures}
+\end{figure*}
 
 The scalability of data-driven control 
 depends not only on the learning or 
