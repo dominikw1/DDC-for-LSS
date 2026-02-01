@@ -1203,7 +1203,9 @@ guarantee safety and robust learning~\cite{chow2018lyapunov}.
 An alternative methodology involves adding CBFs, dropping the reward to minus infinity in
 safety violation situations, ensuring the learned optimal control policy respects the safety bounds~\cite{vu2021barrier}.
 These CBFs can further be learned efficiently using neural networks, as demonstrated by \cite{yang2023model},
-improving this method's applicability to large-scale systems.
+improving this method's applicability to large-scale systems by extending the invariant property of the barrier certificate to multiple steps and integrating it into the policy optimisation in a computationally efficient manner using the Lagrangian 
+method, achieving near-zero safety violations on high-dimensional control tasks.
+However, the learning phase typically needs to be carried out in simulation environments, as safety constraints violations are likely at this stage.
 A formal-methods-based approach presented in \cite{hasanbeig2020cautious} safety constraints 
 expressed in LTL guide the exploration. A key drawback of this, despite success in the safety dimension, is the necessity of manual 
 formulation of these constraints~\cite{gu2024review}. 
