@@ -1107,25 +1107,14 @@ For partially known systems, hybrid data-enabled predictive control~\cite{watson
 presents an approach providing improved computational cost and robustness
 via an inclusion of model knowledge into DeePC. 
 
-To guarantee safety constraint satisfaction, 
-recent work proposes hybrid controller architectures
-that combine a data-driven predictive element
-with a reactive safeguarding feedback loop.
-Bold et al.~\cite{bold2025two} design a two-component controller where
-the first component is a predictive DeePC controller, whereas the second component is a model-free high-gain funnel or adaptive feedback controller, which activates when the predictive controller cannot guarantee satisfaction of output or trajectory constraints.
-This architecture ensures constraint satisfaction
-under worst-case conditions: by switching or
-blending to the high-gain feedback when needed,
-the system never drifts into unsafe regions,
-even while the data-driven component learns or adapts.
-Another approach for proving safety is using reachability analysis, 
-decoupling the system into error system and nominal system,
-the former providing data-driven reachability sets 
-for the enhanced safety constraints
-in the nominal system~\cite{li2024robust}.
-This is directly relevant for large-scale system control, as these approaches 
-can be used in the safe control of subsystems in situations where the global safety
-constraint is decomposable into local conditions for each subsystem.
+Safety constraint satisfaction in DeePC has largely been achieved via
+hybrid control architectures~\cite{bold2025two}, 
+where a secondary controller 
+activates when the predictive controller cannot guarantee satisfaction of output or trajectory constraints, and 
+via data-driven reachability analysis~\cite{li2024robust}.
+Hybrid designs offer flexibility and can be computationally efficient, but they are not specific to DeePC.
+Meanwhile, reachability analysis scales poorly with system size~\cite{leeman2023predictive}, limiting the applicability of this approach to large-scale systems.
+Consequently, the development of safety mechanisms for DeePC that remain computationally tractable for high-dimensional systems remains an open challenge.
 
 \subsection{Reinforcement Learning}
 
