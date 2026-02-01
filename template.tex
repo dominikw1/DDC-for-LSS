@@ -645,7 +645,7 @@ trajectories remain within a certified safe set,
 even when the underlying controller or policy is learned. Formally, a safety filter 
 is a function \(\kappa: \mathbb{R}^{n_x}\times \mathbb{R}^{n_u}\to \mathcal{U}\)
 which transforms the control signal (\(u(t) = \kappa(x(t), u_{contr}(t))\)) determined by the controller \(u_{contr}\)
-such that safety constraints are respected, and the modification is minimal, i.e. minimising 
+such that safety constraints are respected, and the modification is minimal, i.e. minimizing 
 
 \begin{equation}
 \int_{0}^\infty||\kappa(x(t),u_{contr}(t))-u_{contr}(t)||dt
@@ -809,7 +809,7 @@ Proper orthogonal decomposition is one of the most widely used dimensionality-re
 The key idea is to approximate system trajectories by 
 projecting them onto a low-dimensional basis obtained directly from data.
 For a dataset \(X = [x_1x_2...x_m], x_i \in \mathbb{R}^n\), proper orthogonal decomposition seeks an orthonormal basis
-\(U_r\in\mathbb{R}^{n\times r}\) that minimises the projection error 
+\(U_r\in\mathbb{R}^{n\times r}\) that minimizes the projection error 
 
 \begin{equation}
 \min_{U_r^TU_r = I_r} ||X-U_rU_r^TX||^2_F
@@ -1124,8 +1124,7 @@ providing the benefit of determining optimal control policies without
 necessitating detailed system models~\cite{9261330}.
 RL-based controllers require no labelled datasets and are instead guided by feedback and learn in a trial-and-error fashion,
 making them well-suited for large-scale systems where 
-explicit system models are missing for reasons such as 
-nonlinear dynamics and multi-timescale operations~\cite{rfAndIntro}.
+explicit system models are missing~\cite{rfAndIntro}.
 
 Another advantage of RL is its statement of the control problem as Markov decision processes
 (MDPs), providing great generality. 
@@ -1144,7 +1143,7 @@ often missing formal stability guarantees~\cite{BARBALHO2022108315}.
 %In the context of microgrids, an RL agent might take the following form~\cite{mfrlMG}:
 
 The goal is to find a policy \(\pi: S \to \mathcal{A}\) mapping 
-states to actions maximising the expected cumulative reward
+states to actions maximizing the expected cumulative reward
 
 \begin{equation}
 J(\pi) = \mathbb{E}_\pi \left[\sum_{t=0}^\infty\gamma^tr(s_t,a_t)\right]
@@ -1157,7 +1156,10 @@ long-term goals and \(r\) encodes control objectives as scalar rewards, possibly
 To enable real-time online reinforcement for large-scale systems,
 approximation approaches have been proposed, where the input-output history is
 transformed into a shorter set of data, being the basis for a lower-dimensional
-inferred controller than the original, decreasing the time complexity from \(O(L^6)\) to \(O(L^4)\), where \(L\) denotes a natural number valued design parameter of the algorithm~\cite{sadamoto2021fast}.
+inferred controller than the original, decreasing the time complexity from \(\mathcal{O}(n^6)\) to \(\mathcal{O}(L^6)\), 
+where \(n\) is the state vector size and \(L \ll n\) represents the length of the input-output data history considered~\cite{sadamoto2021fast}.
+As a guideline for choosing a value for \(L\) that still results in a nearly optimal controller, the authors propose
+a SVD-based algorithm that determines \(L\) based on a threshold value for the singular values with a complexity of \(\mathcal{O}(L^4)\).
 
 
 A central distinction is to be made between online and offline RL.
@@ -1185,7 +1187,7 @@ Offline RL has also been extended to multi-agent and distributed settings. Count
 counterfactually determining conservative regularisation
 for each agent separately and subsequently combining them linearly, leading to an overall conservative estimation~\cite{NEURIPS2023_f3f2ff95}.
 
-To achieve robustness in reinforcement learning, the maximisation problem presented in \cref{eq:reinforcement}.
+To achieve robustness in reinforcement learning, the maximization problem presented in \cref{eq:reinforcement}.
 can be reformulated, depending on where the uncertainty is assumed to stem from~\cite{moos2022robust}. In the case of an unknown transition matrix \(P\), fixed and lying within a known uncertainty set \(\mathcal{U}_P\), this might look as follows:
 
 \begin{equation}
@@ -1255,7 +1257,7 @@ A natural approach to decentralised control is the extension of the popular MPC 
 In general, data-driven MPC can be formulated as presented in \cite{10535441}.
 Given input-output data for the last \(\rho\) timesteps \(\mathbf{z}_t = [u_{t-\rho}^T ... u_{t-1}^T y_{t-\rho}^T ... y_{t-1}^T]^T\) and 
 denoting the \(T\) future inputs and predicted outputs as \(\mathbf{u}_t = [u_t^T ... u_{t+T-1}^T]^T\) and \(\mathbf{\hat{y}}_t = [\hat{y}_t^T ... \hat{y}_{t+T-1}^T]^T\), respectively, 
-the goal is to minimise some some finite-horizon criterion \(J(\mathbf{u}_t, \mathbf{y}_t)\). With reference trajectory \((\bar{\mathbf{y}}_t, \bar{\mathbf{u}}_t)\), this could take the form of the quadratic criterion
+the goal is to minimize some some finite-horizon criterion \(J(\mathbf{u}_t, \mathbf{y}_t)\). With reference trajectory \((\bar{\mathbf{y}}_t, \bar{\mathbf{u}}_t)\), this could take the form of the quadratic criterion
 
 \begin{equation}
 J(\mathbf{u}_t, \mathbf{y}_t) = ||\mathbf{y}_t - \bar{\mathbf{y}}_t||^2_Q+ ||\mathbf{u}_t - \bar{\mathbf{u}}_t ||^2_R
@@ -1584,7 +1586,7 @@ for multimicrogrid interconnected systems with time delays,
 triggering communication only when the control error exceeds a tunable threshold,
 proving convergence via Lyapunov theory.
 Zhu et al.~\cite{10337762} propose a method for connected heterogeneous vehicle platoon control
-considering sensor faults, network resource usage minimised through the effective use of triggering conditions.
+considering sensor faults, network resource usage minimized through the effective use of triggering conditions.
 Yu et al.~\cite{yu2023distributed} develop an iterative learning approach for the control of 
 Multiple High-Speed Trains with switching topologies, proving 
 stability and reduced bandwidth occupancy while retaining
