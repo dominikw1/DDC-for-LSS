@@ -1617,12 +1617,6 @@ neighbours \(\mathcal{N}_i\), potentially transformed through a function \(\xi\)
 u_i = \kappa_i(x_i, \{\xi(x_j) \mid j \in \mathcal{N}_i\})
 \end{equation}
 
-For linear settings and direct state propagation, this would reduce to:
-
-\begin{equation}
-u_i = K_{ii}x_i + \sum_{j\in\mathcal{N}_i}K_{ij}x_j
-\end{equation}
-
 
 \subsubsection{Distributed Model Predictive Control (DMPC)}
 
@@ -2207,13 +2201,12 @@ rarely achieved by a single algorithmic idea.
 Instead, practical large-scale control solutions combine dimensionality
 reduction, structural decomposition, and appropriate control architectures such as decentralised, distributed, or hierarchical schemes. 
 While data-driven methods can significantly reduce modeling effort and
-improve flexibility, they introduce new challenges related to data quality, computational complexity, and performance guarantees.
+improve flexibility, they introduce new challenges related to computational complexity, stability guarantees and safety certificates.
 
 Despite substantial progress, several open problems remain.
 These primarily include the exploitation of large-scale structure for robust and safe controllers in networked systems.
-Research in all presented control architectures remains limited and commonly tends to employ standard
-mechanisms in subsystems. Novel safety approaches leveraging structure to provide guarantees not easily decomposable scaling to large systems
-could be the topic of future investigation.
+Future investigation could focus on novel robustness and safety approaches that leverage the overall system topology,
+instead of relying on the common practice of decomposing global objectives into tendentially conservative local constraints.
 Further, security aspects, such as malicious agents or subsystems, or the tampering with the learned-from data, are seldom considered.
 Addressing these challenges will be critical for moving data-driven control toward broadly applicable, reliable solutions for real-world large-scale systems.
 
