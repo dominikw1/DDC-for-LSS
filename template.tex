@@ -396,7 +396,7 @@ large-scale systems, covering both data-driven modeling techniques and direct mo
 The control architectures of decentralised, distributed, and hierarchical control are discussed
 with a focus on enabling scalability to large-scale systems.
 The survey highlights the state of the art in
-applying data-driven approaches to large-scale systems, including trade-offs and open research challenges.
+applying data-driven approaches to large-scale systems, including open research challenges.
 
 
 \end{abstract}
@@ -534,6 +534,7 @@ Following is a brief overview of a selection of the most fundamental definitions
 which lay the basis for many of the concepts discussed in this survey. As a comprehensive treatment of
 all mentioned terms is beyond the scope of this survey, the reader is instead referred to the corresponding cited literature.
 
+\subsubsection*{Hankel Matrix}
 A \textit{Hankel matrix} \(\mathcal{H}_{[N,T]}^i(x)\) derived from a dataset \(x\) with depth \(N\) and length \(T\) is defined as~\cite{VERHEIJEN2023100914}:
 
 \begin{equation}
@@ -545,6 +546,7 @@ x(i+N-1) & x(i+N) & ...  & x(i+T+N-2)
 \end{pmatrix}
 \end{equation}
 
+\subsubsection*{Willems' Fundamental Lemma}
 A signal \(u = [u_1,\dots,u_T]\) is said to be \textit{persistently exciting of order \(L\)} if the 
 Hankel matrix \(\mathcal{H}_{[L,T]}(u)\) has full row rank~\cite{coulson2019data}.
 Based on this notion, \textit{Willems' Fundamental Lemma}~\cite{willems2005note} is built.
